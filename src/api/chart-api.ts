@@ -1,3 +1,9 @@
+import { ChartComponent } from '../components/chart';
+
 export class ChartAPI {
-  constructor() {}
+  private _component: ChartComponent;
+
+  constructor(private _container: HTMLElement) {
+    this._component = new ChartComponent(this._container);
+  }
 }
