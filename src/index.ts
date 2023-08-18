@@ -1,2 +1,4 @@
-console.log("hm");
-var a = 1;
+import { createChart } from './api/create-chart'
+
+const chart = createChart('')
+console.log(chart)
