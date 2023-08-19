@@ -27,7 +27,6 @@ export class OverlayRenderer {
     }
 
     if (this._view.mouseOverCol === null) {
-      this._lastMouseOverCol = null;
       this._clearSvgElement();
       return;
     }
@@ -64,6 +63,8 @@ export class OverlayRenderer {
   }
 
   private _clearSvgElement(): void {
+    this._svgElement = null;
+    this._lastMouseOverCol = null;
     Array.from(this._svgContainer.children).forEach((c) => c.remove());
   }
 
