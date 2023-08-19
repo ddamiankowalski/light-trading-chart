@@ -10,7 +10,6 @@ export class DataLayerRenderer {
   }
 
   public render(): void {
-    console.log(this._view.dataSource);
     const gradient = this._ctx.createLinearGradient(20, 0, 220, 0);
 
     // Add three color stops

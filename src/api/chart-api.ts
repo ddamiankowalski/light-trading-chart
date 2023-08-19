@@ -1,4 +1,5 @@
 import { ChartComponent } from '../components/chart';
+import { RawDataSource } from '../interfaces/data-source';
 import { DataLayerView } from '../views/data-layer';
 
 export class ChartAPI {
@@ -10,7 +11,7 @@ export class ChartAPI {
     this._view = new DataLayerView(this._component);
   }
 
-  public setData(source: { x?: number; y: number }[]): void {
+  public setData(source: RawDataSource): void {
     this._view.updateDataSource(source);
   }
 }

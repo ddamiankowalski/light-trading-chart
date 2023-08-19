@@ -1,4 +1,5 @@
 import { ChartComponent } from '../components/chart';
+import { RawDataSource } from '../interfaces/data-source';
 import { DataLayerRenderer } from '../renderer/data-layer';
 import { DataSource } from '../source/data-source';
 
@@ -39,7 +40,7 @@ export class DataLayerView {
     return this._canvas.height;
   }
 
-  public updateDataSource(source: { x?: number; y: number }[]): void {
+  public updateDataSource(source: RawDataSource): void {
     this._dataSource = new DataSource(source);
     this._renderer.render();
   }
