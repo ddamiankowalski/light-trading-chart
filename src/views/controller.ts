@@ -6,6 +6,8 @@ import { Notifier } from '../utils/notifier';
 export class ViewController {
   private _invalidationRunning: boolean = false;
   private _viewInvalidator: Notifier<ViewInvalidateMessage>;
+  private _invalidateSet: Set<ViewType> = new Set();
+  private _viewMap: Map<ViewType, View> = new Map();
 
   constructor() {
     this._viewInvalidator = this._setInvalidator();
@@ -18,7 +20,9 @@ export class ViewController {
     component: ChartComponent,
     eventBus: EventBus
   ): T {
-    return new viewConstructor(component, eventBus, this._viewInvalidator);
+    const view = new viewConstructor(component, eventBus, this._viewInvalidator);
+    this._viewMap.set(viewType, view);
+    return view;
   }
 
   private _setInvalidator(): Notifier<ViewInvalidateMessage> {
@@ -30,6 +34,25 @@ export class ViewController {
   }
 
   private _handleInvalidView(message: ViewInvalidateMessage): void {
-    console.log(message);
+    this._invalidateSet.add(message.viewType);
+
+    if (!this._invalidationRunning) {
+      this._invalidationRunning = true;
+
+      requestAnimationFrame(() => {
+        this._invalidateSet.forEach((viewType) => this._updateView(viewType));
+        this._invalidationRunning = false;
+      });
+    }
+  }
+
+  private _updateView(type: ViewType): void {
+    const view = this._viewMap.get(type);
+
+    if (!view) {
+      throw new Error('Could not find the view for a given viewType');
+    }
+
+    view.render();
   }
 }

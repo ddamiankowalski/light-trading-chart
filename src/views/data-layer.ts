@@ -59,17 +59,17 @@ export class DataLayerView implements View {
     return this._verticalMargin;
   }
 
-  public invalidate(): void {
-    console.log('invalidating');
-  }
-
   public render(): void {
     this._renderer.render();
   }
 
   public updateDataSource(source: RawDataSource): void {
     this._dataSource = new DataSource(source);
-    this._renderer.render();
+    this._invalidate();
+  }
+
+  private _invalidate(): void {
+    this._viewInvalidator.notify({ viewType: ViewType.DataLayer });
   }
 
   private _createCanvas(): HTMLCanvasElement {
@@ -84,7 +84,7 @@ export class DataLayerView implements View {
     this._component.observerNotifier.subscribe(({ width, height }) => {
       this.canvas.width = width;
       this.canvas.height = height;
-      this._renderer.render();
+      this._invalidate();
     });
   }
 

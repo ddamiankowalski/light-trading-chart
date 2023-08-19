@@ -1,6 +1,6 @@
 import { ChartComponent } from '../components/chart';
 import { EventBus } from '../events/event-bus';
-import { View, ViewInvalidateMessage } from '../interfaces/view';
+import { View, ViewInvalidateMessage, ViewType } from '../interfaces/view';
 import { OverlayRenderer } from '../renderer/overlay';
 import { DataSource } from '../source/data-source';
 import { Notifier } from '../utils/notifier';
@@ -25,12 +25,12 @@ export class OverlayView implements View {
     return this._canvas;
   }
 
-  public invalidate(): void {
-    console.log('invalidating');
-  }
-
   public render(): void {
     this._renderer.render();
+  }
+
+  private _invalidate(): void {
+    this._viewInvalidator.notify({ viewType: ViewType.OverlayView });
   }
 
   private _createCanvas(): HTMLCanvasElement {
@@ -48,7 +48,7 @@ export class OverlayView implements View {
     this._component.observerNotifier.subscribe(({ width, height }) => {
       this.canvas.width = width;
       this.canvas.height = height;
-      this._renderer.render();
+      this._invalidate();
     });
   }
 }

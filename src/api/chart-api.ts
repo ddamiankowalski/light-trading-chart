@@ -1,10 +1,10 @@
 import { ChartComponent } from '../components/chart';
 import { EventBus } from '../events/event-bus';
 import { RawDataSource } from '../interfaces/data-source';
-import { ViewType } from '../interfaces/view';
 import { ViewController } from '../views/controller';
 import { DataLayerView } from '../views/data-layer';
 import { OverlayView } from '../views/overlay';
+import { ViewType } from '../interfaces/view';
 
 export class ChartAPI {
   private _component: ChartComponent;

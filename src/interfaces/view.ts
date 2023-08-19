@@ -8,7 +8,6 @@ export enum ViewType {
 }
 
 export interface View {
-  invalidate(): void;
   render(): void;
 }
 
