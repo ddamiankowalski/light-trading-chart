@@ -26,8 +26,9 @@ export class DataLayerRenderer {
     const ratio = this._getYAxisRatio(min, max);
 
     this._ctx.beginPath();
-    this._ctx.lineWidth = 2;
+    this._ctx.lineWidth = 2.5;
     this._ctx.lineCap = 'round';
+    this._ctx.lineJoin = 'round';
     this._ctx.strokeStyle = '#56B786';
 
     for (let i = 0; i < this.dataSize; i++) {
