@@ -24,10 +24,10 @@ module.exports = {
   },
   devtool: 'source-map',
     devServer: {
-      static: './lib',
+      static: './dist',
   },
   output: {
-    path: path.resolve(__dirname, 'lib'),
+    path: path.resolve(__dirname, 'dist'),
     chunkFilename: '[name].js',
     filename: '[name].js'
   },

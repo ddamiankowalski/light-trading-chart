@@ -1,7 +1,5 @@
 {
   "compilerOptions": {
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
     "target": "es5",
     "module": "commonjs",
     "noImplicitAny": true,
@@ -10,7 +8,7 @@
     "sourceMap": true,
     "declaration": true,
     "moduleResolution": "node",
-    "outDir": "lib",
+    "outDir": "dist",
   },
   "include": ["src"]
 }
