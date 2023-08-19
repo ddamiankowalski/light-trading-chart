@@ -4,6 +4,7 @@ import { DataLayerRenderer } from '../renderer/data-layer';
 export class DataLayerView {
   private _canvas: HTMLCanvasElement;
   private _renderer: DataLayerRenderer;
+  private _dataSource: { x?: number; y: number }[] = [];
 
   constructor(private _component: ChartComponent) {
     this._canvas = this.createCanvas();
@@ -27,6 +28,10 @@ export class DataLayerView {
 
   get height(): number {
     return this._canvas.height;
+  }
+
+  public updateDataSource(source: { x?: number; y: number }[]): void {
+    this._dataSource = source;
   }
 
   private createCanvas(): HTMLCanvasElement {

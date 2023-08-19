@@ -9,4 +9,8 @@ export class ChartAPI {
     this._component = new ChartComponent(this._container);
     this._view = new DataLayerView(this._component);
   }
+
+  public setData(source: { x?: number; y: number }[]): void {
+    this._view.updateDataSource(source);
+  }
 }
