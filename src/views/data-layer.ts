@@ -1,7 +1,7 @@
 import { ChartComponent } from '../components/chart';
 import { EventBus } from '../events/event-bus';
 import { RawDataSource } from '../interfaces/data-source';
-import { EventType } from '../interfaces/events';
+import { EventHandlers, EventType } from '../interfaces/events';
 import { ViewType } from '../interfaces/view';
 import { DataLayerRenderer } from '../renderer/data-layer';
 import { DataSource } from '../source/data-source';
@@ -20,7 +20,11 @@ export class DataLayerView {
     this._renderer = new DataLayerRenderer(this);
     this.resizeHandler();
 
-    eventBus.registerEvents(ViewType.DataLayer, EventType.MouseEvent);
+    const handlers: EventHandlers = {
+      mouseMove: this._onMouseMove.bind(this)
+    };
+
+    eventBus.registerEvents(ViewType.DataLayer, EventType.MouseEvent, handlers, this._component.element);
   }
 
   get ctx(): CanvasRenderingContext2D {
@@ -72,5 +76,9 @@ export class DataLayerView {
       this._canvas.height = height;
       this._renderer.render();
     });
+  }
+
+  private _onMouseMove(event: Event): void {
+    console.log('event, this');
   }
 }
