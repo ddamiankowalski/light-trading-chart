@@ -88,7 +88,6 @@ export class DataLayerView implements View, SourceView {
 
   private _resizeHandler(): void {
     this._component.observerNotifier.subscribe(({ width, height }) => {
-      console.log('NEXT ENTRY, TIMEOUT SET', width, height);
       this.canvas.width = width;
       this.canvas.height = height;
       this._invalidate();

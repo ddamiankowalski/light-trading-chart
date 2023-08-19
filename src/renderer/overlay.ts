@@ -22,7 +22,13 @@ export class OverlayRenderer {
   }
 
   public render(): void {
-    if (this._view.mouseOverCol === null || this._lastMouseOverCol === this._view.mouseOverCol) {
+    if (this._lastMouseOverCol === this._view.mouseOverCol) {
+      return;
+    }
+
+    if (this._view.mouseOverCol === null) {
+      this._lastMouseOverCol = null;
+      this._clearSvgElement();
       return;
     }
 
@@ -55,6 +61,10 @@ export class OverlayRenderer {
     element.classList.add('light-trading-chart__overlay-point');
     this._svgContainer.replaceChildren(element);
     this._svgElement = element;
+  }
+
+  private _clearSvgElement(): void {
+    Array.from(this._svgContainer.children).forEach((c) => c.remove());
   }
 
   private _updateSvg(x: number, y: number): void {

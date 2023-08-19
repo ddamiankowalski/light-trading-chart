@@ -94,6 +94,7 @@ export class OverlayView implements View, SourceView {
   }
 
   private _onMouseOut(event: MouseEvent): void {
-    console.log(event);
+    this._mouseOverCol = null;
+    this._viewInvalidator.notify({ viewType: ViewType.OverlayView });
   }
 }
