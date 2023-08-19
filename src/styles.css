@@ -42,3 +42,19 @@ html, body {
 .light-trading-chart__wrapper {
 
 }
+
+.light-trading-chart__overlay-point {
+  animation-name: overlay-point-show;
+  animation-duration: .3s;
+  transform-origin: center;
+}
+
+@keyframes overlay-point-show {
+  0% {
+    opacity: 0;
+  } 
+  
+  100% {
+    opacity: 1;
+  }
+}

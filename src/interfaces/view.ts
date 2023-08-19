@@ -12,6 +12,8 @@ export enum ViewType {
 export interface View {
   render(): void;
   invalidate(): void;
+  width: number;
+  height: number;
 }
 
 export interface SourceView {
