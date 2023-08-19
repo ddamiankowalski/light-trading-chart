@@ -3,23 +3,30 @@ import { EventBus } from '../events/event-bus';
 import { RawDataSource } from '../interfaces/data-source';
 import { ViewController } from '../views/controller';
 import { DataLayerView } from '../views/data-layer';
+import { OverlayView } from '../views/overlay';
 
 export class ChartAPI {
   private _component: ChartComponent;
-  private _view: DataLayerView;
+  private _dataView: DataLayerView;
+  private _overlayView: OverlayView;
   private _eventBus = new EventBus();
   private _viewController = new ViewController();
 
   constructor(private _container: HTMLElement) {
     this._component = new ChartComponent(this._container);
-    this._view = this._createDataLayerView();
+    this._dataView = this._createDataLayerView();
+    this._overlayView = this._createOverlayView();
   }
 
   public setData(source: RawDataSource): void {
-    this._view.updateDataSource(source);
+    this._dataView.updateDataSource(source);
   }
 
   private _createDataLayerView(): DataLayerView {
     return this._viewController.addView(DataLayerView, this._component, this._eventBus);
+  }
+
+  private _createOverlayView(): OverlayView {
+    return this._viewController.addView(OverlayView, this._component, this._eventBus);
   }
 }
