@@ -3,9 +3,10 @@ import { EventBus } from "../events/event-bus";
 import { View } from "../interfaces/view";
 import { OverlayRenderer } from "../renderer/overlay";
 import { DataSource } from "../source/data-source";
+import { Notifier } from "../utils/notifier";
 
 export class OverlayView implements View {
-    private _invalidated = false;
+    private _invalidatedNotifier = new Notifier<boolean>(false);
     private _canvas: HTMLCanvasElement;
     private _renderer: OverlayRenderer;
     private _dataSource: DataSource = new DataSource([]);
@@ -21,8 +22,16 @@ export class OverlayView implements View {
         return this._canvas;
     }
 
+    get notifier(): Notifier<boolean> {
+        return this._invalidatedNotifier;
+    }
+
     public invalidate(): void {
-        this._invalidated = true;
+        this._invalidatedNotifier.notify(true);
+    }
+
+    public render(): void {
+        this._renderer.render();
     }
 
     private _createCanvas(): HTMLCanvasElement {

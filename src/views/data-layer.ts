@@ -5,9 +5,10 @@ import { EventHandlers, EventType } from '../interfaces/events';
 import { View, ViewType } from '../interfaces/view';
 import { DataLayerRenderer } from '../renderer/data-layer';
 import { DataSource } from '../source/data-source';
+import { Notifier } from '../utils/notifier';
 
 export class DataLayerView implements View {
-  private _invalidated = false;
+  private _invalidatedNotifier = new Notifier<boolean>(false);
   private _canvas: HTMLCanvasElement;
   private _renderer: DataLayerRenderer;
   private _dataSource: DataSource = new DataSource([]);
@@ -27,6 +28,10 @@ export class DataLayerView implements View {
 
     eventBus.registerEvents(ViewType.DataLayer, EventType.MouseEvent, handlers, this._component.element);
   }
+
+  get notifier(): Notifier<boolean> {
+    return this._invalidatedNotifier;
+}
 
   get ctx(): CanvasRenderingContext2D {
     const context = this._canvas.getContext('2d');
@@ -59,7 +64,11 @@ export class DataLayerView implements View {
   }
 
   public invalidate(): void {
-    this._invalidated = true;
+    this._invalidatedNotifier.notify(true);
+}
+
+  public render(): void {
+  this._renderer.render();
 }
 
   public updateDataSource(source: RawDataSource): void {
