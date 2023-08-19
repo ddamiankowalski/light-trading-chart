@@ -5,9 +5,3 @@ const sampleData = [{ y: 123 }, { y: 220 }, { y: 12 }, { y: 125 }, { y: 600 }, {
 
 const chart = createChart(document.getElementById('chart-container') as HTMLElement);
 chart.setData([{ y: 123 }, { y: 220 }, { y: 12 }, { y: 125 }, { y: 600 }, { y: 20 }, { y: 330 }]);
-
-const chart1 = createChart(document.getElementById('chart-container1') as HTMLElement);
-chart1.setData([{ y: 123 }, { y: 220 }, { y: 12 }, { y: 125 }, { y: 600 }, { y: 20 }, { y: 330 }]);
-
-const chart2 = createChart(document.getElementById('chart-container2') as HTMLElement);
-chart2.setData([{ y: 123 }, { y: 220 }, { y: 12 }, { y: 125 }, { y: 600 }, { y: 20 }, { y: 330 }]);

@@ -1,5 +1,8 @@
 import { ChartComponent } from '../components/chart';
+import { EventBus } from '../events/event-bus';
 import { RawDataSource } from '../interfaces/data-source';
+import { EventType } from '../interfaces/events';
+import { ViewType } from '../interfaces/view';
 import { DataLayerRenderer } from '../renderer/data-layer';
 import { DataSource } from '../source/data-source';
 
@@ -9,10 +12,15 @@ export class DataLayerView {
   private _dataSource: DataSource = new DataSource([]);
   private _verticalMargin: number = 20;
 
-  constructor(private _component: ChartComponent) {
+  constructor(
+    private _component: ChartComponent,
+    eventBus: EventBus
+  ) {
     this._canvas = this.createCanvas();
     this._renderer = new DataLayerRenderer(this);
     this.resizeHandler();
+
+    eventBus.registerEvents(ViewType.DataLayer, EventType.MouseEvent);
   }
 
   get ctx(): CanvasRenderingContext2D {
