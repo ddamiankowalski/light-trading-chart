@@ -2,12 +2,12 @@ import { ChartComponent } from '../components/chart';
 import { EventBus } from '../events/event-bus';
 import { RawDataSource } from '../interfaces/data-source';
 import { EventHandlers, EventType } from '../interfaces/events';
-import { View, ViewInvalidateMessage, ViewType } from '../interfaces/view';
+import { SourceView, View, ViewInvalidateMessage, ViewType } from '../interfaces/view';
 import { DataLayerRenderer } from '../renderer/data-layer';
 import { DataSource } from '../source/data-source';
 import { Notifier } from '../utils/notifier';
 
-export class DataLayerView implements View {
+export class DataLayerView implements View, SourceView {
   private _canvas: HTMLCanvasElement;
   private _renderer: DataLayerRenderer;
   private _dataSource: DataSource = new DataSource([]);
@@ -63,6 +63,10 @@ export class DataLayerView implements View {
     this._renderer.render();
   }
 
+  public invalidate(): void {
+    this._invalidate();
+  }
+
   public updateDataSource(source: RawDataSource): void {
     this._dataSource = new DataSource(source);
     this._invalidate();
@@ -88,11 +92,5 @@ export class DataLayerView implements View {
     });
   }
 
-  private _onMouseMove(event: MouseEvent): void {
-    const cols = (this.dataSource.size - 1) * 2;
-    const mouseOverCol = Math.ceil(Math.floor(event.offsetX / (this.canvas.width / cols)) / 2);
-
-    // WE HAVE THE INDEX OF DATA TO BE CURRENTLY HIGHLIGHTED, WE CAN RENDER IT
-    console.log(this.dataSource.source[mouseOverCol]);
-  }
+  private _onMouseMove(event: MouseEvent): void {}
 }

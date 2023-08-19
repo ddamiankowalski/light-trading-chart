@@ -1,6 +1,7 @@
 import { ChartComponent } from '../components/chart';
 import { EventBus } from '../events/event-bus';
 import { Notifier } from '../utils/notifier';
+import { RawDataSource } from './data-source';
 
 export enum ViewType {
   DataLayer = 'DATA_LAYER',
@@ -9,6 +10,11 @@ export enum ViewType {
 
 export interface View {
   render(): void;
+  invalidate(): void;
+}
+
+export interface SourceView {
+  updateDataSource(source: RawDataSource): void;
 }
 
 export interface ViewInvalidateMessage {

@@ -1,6 +1,8 @@
 import { ChartComponent } from '../components/chart';
 import { EventBus } from '../events/event-bus';
+import { RawDataSource } from '../interfaces/data-source';
 import { View, ViewConstructor, ViewInvalidateMessage, ViewType } from '../interfaces/view';
+import { DataSource } from '../source/data-source';
 import { Notifier } from '../utils/notifier';
 
 export class ViewController {
@@ -8,6 +10,7 @@ export class ViewController {
   private _viewInvalidator: Notifier<ViewInvalidateMessage>;
   private _invalidateSet: Set<ViewType> = new Set();
   private _viewMap: Map<ViewType, View> = new Map();
+  private _dataSource: DataSource = new DataSource([]);
 
   constructor() {
     this._viewInvalidator = this._setInvalidator();
