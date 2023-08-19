@@ -1,7 +1,7 @@
-export class Subscriber {
-  constructor(private _callback: () => void) {}
+export class Subscriber<T> {
+  constructor(private _callback: (value: T) => void) {}
 
-  get callback(): () => void {
+  get callback(): (value: T) => void {
     return this._callback;
   }
 }
