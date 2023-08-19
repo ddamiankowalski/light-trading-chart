@@ -10,6 +10,7 @@ import { Notifier } from '../utils/notifier';
 
 export class OverlayView implements View, SourceView {
   private _canvas: HTMLCanvasElement;
+  private _svgContainer: SVGSVGElement;
   private _renderer: OverlayRenderer;
   private _dataSource: DataSource = new DataSource([]);
   private _verticalMargin: number = 20;
@@ -22,6 +23,7 @@ export class OverlayView implements View, SourceView {
     private _viewInvalidator: Notifier<ViewInvalidateMessage>
   ) {
     this._canvas = this._createCanvas();
+    this._svgContainer = this._createSvgContainer();
     this._renderer = new OverlayRenderer(this);
     this._resizeHandler();
 
@@ -44,6 +46,10 @@ export class OverlayView implements View, SourceView {
 
   get canvas(): HTMLCanvasElement {
     return this._canvas;
+  }
+
+  get svgContainer(): SVGSVGElement {
+    return this._svgContainer;
   }
 
   get dataSource(): DataSource {
@@ -73,6 +79,19 @@ export class OverlayView implements View, SourceView {
 
   private _invalidate(): void {
     this._viewInvalidator.notify({ viewType: ViewType.OverlayView });
+  }
+
+  private _createSvgContainer(): SVGSVGElement {
+    const svgContainer = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svgContainer.setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xlink', 'http://www.w3.org/1999/xlink');
+    svgContainer.setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns', 'http://www.w3.org/2000/svg');
+    svgContainer.style.width = '100%';
+    svgContainer.style.height = '100%';
+    svgContainer.style.top = '0';
+    svgContainer.style.left = '0';
+    svgContainer.style.position = 'absolute';
+    this._component.element.appendChild(svgContainer);
+    return svgContainer;
   }
 
   private _createCanvas(): HTMLCanvasElement {
