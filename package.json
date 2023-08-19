@@ -1,6 +1,6 @@
 {
   "name": "light-trading-chart",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,9 +13,14 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/eslint-parser": "^7.22.10",
+    "@types/node": "^20.5.1",
+    "@types/webpack": "^5.28.1",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
     "@typescript-eslint/parser": "^6.4.0",
+    "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.8.1",
+    "declaration-bundler-webpack-plugin": "^1.0.3",
     "eslint": "^8.47.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-standard": "^17.1.0",
@@ -34,7 +39,8 @@
     "typescript": "^5.1.6",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^4.15.1"
+    "webpack-dev-server": "^4.15.1",
+    "wepack-cli": "^0.0.1-security"
   },
   "dependencies": {
     "awesome-typescript-loader": "^5.2.1"

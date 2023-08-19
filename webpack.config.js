@@ -3,7 +3,7 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
   entry: {
-    "light-trading-chart": path.resolve(__dirname, 'src/index.ts')
+    "index": path.resolve(__dirname, 'src/index.ts')
   },
   mode: 'development',
   plugins: [

@@ -1,15 +1,13 @@
 {
   "compilerOptions": {
-    "outDir": "lib",
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
     "sourceMap": true,
     "declaration": true,
-    "strict": true,
-    "noImplicitAny": true,
-    "module": "es6",
-    "target": "es5",
-    "allowJs": true,
     "moduleResolution": "node",
-    "lib": [ "es2015", "dom" ],
+    "outDir": "lib",
   },
-  "exclude": ["webpack.config.js", "node_modules"]
+  "include": ["src"]
 }
