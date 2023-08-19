@@ -22,6 +22,8 @@ export class DataLayerRenderer {
   }
 
   public render(): void {
+    this._resetCanvas();
+
     const { min, max } = this._view.dataSource.minMax;
     const ratio = this._getYAxisRatio(min, max);
 
@@ -49,11 +51,16 @@ export class DataLayerRenderer {
     this._createGradient();
   }
 
+  private _resetCanvas(): void {
+    this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
+  }
+
   private _getYAxisRatio(min: number, max: number): number {
     return this.effectiveCanvasHeight / (max - min);
   }
 
   private _clipPath(): void {
+    this._ctx.save();
     this._ctx.lineTo(this._canvas.width, this._canvas.height);
     this._ctx.lineTo(0, this._canvas.height);
     this._ctx.clip();
@@ -72,5 +79,6 @@ export class DataLayerRenderer {
 
     this._ctx.fillStyle = gradient;
     this._ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);
+    this._ctx.restore();
   }
 }

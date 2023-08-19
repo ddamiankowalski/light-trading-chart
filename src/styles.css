@@ -34,12 +34,7 @@ html, body {
   transform: translate(-50%, -50%);
   flex-direction: column;
   gap: 3rem;
-  opacity: .5;
   transition: opacity .3s ease;
-}
-
-.wrapper:hover {
-  opacity: 1;
 }
 
 .light-trading-chart {}
