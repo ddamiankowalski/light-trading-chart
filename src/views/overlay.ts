@@ -5,6 +5,7 @@ import { OverlayRenderer } from "../renderer/overlay";
 import { DataSource } from "../source/data-source";
 
 export class OverlayView implements View {
+    private _invalidated = false;
     private _canvas: HTMLCanvasElement;
     private _renderer: OverlayRenderer;
     private _dataSource: DataSource = new DataSource([]);
@@ -18,7 +19,11 @@ export class OverlayView implements View {
 
     get canvas(): HTMLCanvasElement {
         return this._canvas;
-      }
+    }
+
+    public invalidate(): void {
+        this._invalidated = true;
+    }
 
     private _createCanvas(): HTMLCanvasElement {
         const canvas = document.createElement('canvas');

@@ -7,6 +7,7 @@ import { DataLayerRenderer } from '../renderer/data-layer';
 import { DataSource } from '../source/data-source';
 
 export class DataLayerView implements View {
+  private _invalidated = false;
   private _canvas: HTMLCanvasElement;
   private _renderer: DataLayerRenderer;
   private _dataSource: DataSource = new DataSource([]);
@@ -16,9 +17,9 @@ export class DataLayerView implements View {
     private _component: ChartComponent,
     eventBus: EventBus
   ) {
-    this._canvas = this.createCanvas();
+    this._canvas = this._createCanvas();
     this._renderer = new DataLayerRenderer(this);
-    this.resizeHandler();
+    this._resizeHandler();
 
     const handlers: EventHandlers = {
       mouseMove: this._onMouseMove.bind(this)
@@ -57,12 +58,16 @@ export class DataLayerView implements View {
     return this._verticalMargin;
   }
 
+  public invalidate(): void {
+    this._invalidated = true;
+}
+
   public updateDataSource(source: RawDataSource): void {
     this._dataSource = new DataSource(source);
     this._renderer.render();
   }
 
-  private createCanvas(): HTMLCanvasElement {
+  private _createCanvas(): HTMLCanvasElement {
     const canvas = document.createElement('canvas');
     canvas.style.width = '100%';
     canvas.style.height = '100%';
@@ -70,7 +75,7 @@ export class DataLayerView implements View {
     return canvas;
   }
 
-  private resizeHandler(): void {
+  private _resizeHandler(): void {
     this._component.observerNotifier.subscribe(({ width, height }) => {
       this.canvas.width = width;
       this.canvas.height = height;

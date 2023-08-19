@@ -6,7 +6,9 @@ export enum ViewType {
 }
 
 
-export interface View {}
+export interface View {
+  invalidate(): void;
+}
 
 export interface ViewConstructor<T> {
   new (component: ChartComponent, eventBus: EventBus): T;
