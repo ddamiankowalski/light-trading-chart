@@ -21,14 +21,41 @@ export class DataLayerRenderer {
     const { min, max } = this._view.dataSource.minMax;
     const ratio = this._getYAxisRatio(min, max);
 
+    this._ctx.beginPath();
+    this._ctx.lineWidth = 2;
+    this._ctx.lineCap = 'round';
+    this._ctx.strokeStyle = '#56B786';
+
     for (let i = 0; i < this.dataSize; i++) {
       const xCoord = i * this.colGap;
       const yCoord = this._canvas.height - (this._view.dataSource.source[i].y - min) * ratio;
 
-      this._ctx.beginPath();
-      this._ctx.arc(xCoord, yCoord, 10, 0, 2 * Math.PI);
-      this._ctx.stroke();
+      if (i === 0) {
+        this._ctx.moveTo(xCoord, yCoord);
+        continue;
+      }
+
+      this._ctx.lineTo(xCoord + 0.5, yCoord + 0.5);
     }
+    this._ctx.stroke();
+
+    this._ctx.lineTo(this._canvas.width, this._canvas.height);
+    this._ctx.lineTo(0, this._canvas.height);
+    this._ctx.clip();
+
+    // CREATING GRADIENT
+    const gradient = this._ctx.createLinearGradient(
+      this._canvas.width / 2,
+      0,
+      this._canvas.width / 2,
+      this._canvas.height
+    );
+
+    gradient.addColorStop(0, 'rgba(86, 183, 134, 0.5)');
+    gradient.addColorStop(1, 'rgba(86, 183, 134, 0.0125)');
+
+    this._ctx.fillStyle = gradient;
+    this._ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);
   }
 
   private _getYAxisRatio(min: number, max: number): number {

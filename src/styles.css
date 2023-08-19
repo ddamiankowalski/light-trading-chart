@@ -6,19 +6,38 @@ html, body {
 }
 
 #chart-container {
+  display: block;
+  height: 14rem;
+  width: 26rem;
+  overflow: hidden;
+}
+
+#chart-container1 {
+  display: block;
+  height: 14rem;
+  width: 26rem;
+  overflow: hidden;
+}
+
+#chart-container2 {
+  display: block;
+  height: 14rem;
+  width: 26rem;
+  overflow: hidden;
+}
+
+.wrapper {
+  display: flex;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  display: block;
-  border: 1px solid black;
-  border-radius: .5rem;
-  height: 14rem;
-  width: 26rem;
+  flex-direction: column;
+  gap: 3rem;
 }
 
 .light-trading-chart {}
 
 .light-trading-chart__wrapper {
-  
+
 }
