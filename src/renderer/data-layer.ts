@@ -17,6 +17,10 @@ export class DataLayerRenderer {
     return this._view.dataSource.size;
   }
 
+  get effectiveCanvasHeight(): number {
+    return this._canvas.height - 2 * this._view.verticalMargin;
+  }
+
   public render(): void {
     const { min, max } = this._view.dataSource.minMax;
     const ratio = this._getYAxisRatio(min, max);
@@ -28,7 +32,8 @@ export class DataLayerRenderer {
 
     for (let i = 0; i < this.dataSize; i++) {
       const xCoord = i * this.colGap;
-      const yCoord = this._canvas.height - (this._view.dataSource.source[i].y - min) * ratio;
+      const yCoord =
+        this._canvas.height - this._view.verticalMargin - (this._view.dataSource.source[i].y - min) * ratio;
 
       if (i === 0) {
         this._ctx.moveTo(xCoord, yCoord);
@@ -39,11 +44,21 @@ export class DataLayerRenderer {
     }
     this._ctx.stroke();
 
+    this._clipPath();
+    this._createGradient();
+  }
+
+  private _getYAxisRatio(min: number, max: number): number {
+    return this.effectiveCanvasHeight / (max - min);
+  }
+
+  private _clipPath(): void {
     this._ctx.lineTo(this._canvas.width, this._canvas.height);
     this._ctx.lineTo(0, this._canvas.height);
     this._ctx.clip();
+  }
 
-    // CREATING GRADIENT
+  private _createGradient(): void {
     const gradient = this._ctx.createLinearGradient(
       this._canvas.width / 2,
       0,
@@ -56,9 +71,5 @@ export class DataLayerRenderer {
 
     this._ctx.fillStyle = gradient;
     this._ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);
-  }
-
-  private _getYAxisRatio(min: number, max: number): number {
-    return this._canvas.height / (max - min);
   }
 }

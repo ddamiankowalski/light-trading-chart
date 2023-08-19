@@ -7,6 +7,7 @@ export class DataLayerView {
   private _canvas: HTMLCanvasElement;
   private _renderer: DataLayerRenderer;
   private _dataSource: DataSource = new DataSource([]);
+  private _verticalMargin: number = 20;
 
   constructor(private _component: ChartComponent) {
     this._canvas = this.createCanvas();
@@ -38,6 +39,10 @@ export class DataLayerView {
 
   get height(): number {
     return this._canvas.height;
+  }
+
+  get verticalMargin(): number {
+    return this._verticalMargin;
   }
 
   public updateDataSource(source: RawDataSource): void {
