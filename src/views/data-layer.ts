@@ -1,10 +1,11 @@
 import { ChartComponent } from '../components/chart';
 import { DataLayerRenderer } from '../renderer/data-layer';
+import { DataSource } from '../source/data-source';
 
 export class DataLayerView {
   private _canvas: HTMLCanvasElement;
   private _renderer: DataLayerRenderer;
-  private _dataSource: { x?: number; y: number }[] = [];
+  private _dataSource: DataSource = new DataSource([]);
 
   constructor(private _component: ChartComponent) {
     this._canvas = this.createCanvas();
@@ -26,7 +27,7 @@ export class DataLayerView {
     return this._canvas;
   }
 
-  get dataSource(): { x?: number; y: number }[] {
+  get dataSource(): DataSource {
     return this._dataSource;
   }
 
@@ -39,7 +40,7 @@ export class DataLayerView {
   }
 
   public updateDataSource(source: { x?: number; y: number }[]): void {
-    this._dataSource = source;
+    this._dataSource = new DataSource(source);
     this._renderer.render();
   }
 
