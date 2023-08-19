@@ -25,7 +25,8 @@ export class OverlayView implements View, SourceView {
     this._renderer = new OverlayRenderer(this);
 
     const handlers: EventHandlers = {
-      mouseMove: this._onMouseMove.bind(this)
+      mouseMove: this._onMouseMove.bind(this),
+      mouseOut: this._onMouseOut.bind(this)
     };
 
     _eventBus.registerEvents(ViewType.DataLayer, EventType.MouseEvent, handlers, this._component.element);
@@ -90,5 +91,9 @@ export class OverlayView implements View, SourceView {
     const cols = (this.dataSource.size - 1) * 2;
     this._mouseOverCol = Math.ceil(Math.floor(event.offsetX / (this.width / cols)) / 2);
     this._viewInvalidator.notify({ viewType: ViewType.OverlayView });
+  }
+
+  private _onMouseOut(event: MouseEvent): void {
+    console.log(event);
   }
 }
