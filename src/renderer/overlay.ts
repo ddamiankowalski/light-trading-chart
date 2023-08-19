@@ -2,6 +2,7 @@ import { OverlayView } from '../views/overlay';
 
 export class OverlayRenderer {
   private _svgContainer: SVGSVGElement;
+  private _svgElement: SVGCircleElement | null = null;
   private _lastMouseOverCol: number | null = null;
 
   constructor(private _view: OverlayView) {
@@ -35,7 +36,7 @@ export class OverlayRenderer {
       (this._view.dataSource.source[this._view.mouseOverCol].y - min) * ratio;
     const xCoord = this._view.mouseOverCol * this.colGap;
 
-    this._createSvg(xCoord, yCoord);
+    !this._svgElement ? this._createSvg(xCoord, yCoord) : this._updateSvg(xCoord, yCoord);
   }
 
   private _getYAxisRatio(min: number, max: number): number {
@@ -53,5 +54,15 @@ export class OverlayRenderer {
     element.setAttribute('shape-rendering', 'geometricPrecision');
     element.classList.add('light-trading-chart__overlay-point');
     this._svgContainer.replaceChildren(element);
+    this._svgElement = element;
+  }
+
+  private _updateSvg(x: number, y: number): void {
+    if (!this._svgElement) {
+      throw new Error('Could not update the svgCircleElement');
+    }
+
+    this._svgElement.setAttribute('cx', x.toString());
+    this._svgElement.setAttribute('cy', y.toString());
   }
 }

@@ -40,13 +40,14 @@ html, body {
 .light-trading-chart {}
 
 .light-trading-chart__wrapper {
-
+  position: relative;
 }
 
 .light-trading-chart__overlay-point {
   animation-name: overlay-point-show;
   animation-duration: .3s;
   transform-origin: center;
+  transition: all .3s ease; 
 }
 
 @keyframes overlay-point-show {
