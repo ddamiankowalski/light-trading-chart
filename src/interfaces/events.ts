@@ -3,10 +3,10 @@ export enum EventType {
   KeyboardEvent = 'KEYBOARD_EVENT'
 }
 
-export type EventHandlerType = 'mouseMove';
+export type EventHandlerType = 'mouseMove' | 'mouseOut';
 
-export type EventHandlers = {
+export type EventHandlers = Partial<{
   [key in EventHandlerType]: EventHandler;
-};
+}>;
 
 export type EventHandler = (event: Event & MouseEvent) => void;
