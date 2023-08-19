@@ -2,11 +2,11 @@ import { ChartComponent } from '../components/chart';
 import { EventBus } from '../events/event-bus';
 import { RawDataSource } from '../interfaces/data-source';
 import { EventHandlers, EventType } from '../interfaces/events';
-import { ViewType } from '../interfaces/view';
+import { View, ViewType } from '../interfaces/view';
 import { DataLayerRenderer } from '../renderer/data-layer';
 import { DataSource } from '../source/data-source';
 
-export class DataLayerView {
+export class DataLayerView implements View {
   private _canvas: HTMLCanvasElement;
   private _renderer: DataLayerRenderer;
   private _dataSource: DataSource = new DataSource([]);
