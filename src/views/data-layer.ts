@@ -22,6 +22,14 @@ export class DataLayerView {
     return context;
   }
 
+  get canvas(): HTMLCanvasElement {
+    return this._canvas;
+  }
+
+  get dataSource(): { x?: number; y: number }[] {
+    return this._dataSource;
+  }
+
   get width(): number {
     return this._canvas.width;
   }
@@ -32,6 +40,7 @@ export class DataLayerView {
 
   public updateDataSource(source: { x?: number; y: number }[]): void {
     this._dataSource = source;
+    this._renderer.render();
   }
 
   private createCanvas(): HTMLCanvasElement {
@@ -46,6 +55,7 @@ export class DataLayerView {
     this._component.observerNotifier.subscribe(({ width, height }) => {
       this._canvas.width = width;
       this._canvas.height = height;
+      this._renderer.render();
     });
   }
 }
