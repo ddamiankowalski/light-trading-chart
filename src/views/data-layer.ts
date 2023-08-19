@@ -3,6 +3,7 @@ import { EventBus } from '../events/event-bus';
 import { RawDataSource } from '../interfaces/data-source';
 import { EventHandlers, EventType } from '../interfaces/events';
 import { SourceView, View, ViewInvalidateMessage, ViewType } from '../interfaces/view';
+import { ChartModel } from '../model/chart-model';
 import { DataLayerRenderer } from '../renderer/data-layer';
 import { DataSource } from '../source/data-source';
 import { Notifier } from '../utils/notifier';
@@ -16,6 +17,7 @@ export class DataLayerView implements View, SourceView {
   constructor(
     private _component: ChartComponent,
     private _eventBus: EventBus,
+    private _chartModel: ChartModel,
     private _viewInvalidator: Notifier<ViewInvalidateMessage>
   ) {
     this._canvas = this._createCanvas();
