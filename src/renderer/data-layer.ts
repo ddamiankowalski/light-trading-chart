@@ -9,16 +9,20 @@ export class DataLayerRenderer {
     this._canvas = _view.canvas;
   }
 
+  get colGap(): number {
+    return this._view.canvas.width / (this._view.dataSource.size - 1);
+  }
+
+  get dataSize(): number {
+    return this._view.dataSource.size;
+  }
+
   public render(): void {
-    const gradient = this._ctx.createLinearGradient(20, 0, 220, 0);
-
-    // Add three color stops
-    gradient.addColorStop(0, 'green');
-    gradient.addColorStop(0.5, 'cyan');
-    gradient.addColorStop(1, 'green');
-
-    // Set the fill style and draw a rectangle
-    this._ctx.fillStyle = gradient;
-    this._ctx.fillRect(20, 20, 200, 100);
+    for (let i = 0; i < this.dataSize; i++) {
+      const xCoord = i * this.colGap;
+      this._ctx.beginPath();
+      this._ctx.arc(xCoord, 75, 1, 0, 2 * Math.PI);
+      this._ctx.stroke();
+    }
   }
 }

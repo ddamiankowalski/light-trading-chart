@@ -2,12 +2,24 @@ import { MinMaxDataInfo, RawDataSource } from '../interfaces/data-source';
 
 export class DataSource {
   private _minMax: MinMaxDataInfo = {};
+  private _source: RawDataSource;
+  private _dataSize: number = 0;
 
   constructor(source: RawDataSource) {
+    this._source = source;
     this._setDataSource(source);
   }
 
+  get size(): number {
+    return this._dataSize;
+  }
+
+  get source(): RawDataSource {
+    return this._source;
+  }
+
   private _setDataSource(source: RawDataSource): void {
+    this._dataSize = source.length;
     this._calcMinMax(source);
   }
 
