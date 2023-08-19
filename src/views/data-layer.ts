@@ -2,13 +2,12 @@ import { ChartComponent } from '../components/chart';
 import { EventBus } from '../events/event-bus';
 import { RawDataSource } from '../interfaces/data-source';
 import { EventHandlers, EventType } from '../interfaces/events';
-import { View, ViewType } from '../interfaces/view';
+import { View, ViewInvalidateMessage, ViewType } from '../interfaces/view';
 import { DataLayerRenderer } from '../renderer/data-layer';
 import { DataSource } from '../source/data-source';
 import { Notifier } from '../utils/notifier';
 
 export class DataLayerView implements View {
-  private _invalidatedNotifier = new Notifier<boolean>(false);
   private _canvas: HTMLCanvasElement;
   private _renderer: DataLayerRenderer;
   private _dataSource: DataSource = new DataSource([]);
@@ -16,7 +15,8 @@ export class DataLayerView implements View {
 
   constructor(
     private _component: ChartComponent,
-    eventBus: EventBus
+    private _eventBus: EventBus,
+    private _viewInvalidator: Notifier<ViewInvalidateMessage>
   ) {
     this._canvas = this._createCanvas();
     this._renderer = new DataLayerRenderer(this);
@@ -26,12 +26,8 @@ export class DataLayerView implements View {
       mouseMove: this._onMouseMove.bind(this)
     };
 
-    eventBus.registerEvents(ViewType.DataLayer, EventType.MouseEvent, handlers, this._component.element);
+    _eventBus.registerEvents(ViewType.DataLayer, EventType.MouseEvent, handlers, this._component.element);
   }
-
-  get notifier(): Notifier<boolean> {
-    return this._invalidatedNotifier;
-}
 
   get ctx(): CanvasRenderingContext2D {
     const context = this._canvas.getContext('2d');
@@ -64,12 +60,12 @@ export class DataLayerView implements View {
   }
 
   public invalidate(): void {
-    this._invalidatedNotifier.notify(true);
-}
+    console.log('invalidating');
+  }
 
   public render(): void {
-  this._renderer.render();
-}
+    this._renderer.render();
+  }
 
   public updateDataSource(source: RawDataSource): void {
     this._dataSource = new DataSource(source);
