@@ -14,11 +14,9 @@ export class DataSource {
   private _calcMinMax(source: RawDataSource): void {
     this._minMax = source.reduce(
       (acc, curr) => {
-        const result = { min: 0, max: 0 };
-        const { y: currentY } = curr;
-        result.min = acc.min < currentY ? acc.min : currentY;
-        result.max = acc.max > currentY ? acc.max : currentY;
-        return result;
+        acc.min = acc.min < curr.y ? acc.min : curr.y;
+        acc.max = acc.max > curr.y ? acc.max : curr.y;
+        return acc;
       },
       { min: Infinity, max: -Infinity }
     );
