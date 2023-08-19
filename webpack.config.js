@@ -27,7 +27,7 @@ module.exports = {
     static: './lib',
   },
   output: {
-        path: path.resolve(__dirname, 'lib'),
+    path: path.resolve(__dirname, 'lib'),
     chunkFilename: '[name].js',
     filename: '[name].js'
   },

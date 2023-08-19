@@ -1,12 +1,15 @@
 {
   "compilerOptions": {
-    "module": "ES6",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "module": "commonjs",
     "noImplicitAny": true,
     "removeComments": true,
     "preserveConstEnums": true,
     "sourceMap": true,
     "declaration": true,
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "outDir": "lib",
   },
   "include": ["src"]
