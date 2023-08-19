@@ -1,22 +1,20 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
-  entry: './src/index.ts',
+  entry: {
+    "light-trading-chart": path.resolve(__dirname, 'src/index.ts')
+  },
   mode: 'development',
   plugins: [
-    new HtmlWebpackPlugin({
-      template: 'index.html'
-    }),
     new ESLintPlugin()
   ],
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
+        test: /\.ts$/,
         use: 'ts-loader',
-        exclude: /node_modules/,
+        exclude: [/node_modules/, /webpack.config.js/],
       },
       {
         test: /\.css$/i,
@@ -29,6 +27,7 @@ module.exports = {
     static: './lib',
   },
   output: {
+    chunkFilename: '[name].js',
     filename: '[name].js',
     path: path.resolve(__dirname, 'lib'),
     libraryTarget: 'umd',
