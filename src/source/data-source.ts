@@ -1,7 +1,7 @@
-import { MinMaxDataInfo, RawDataSource } from '../interfaces/data-source';
+import { MinMaxSource, RawDataSource } from '../interfaces/data-source';
 
 export class DataSource {
-  private _minMax: MinMaxDataInfo = {};
+  private _minMax: MinMaxSource = { min: Infinity, max: -Infinity };
   private _source: RawDataSource;
   private _dataSize: number = 0;
 
@@ -16,6 +16,10 @@ export class DataSource {
 
   get source(): RawDataSource {
     return this._source;
+  }
+
+  get minMax(): MinMaxSource {
+    return this._minMax;
   }
 
   private _setDataSource(source: RawDataSource): void {

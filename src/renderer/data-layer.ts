@@ -18,11 +18,20 @@ export class DataLayerRenderer {
   }
 
   public render(): void {
+    const { min, max } = this._view.dataSource.minMax;
+    const ratio = this._getYAxisRatio(min, max);
+
     for (let i = 0; i < this.dataSize; i++) {
       const xCoord = i * this.colGap;
+      const yCoord = this._canvas.height - (this._view.dataSource.source[i].y - min) * ratio;
+
       this._ctx.beginPath();
-      this._ctx.arc(xCoord, 75, 1, 0, 2 * Math.PI);
+      this._ctx.arc(xCoord, yCoord, 10, 0, 2 * Math.PI);
       this._ctx.stroke();
     }
+  }
+
+  private _getYAxisRatio(min: number, max: number): number {
+    return this._canvas.height / (max - min);
   }
 }
