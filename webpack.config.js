@@ -27,15 +27,12 @@ module.exports = {
     static: './lib',
   },
   output: {
+        path: path.resolve(__dirname, 'lib'),
     chunkFilename: '[name].js',
-    filename: '[name].js',
-    path: path.resolve(__dirname, 'lib'),
-    libraryTarget: 'umd',
-    library: 'light-trading-chart',
-    umdNamedDefine: true
+    filename: '[name].js'
   },
   resolve: {
-    extensions: ['.ts', '.js'],
+    extensions: ['.ts'],
   },
   optimization: {
     runtimeChunk: 'single',
