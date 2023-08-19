@@ -24,14 +24,16 @@ module.exports = {
       },
     ],
   },
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
     devServer: {
-    static: './dist',
+    static: './lib',
   },
   output: {
-    filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist'),
-    clean: true
+    filename: '[name].js',
+    path: path.resolve(__dirname, 'lib'),
+    libraryTarget: 'umd',
+    library: 'light-trading-chart',
+    umdNamedDefine: true
   },
   resolve: {
     extensions: ['.ts', '.js'],
