@@ -13,6 +13,7 @@ export class OverlayView implements View, SourceView {
   private _renderer: OverlayRenderer;
   private _dataSource: DataSource = new DataSource([]);
   private _verticalMargin: number = 20;
+  private _mouseOverCol: number | null = null;
 
   constructor(
     private _component: ChartComponent,
@@ -53,6 +54,10 @@ export class OverlayView implements View, SourceView {
     return this._verticalMargin;
   }
 
+  get mouseOverCol(): number | null {
+    return this._mouseOverCol;
+  }
+
   public render(): void {
     this._renderer.render();
   }
@@ -91,9 +96,7 @@ export class OverlayView implements View, SourceView {
 
   private _onMouseMove(event: MouseEvent): void {
     const cols = (this.dataSource.size - 1) * 2;
-    const mouseOverCol = Math.ceil(Math.floor(event.offsetX / (this.canvas.width / cols)) / 2);
-
-    // WE HAVE THE INDEX OF DATA TO BE CURRENTLY HIGHLIGHTED, WE CAN RENDER IT
-    console.log(this.dataSource.source[mouseOverCol]);
+    this._mouseOverCol = Math.ceil(Math.floor(event.offsetX / (this.canvas.width / cols)) / 2);
+    this._viewInvalidator.notify({ viewType: ViewType.OverlayView });
   }
 }

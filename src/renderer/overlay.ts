@@ -3,10 +3,12 @@ import { OverlayView } from '../views/overlay';
 export class OverlayRenderer {
   private _ctx: CanvasRenderingContext2D;
   private _canvas: HTMLCanvasElement;
+  private _svgContainer: SVGSVGElement;
 
   constructor(private _view: OverlayView) {
     this._ctx = _view.ctx;
     this._canvas = _view.canvas;
+    this._svgContainer = this._createSvgContainer();
   }
 
   get dataSize(): number {
@@ -24,14 +26,26 @@ export class OverlayRenderer {
   public render(): void {
     this._resetCanvas();
 
+    if (!this._view.mouseOverCol) {
+      return;
+    }
+
     const { min, max } = this._view.dataSource.minMax;
     const ratio = this._getYAxisRatio(min, max);
 
-    for (let i = 0; i < this.dataSize; i++) {
-      const xCoord = i * this.colGap;
-      const yCoord =
-        this._canvas.height - this._view.verticalMargin - (this._view.dataSource.source[i].y - min) * ratio;
-    }
+    const yCoord =
+      this._canvas.height -
+      this._view.verticalMargin -
+      (this._view.dataSource.source[this._view.mouseOverCol].y - min) * ratio;
+    const xCoord = this._view.mouseOverCol * this.colGap;
+
+    this._createSvg(xCoord, yCoord);
+  }
+
+  private _createSvgContainer(): SVGSVGElement {
+    const svgContainer = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    this._canvas.appendChild(svgContainer);
+    return svgContainer;
   }
 
   private _resetCanvas(): void {
@@ -40,5 +54,16 @@ export class OverlayRenderer {
 
   private _getYAxisRatio(min: number, max: number): number {
     return this.effectiveCanvasHeight / (max - min);
+  }
+
+  private _createSvg(x: number, y: number): void {
+    const element = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    element.setAttribute('x', x.toString());
+    element.setAttribute('y', y.toString());
+    element.setAttribute('width', '100');
+    element.setAttribute('height', '100');
+    element.setAttribute('fill', '#5cceee');
+    this._svgContainer.appendChild(element);
+    console.log(element);
   }
 }
