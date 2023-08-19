@@ -9,4 +9,4 @@ export type EventHandlers = {
   [key in EventHandlerType]: EventHandler;
 };
 
-export type EventHandler = (event: Event) => void;
+export type EventHandler = (event: Event & MouseEvent) => void;

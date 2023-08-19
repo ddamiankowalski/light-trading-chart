@@ -72,13 +72,17 @@ export class DataLayerView {
 
   private resizeHandler(): void {
     this._component.observerNotifier.subscribe(({ width, height }) => {
-      this._canvas.width = width;
-      this._canvas.height = height;
+      this.canvas.width = width;
+      this.canvas.height = height;
       this._renderer.render();
     });
   }
 
-  private _onMouseMove(event: Event): void {
-    console.log('event, this');
+  private _onMouseMove(event: MouseEvent): void {
+    const cols = (this.dataSource.size - 1) * 2;
+    const mouseOverCol = Math.ceil(Math.floor(event.offsetX / (this.canvas.width / cols)) / 2);
+
+    // WE HAVE THE INDEX OF DATA TO BE CURRENTLY HIGHLIGHTED, WE CAN RENDER IT
+    console.log(this.dataSource.source[mouseOverCol]);
   }
 }
