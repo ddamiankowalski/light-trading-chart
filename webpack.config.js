@@ -24,7 +24,7 @@ module.exports = {
   },
   devtool: 'source-map',
     devServer: {
-    static: './lib',
+      static: './lib',
   },
   output: {
     path: path.resolve(__dirname, 'lib'),
