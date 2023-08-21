@@ -5,7 +5,7 @@
   "scripts": {
     "test": "mocha --watch",
     "start": "webpack serve --open",
-    "build": "del-cli --force ./lib && del-cli --force ./_bundles && tsc && webpack"
+    "build": "del-cli --force ./lib && del-cli --force ./_bundles && del-cli --force ./lib-esm && tsc --project tsconfig.esm.json && tsc && webpack"
   },
   "keywords": [],
   "author": "",
@@ -13,7 +13,6 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.22.10",
     "@types/node": "^20.5.1",
-    "@types/webpack": "^5.28.1",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
     "@typescript-eslint/parser": "^6.4.0",
     "clean-webpack-plugin": "^4.0.0",

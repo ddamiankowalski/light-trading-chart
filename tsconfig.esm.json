@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "CommonJS",
+    "module": "es6",
     "sourceMap": true,
     "declaration": true,
     "lib": [ "es2015", "dom" ],
     "noImplicitAny": true,
     "removeComments": true,
     "preserveConstEnums": true,
-    "outDir": "lib",
+    "outDir": "lib-esm",
     "allowJs": false,
   },
   "include": ["src"],

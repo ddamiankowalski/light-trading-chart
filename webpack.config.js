@@ -1,15 +1,17 @@
 const path = require('path');
-const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
-  entry: {
-    "light-trading-chart": './src/index.ts',
-    "light-trading-chart.min": './src/index.ts'
+  entry: './src/index.ts',
+  mode: 'production',
+  output: {
+    path: path.resolve(__dirname, '_bundles'),
+    filename: '[name].js',
+    globalObject: 'this',
+    library: {
+      name: 'lightTradingChart',
+      type: 'umd'
+    }
   },
-  mode: 'development',
-  plugins: [
-    new ESLintPlugin(),
-  ],
   module: {
     rules: [
       {
@@ -17,22 +19,11 @@ module.exports = {
         use: 'ts-loader',
         exclude: [/node_modules/, /webpack.config.js/],
       },
-      {
-        test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
-      },
     ],
   },
   devtool: 'source-map',
     devServer: {
       static: './dist',
-  },
-  output: {
-    path: path.resolve(__dirname, '_bundles'),
-    filename: '[name].js',
-    libraryTarget: 'umd',
-    library: 'LightTradingChart',
-    umdNamedDefine: true
   },
   resolve: {
     extensions: ['.ts'],
