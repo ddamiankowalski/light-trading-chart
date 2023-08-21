@@ -3,7 +3,7 @@
   "version": "1.0.22",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --watch",
     "start": "webpack serve --open",
     "build": "del-cli --force ./lib && del-cli --force ./_bundles && tsc && webpack"
   },
@@ -32,6 +32,7 @@
     "eslint-plugin-standard": "^5.0.0",
     "eslint-webpack-plugin": "^4.0.1",
     "html-webpack-plugin": "^5.5.3",
+    "mocha": "^10.2.0",
     "prettier": "^3.0.2",
     "style-loader": "^3.3.3",
     "ts-loader": "^9.4.4",
@@ -42,6 +43,10 @@
     "wepack-cli": "^0.0.1-security"
   },
   "dependencies": {
-    "del-cli": "^5.0.0"
+    "@types/chai": "^4.3.5",
+    "@types/mocha": "^10.0.1",
+    "chai": "^4.3.7",
+    "del-cli": "^5.0.0",
+    "ts-node": "^10.9.1"
   }
 }
