@@ -16,7 +16,7 @@ export class ChartAPI {
   private _chartModel = new ChartModel();
 
   constructor(private _container: HTMLElement) {
-    this._component = new ChartComponent(this._container);
+    this._component = this._createChartComponent();
     this._dataView = this._createDataLayerView();
     this._overlayView = this._createOverlayView();
   }
@@ -24,6 +24,10 @@ export class ChartAPI {
   public setData(source: RawDataSource): void {
     this._dataView.updateDataSource(source);
     this._overlayView.updateDataSource(source);
+  }
+
+  private _createChartComponent(): ChartComponent {
+    return new ChartComponent(this._container);
   }
 
   private _createDataLayerView(): DataLayerView {
