@@ -3,11 +3,12 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
   entry: {
-    "index": path.resolve(__dirname, 'src/index.ts')
+    "light-trading-chart": './src/index.ts',
+    "light-trading-chart.min": './src/index.ts'
   },
   mode: 'development',
   plugins: [
-    new ESLintPlugin()
+    new ESLintPlugin(),
   ],
   module: {
     rules: [
@@ -27,9 +28,11 @@ module.exports = {
       static: './dist',
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    chunkFilename: '[name].js',
-    filename: '[name].js'
+    path: path.resolve(__dirname, '_bundles'),
+    filename: '[name].js',
+    libraryTarget: 'umd',
+    library: 'LightTradingChart',
+    umdNamedDefine: true
   },
   resolve: {
     extensions: ['.ts'],

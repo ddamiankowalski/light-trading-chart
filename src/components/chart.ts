@@ -36,7 +36,6 @@ export class ChartComponent {
 
   private _setResizeObserver(): ResizeObserver {
     return new ResizeObserver((entries) => {
-      console.log(entries);
       const [e] = entries;
       const { width, height } = e.contentRect;
       this._width = width;

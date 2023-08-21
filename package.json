@@ -1,11 +1,11 @@
 {
   "name": "light-trading-chart",
-  "version": "1.0.14",
+  "version": "1.0.22",
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack serve --open",
-    "build": "webpack"
+    "build": "del-cli --force ./lib && del-cli --force ./_bundles && tsc && webpack"
   },
   "keywords": [],
   "author": "",
@@ -42,6 +42,6 @@
     "wepack-cli": "^0.0.1-security"
   },
   "dependencies": {
-    "awesome-typescript-loader": "^5.2.1"
+    "del-cli": "^5.0.0"
   }
 }
