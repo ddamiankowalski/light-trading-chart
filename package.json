@@ -1,7 +1,9 @@
 {
   "name": "light-trading-chart",
-  "version": "1.0.22",
+  "version": "1.0.25",
   "description": "",
+  "main": "_bundles/main.js",
+  "module": "lib-esm/index.js",
   "scripts": {
     "test": "mocha --watch",
     "start": "webpack serve --open",
@@ -44,8 +46,10 @@
   "dependencies": {
     "@types/chai": "^4.3.5",
     "@types/mocha": "^10.0.1",
+    "@types/sinon": "^10.0.16",
     "chai": "^4.3.7",
     "del-cli": "^5.0.0",
+    "sinon": "^15.2.0",
     "ts-node": "^10.9.1"
   }
 }

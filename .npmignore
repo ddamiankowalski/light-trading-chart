@@ -1,6 +1,13 @@
 **/tsconfig.json
 **/webpack.config.js
+**/*.html
 
+.mocharc.json
+.prettierrc.json
+.eslintrc.json
+tsconfig.esm.json
+tsconfig.json
 node_modules
 src
-index.html
+tests
+
