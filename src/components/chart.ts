@@ -24,12 +24,12 @@ export class ChartComponent {
   private _createComponent(): HTMLDivElement {
     const div = document.createElement('div');
     div.classList.add('light-trading-chart__wrapper');
-    this.setStyleProperties(div);
+    this._setStyleProperties(div);
     this._container.appendChild(div);
     return div;
   }
 
-  private setStyleProperties(div: HTMLDivElement): void {
+  private _setStyleProperties(div: HTMLDivElement): void {
     div.style.width = '100%';
     div.style.height = '100%';
   }
