@@ -5,7 +5,6 @@ import { ViewController } from '../views/controller';
 import { DataLayerView } from '../views/data-layer';
 import { OverlayView } from '../views/overlay';
 import { ViewType } from '../interfaces/view';
-import { ChartModel } from '../model/chart-model';
 
 export class ChartAPI {
   private _component: ChartComponent;
@@ -13,7 +12,6 @@ export class ChartAPI {
   private _overlayView: OverlayView;
   private _eventBus = new EventBus();
   private _viewController = new ViewController();
-  private _chartModel = new ChartModel();
 
   constructor(private _container: HTMLElement) {
     this._component = this._createChartComponent();
@@ -31,22 +29,10 @@ export class ChartAPI {
   }
 
   private _createDataLayerView(): DataLayerView {
-    return this._viewController.addView(
-      DataLayerView,
-      ViewType.DataLayer,
-      this._component,
-      this._eventBus,
-      this._chartModel
-    );
+    return this._viewController.addView(DataLayerView, ViewType.DataLayer, this._component, this._eventBus);
   }
 
   private _createOverlayView(): OverlayView {
-    return this._viewController.addView(
-      OverlayView,
-      ViewType.OverlayView,
-      this._component,
-      this._eventBus,
-      this._chartModel
-    );
+    return this._viewController.addView(OverlayView, ViewType.OverlayView, this._component, this._eventBus);
   }
 }

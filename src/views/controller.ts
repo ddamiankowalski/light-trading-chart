@@ -1,8 +1,6 @@
 import { ChartComponent } from '../components/chart';
 import { EventBus } from '../events/event-bus';
-import { RawDataSource } from '../interfaces/data-source';
 import { View, ViewConstructor, ViewInvalidateMessage, ViewType } from '../interfaces/view';
-import { ChartModel } from '../model/chart-model';
 import { DataSource } from '../source/data-source';
 import { Notifier } from '../utils/notifier';
 
@@ -22,10 +20,9 @@ export class ViewController {
     viewConstructor: ViewConstructor<T>,
     viewType: ViewType,
     component: ChartComponent,
-    eventBus: EventBus,
-    chartModel: ChartModel
+    eventBus: EventBus
   ): T {
-    const view = new viewConstructor(component, eventBus, chartModel, this._viewInvalidator);
+    const view = new viewConstructor(component, eventBus, this._viewInvalidator);
     this._viewMap.set(viewType, view);
     return view;
   }
