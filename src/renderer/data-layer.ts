@@ -24,12 +24,11 @@ export class DataLayerRenderer {
     return this._canvas.height - 2 * this._view.verticalMargin;
   }
 
-  public render(): void {
+  public render(color: string): void {
     this._resetCanvas();
 
     const { min, max } = this._view.dataSource.minMax;
     const ratio = this._getYAxisRatio(min, max);
-    const color = this._getColor();
 
     this._ctx.beginPath();
     this._ctx.lineWidth = 2.5;
@@ -68,16 +67,6 @@ export class DataLayerRenderer {
 
   private _getYAxisRatio(min: number, max: number): number {
     return this.effectiveCanvasHeight / (max - min);
-  }
-
-  private _getColor(): string {
-    if (this._view.dataSource.size <= 2 && this._view.dataSource.source[0].y === this._view.dataSource.source[1].y) {
-      return '#585D67';
-    }
-
-    return this._view.dataSource.source[0].y < this._view.dataSource.source[this._view.dataSource.size - 1].y
-      ? '#56B786'
-      : '#e23142';
   }
 
   private _getRgbaColor(): string {

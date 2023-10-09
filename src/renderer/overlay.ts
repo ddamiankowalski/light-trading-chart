@@ -25,7 +25,7 @@ export class OverlayRenderer {
     return this._view.height - 2 * this._view.verticalMargin;
   }
 
-  public render(): void {
+  public render(color: string): void {
     if (this._view.dataSource.size <= 2 && this._view.dataSource.source[0].y === this._view.dataSource.source[1].y) {
       return;
     }
@@ -49,7 +49,7 @@ export class OverlayRenderer {
       (this._view.dataSource.source[this._view.mouseOverCol].y - min) * ratio;
     const xCoord = this._view.mouseOverCol * this.colGap;
 
-    !this._svgElement ? this._createSvg(xCoord, yCoord) : this._updateSvg(xCoord, yCoord);
+    !this._svgElement ? this._createSvg(xCoord, yCoord, color) : this._updateSvg(xCoord, yCoord);
   }
 
   private _shouldAddMargin(): number {
@@ -60,9 +60,7 @@ export class OverlayRenderer {
     return this.effectiveCanvasHeight / (max - min);
   }
 
-  private _createSvg(x: number, y: number): void {
-    const color = this._getColor();
-
+  private _createSvg(x: number, y: number, color: string): void {
     const element = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
     element.setAttribute('cx', x.toString());
     element.setAttribute('cy', y.toString());
@@ -89,11 +87,5 @@ export class OverlayRenderer {
 
     this._svgElement.setAttribute('cx', x.toString());
     this._svgElement.setAttribute('cy', y.toString());
-  }
-
-  private _getColor(): string {
-    return this._view.dataSource.source[0].y < this._view.dataSource.source[this._view.dataSource.size - 1].y
-      ? '#56B786'
-      : '#e23142';
   }
 }
