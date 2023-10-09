@@ -13,6 +13,7 @@ export class DataLayerView implements View, SourceView {
   private _dataSource: DataSource = new DataSource([]);
   private _verticalMargin: number = 3;
   private _color: string;
+  private _rgbColor: string;
 
   constructor(
     private _component: ChartComponent,
@@ -61,11 +62,16 @@ export class DataLayerView implements View, SourceView {
   }
 
   public render(): void {
-    this._renderer.render(this._color);
+    this._renderer.render(this._color, this._rgbColor);
   }
 
   public updateColor(color: string) {
     this._color = color;
+    this.render();
+  }
+
+  public updateRgbColor(color: string): void {
+    this._rgbColor = color;
     this.render();
   }
 

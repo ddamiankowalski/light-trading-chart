@@ -14,6 +14,7 @@ export class OverlayView implements View, SourceView {
   private _verticalMargin: number = 3;
   private _mouseOverCol: number | null = null;
   private _color: string;
+  private _rgbColor: string;
 
   constructor(
     private _component: ChartComponent,
@@ -61,6 +62,11 @@ export class OverlayView implements View, SourceView {
 
   public updateColor(color: string): void {
     this._color = color;
+    this.render();
+  }
+
+  public updateRgbColor(color: string): void {
+    this._rgbColor = color;
     this.render();
   }
 

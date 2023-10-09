@@ -24,7 +24,7 @@ export class DataLayerRenderer {
     return this._canvas.height - 2 * this._view.verticalMargin;
   }
 
-  public render(color: string): void {
+  public render(color: string, rgbColor: string): void {
     this._resetCanvas();
 
     const { min, max } = this._view.dataSource.minMax;
@@ -54,7 +54,7 @@ export class DataLayerRenderer {
     this._ctx.stroke();
 
     this._clipPath();
-    this._createGradient();
+    this._createGradient(rgbColor);
   }
 
   private _resetCanvas(): void {
@@ -69,15 +69,15 @@ export class DataLayerRenderer {
     return this.effectiveCanvasHeight / (max - min);
   }
 
-  private _getRgbaColor(): string {
-    if (this._view.dataSource.size <= 2 && this._view.dataSource.source[0].y === this._view.dataSource.source[1].y) {
-      return '74, 83, 103';
-    }
+  // private _getRgbaColor(): string {
+  //   if (this._view.dataSource.size <= 2 && this._view.dataSource.source[0].y === this._view.dataSource.source[1].y) {
+  //     return '74, 83, 103';
+  //   }
 
-    return this._view.dataSource.source[0].y < this._view.dataSource.source[this._view.dataSource.size - 1].y
-      ? '86, 183, 134'
-      : '226, 49, 66';
-  }
+  //   return this._view.dataSource.source[0].y < this._view.dataSource.source[this._view.dataSource.size - 1].y
+  //     ? '86, 183, 134'
+  //     : '226, 49, 66';
+  // }
 
   private _clipPath(): void {
     this._ctx.save();
@@ -86,7 +86,7 @@ export class DataLayerRenderer {
     this._ctx.clip();
   }
 
-  private _createGradient(): void {
+  private _createGradient(rgbColor: string): void {
     const gradient = this._ctx.createLinearGradient(
       this._canvas.width / 2,
       0,
@@ -94,8 +94,8 @@ export class DataLayerRenderer {
       this._canvas.height
     );
 
-    gradient.addColorStop(0, `rgba(${this._getRgbaColor()}, 0.5)`);
-    gradient.addColorStop(1, `rgba(${this._getRgbaColor()}, 0.0125)`);
+    gradient.addColorStop(0, `rgba(${rgbColor}, 0.5)`);
+    gradient.addColorStop(1, `rgba(${rgbColor}, 0.0125)`);
 
     this._ctx.fillStyle = gradient;
     this._ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);

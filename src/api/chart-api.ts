@@ -29,6 +29,11 @@ export class ChartAPI {
     this._overlayView.updateColor(color);
   }
 
+  public setRgbColor(color: string): void {
+    this._dataView.updateRgbColor(color);
+    this._overlayView.updateRgbColor(color);
+  }
+
   private _createChartComponent(): ChartComponent {
     return new ChartComponent(this._container);
   }
