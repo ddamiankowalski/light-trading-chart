@@ -21,7 +21,6 @@ export class DataLayerRenderer {
     if (this._view.verticalMargin * 2 > this._canvas.height) {
       return this._canvas.height;
     }
-    console.log(this._canvas.height);
     return this._canvas.height - 2 * this._view.verticalMargin;
   }
 

@@ -66,10 +66,10 @@ export class OverlayRenderer {
     const element = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
     element.setAttribute('cx', x.toString());
     element.setAttribute('cy', y.toString());
-    element.setAttribute('r', '4');
+    element.setAttribute('r', '6');
     element.setAttribute('fill', color);
-    element.setAttribute('stroke', '#FFFFFF');
-    element.setAttribute('stroke-width', '2');
+    element.setAttribute('stroke', '#272D3A');
+    element.setAttribute('stroke-width', '3');
     element.setAttribute('shape-rendering', 'geometricPrecision');
     element.classList.add('light-trading-chart__overlay-point');
     this._svgContainer.replaceChildren(element);
