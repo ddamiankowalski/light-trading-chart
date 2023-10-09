@@ -69,16 +69,6 @@ export class DataLayerRenderer {
     return this.effectiveCanvasHeight / (max - min);
   }
 
-  // private _getRgbaColor(): string {
-  //   if (this._view.dataSource.size <= 2 && this._view.dataSource.source[0].y === this._view.dataSource.source[1].y) {
-  //     return '74, 83, 103';
-  //   }
-
-  //   return this._view.dataSource.source[0].y < this._view.dataSource.source[this._view.dataSource.size - 1].y
-  //     ? '86, 183, 134'
-  //     : '226, 49, 66';
-  // }
-
   private _clipPath(): void {
     this._ctx.save();
     this._ctx.lineTo(this._canvas.width, this._canvas.height);
@@ -93,6 +83,10 @@ export class DataLayerRenderer {
       this._canvas.width / 2,
       this._canvas.height
     );
+
+    if (!rgbColor) {
+      rgbColor = '74, 83, 103';
+    }
 
     gradient.addColorStop(0, `rgba(${rgbColor}, 0.5)`);
     gradient.addColorStop(1, `rgba(${rgbColor}, 0.0125)`);
