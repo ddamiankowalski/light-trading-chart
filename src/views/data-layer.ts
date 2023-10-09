@@ -11,7 +11,7 @@ export class DataLayerView implements View, SourceView {
   private _canvas: HTMLCanvasElement;
   private _renderer: DataLayerRenderer;
   private _dataSource: DataSource = new DataSource([]);
-  private _verticalMargin: number = 20;
+  private _verticalMargin: number = 3;
 
   constructor(
     private _component: ChartComponent,

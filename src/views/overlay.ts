@@ -11,7 +11,7 @@ export class OverlayView implements View, SourceView {
   private _svgContainer: SVGSVGElement;
   private _renderer: OverlayRenderer;
   private _dataSource: DataSource = new DataSource([]);
-  private _verticalMargin: number = 20;
+  private _verticalMargin: number = 3;
   private _mouseOverCol: number | null = null;
 
   constructor(
@@ -79,6 +79,7 @@ export class OverlayView implements View, SourceView {
     svgContainer.style.height = '100%';
     svgContainer.style.top = '0';
     svgContainer.style.left = '0';
+    svgContainer.style.overflow = 'visible';
     svgContainer.style.position = 'absolute';
     svgContainer.classList.add('light-trading-chart__overlay');
     this._component.element.appendChild(svgContainer);

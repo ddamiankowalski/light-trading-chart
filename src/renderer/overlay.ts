@@ -18,10 +18,18 @@ export class OverlayRenderer {
   }
 
   get effectiveCanvasHeight(): number {
+    if (this._view.verticalMargin * 2 > this._view.height) {
+      return this._view.height;
+    }
+
     return this._view.height - 2 * this._view.verticalMargin;
   }
 
   public render(): void {
+    if (this._view.dataSource.size <= 2 && this._view.dataSource.source[0].y === this._view.dataSource.source[1].y) {
+      return;
+    }
+
     if (this._lastMouseOverCol === this._view.mouseOverCol) {
       return;
     }
@@ -37,11 +45,15 @@ export class OverlayRenderer {
 
     const yCoord =
       this._view.height -
-      this._view.verticalMargin -
+      this._shouldAddMargin() -
       (this._view.dataSource.source[this._view.mouseOverCol].y - min) * ratio;
     const xCoord = this._view.mouseOverCol * this.colGap;
 
     !this._svgElement ? this._createSvg(xCoord, yCoord) : this._updateSvg(xCoord, yCoord);
+  }
+
+  private _shouldAddMargin(): number {
+    return this._view.verticalMargin * 2 > this._view.height ? 0 : this._view.verticalMargin;
   }
 
   private _getYAxisRatio(min: number, max: number): number {
@@ -49,11 +61,13 @@ export class OverlayRenderer {
   }
 
   private _createSvg(x: number, y: number): void {
+    const color = this._getColor();
+
     const element = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
     element.setAttribute('cx', x.toString());
     element.setAttribute('cy', y.toString());
     element.setAttribute('r', '4');
-    element.setAttribute('fill', '#56B786');
+    element.setAttribute('fill', color);
     element.setAttribute('stroke', '#FFFFFF');
     element.setAttribute('stroke-width', '2');
     element.setAttribute('shape-rendering', 'geometricPrecision');
@@ -75,5 +89,11 @@ export class OverlayRenderer {
 
     this._svgElement.setAttribute('cx', x.toString());
     this._svgElement.setAttribute('cy', y.toString());
+  }
+
+  private _getColor(): string {
+    return this._view.dataSource.source[0].y < this._view.dataSource.source[this._view.dataSource.size - 1].y
+      ? '#56B786'
+      : '#e23142';
   }
 }
