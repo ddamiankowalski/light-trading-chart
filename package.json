@@ -1,14 +1,14 @@
 {
   "name": "light-trading-chart",
-  "version": "1.4.0",
-  "type": "module",
-  "files": ["dist"],
-  "main": "./dist/light-trading-chart.umd.cjs",
-  "module": "./dist/light-trading-chart.js",
+  "version": "1.5.2",
+  "files": [
+    "dist"
+  ],
+  "module": "./dist/light-trading-chart.mjs",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/light-trading-chart.js",
-      "require": "./dist/light-trading-chart.umd.cjs"
+      "import": "./dist/light-trading-chart.mjs"
     }
   },
   "scripts": {
@@ -17,6 +17,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@types/node": "^20.8.4",
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
     "vite-plugin-dts": "^3.6.0"

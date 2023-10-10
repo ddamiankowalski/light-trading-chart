@@ -11,6 +11,7 @@ export default defineConfig({
       name: 'LightTradingChart',
       // the proper extensions will be added
       fileName: 'light-trading-chart',
+      formats: ['es']
     },
     rollupOptions: {
       external: [],
