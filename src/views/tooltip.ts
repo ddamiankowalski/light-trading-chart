@@ -53,6 +53,7 @@ export class TooltipView {
         tooltip.style.height = '1rem';
         tooltip.style.left = '50%';
         tooltip.style.transform = 'translate(-50%)';
+        tooltip.style.borderRadius = '0.25rem';
         tooltip.style.backgroundColor = this._color ?? 'black';
         this._tooltipContainer.appendChild(tooltip);
         this._animateTooltip(tooltip);
@@ -63,11 +64,11 @@ export class TooltipView {
         const dataPoint = this._dataSource.source[col];
         const midpoint = this._getMidpointStatus(dataPoint.y, this._dataSource.minMax.min, this._dataSource.minMax.max)
         if (midpoint === 'above') {
-            tooltip.style.bottom = '0';
-            tooltip.style.borderRadius = '0.25rem 0.25rem 0 0';
+            tooltip.style.bottom = '0.125rem';
+            tooltip.style.top = 'unset';
         } else {
             tooltip.style.bottom = 'unset';
-            tooltip.style.borderRadius = '0 0 0.25rem 0.25rem';
+            tooltip.style.top = '0.125rem';
         }
     }
 
