@@ -69,6 +69,7 @@ export class OverlayView implements View, SourceView {
 
   public updateColor(color: string): void {
     this._color = color;
+    this._tooltipView.updateValueColor(color);
     this.render();
   }
 
@@ -103,7 +104,7 @@ export class OverlayView implements View, SourceView {
     svgContainer.style.overflow = "visible";
     svgContainer.style.position = "absolute";
     svgContainer.classList.add("light-trading-chart__overlay");
-    svgContainer.style.pointerEvents = 'none';
+    svgContainer.style.pointerEvents = "none";
     this._component.element.appendChild(svgContainer);
     return svgContainer;
   }

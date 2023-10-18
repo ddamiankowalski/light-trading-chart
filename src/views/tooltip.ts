@@ -7,8 +7,13 @@ export class TooltipView {
   private _tooltipContainer: HTMLElement;
   private _tooltipEl: HTMLElement | null = null;
   private _color?: string;
-  private _date?: HTMLElement;
-  private _returns?: HTMLElement;
+  private _valueColor?: string;
+
+  private _dateValue?: HTMLElement;
+  private _dateLabel?: HTMLElement;
+
+  private _returnsValue?: HTMLElement;
+  private _returnsLabel?: HTMLElement;
 
   constructor(private _component: ChartComponent) {
     this._tooltipContainer = this._createTooltipContainer();
@@ -18,11 +23,19 @@ export class TooltipView {
     this._color = color;
   }
 
+  public updateValueColor(color: string): void {
+    this._valueColor = color;
+  }
+
   public updateDataSource(source: RawDataSource): void {
     this._dataSource = new DataSource(source);
   }
 
   public notifyMouseOverCol(col: number): void {
+    if (this._dataSource.size <= 2 && this._dataSource.source[0].y === this._dataSource.source[1].y) {
+      return;
+    }
+
     if (!this._tooltipEl) {
       this._tooltipEl = this._createTooltip(col);
     } else {
@@ -59,34 +72,49 @@ export class TooltipView {
     tooltip.classList.add("light-chart-tooltip");
     this._tooltipContainer.appendChild(tooltip);
     this._animateTooltip(tooltip);
-    this._createTooltipData(tooltip, col);
-    this._createTooltipReturns(tooltip, col);
+    this._createTooltipData(tooltip);
+    this._createTooltipReturns(tooltip);
     return tooltip;
   }
 
-  private _createTooltipReturns(tooltip: HTMLElement, col: number): void {
+  private _createTooltipReturns(tooltip: HTMLElement): void {
     const returns = document.createElement("div");
     returns.classList.add("light-chart-tooltip__returns");
-    returns.innerHTML = "Returns: " + this._dataSource.source[col].y.toString();
+    this._returnsValue = document.createElement("span");
+    this._returnsValue.classList.add("light-chart-tooltip__value");
+
+    if (this._valueColor) {
+      this._returnsValue.style.color = this._valueColor;
+    }
+
+    this._returnsLabel = document.createElement("span");
+    this._returnsLabel.classList.add("light-chart-tooltip__label");
     tooltip.appendChild(returns);
-    this._returns = returns;
+    returns.appendChild(this._returnsLabel);
+    returns.appendChild(this._returnsValue);
   }
 
-  private _createTooltipData(tooltip: HTMLElement, col: number): void {
+  private _createTooltipData(tooltip: HTMLElement): void {
     const date = document.createElement("div");
     date.classList.add("light-chart-tooltip__date");
-    date.innerHTML = this._dataSource.source[col].y.toString();
+    this._dateValue = document.createElement("span");
+    this._dateValue.classList.add("light-chart-tooltip__value");
+    this._dateLabel = document.createElement("span");
+    this._dateLabel.classList.add("light-chart-tooltip__label");
     tooltip.appendChild(date);
-    this._date = date;
+    date.appendChild(this._dateLabel);
+    date.appendChild(this._dateValue);
   }
 
   private _updateTooltipData(col: number): void {
-    if (this._date) {
-      this._date.innerHTML = "Date: " + this._dataSource.source[col]?.x;
+    if (this._dateLabel && this._dateValue) {
+      this._dateLabel.textContent = "Date: ";
+      this._dateValue.innerHTML = this._dataSource.source[col]?.x?.toString() as string;
     }
 
-    if (this._returns) {
-      this._returns.innerHTML = "Returns: " + this._dataSource.source[col].y.toFixed(1).toString();
+    if (this._returnsLabel && this._returnsValue) {
+      this._returnsLabel.innerHTML = "Returns: ";
+      this._returnsValue.innerHTML = this._dataSource.source[col].y.toFixed(2).toString() + "%";
     }
   }
 
