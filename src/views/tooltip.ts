@@ -7,6 +7,8 @@ export class TooltipView {
     private _tooltipContainer: HTMLElement;
     private _tooltipEl: HTMLElement | null = null;
     private _color?: string;
+    private _date?: HTMLElement;
+    private _returns?: HTMLElement;
 
     constructor(private _component: ChartComponent) {
         this._tooltipContainer = this._createTooltipContainer();
@@ -49,15 +51,41 @@ export class TooltipView {
         const tooltip = document.createElement('div');
         this._assertTooltipSide(tooltip, col);
         tooltip.style.position = 'absolute';
+        tooltip.style.display = 'flex';
         tooltip.style.width = '60%';
         tooltip.style.height = '1rem';
         tooltip.style.left = '50%';
         tooltip.style.transform = 'translate(-50%)';
         tooltip.style.borderRadius = '0.25rem';
         tooltip.style.backgroundColor = this._color ?? 'black';
+        tooltip.classList.add('light-chart-tooltip');
         this._tooltipContainer.appendChild(tooltip);
         this._animateTooltip(tooltip);
+        this._createTooltipData(tooltip, col);
+        this._createTooltipReturns(tooltip, col);
         return tooltip;
+    }
+
+    private _createTooltipReturns(tooltip: HTMLElement, col: number): void {
+        const returns = document.createElement('div');
+        returns.style.color = 'white';
+        returns.innerHTML = 'Returns: ' + this._dataSource.source[col].y.toString();
+        tooltip.appendChild(returns);
+        this._returns = returns;
+    }
+
+    private _createTooltipData(tooltip: HTMLElement, col: number): void {
+        const date = document.createElement('div');
+        date.style.color = 'white';
+        date.innerHTML = this._dataSource.source[col].y.toString();
+        tooltip.appendChild(date);
+        this._date = date;
+    }
+
+    private _updateTooltipData(col: number): void {
+        if (this._date) {
+            this._date.innerHTML = 'Date: ' + this._dataSource.source[col].y.toString();
+        }
     }
 
     private _assertTooltipSide(tooltip: HTMLElement, col: number): void {
@@ -80,6 +108,7 @@ export class TooltipView {
 
     private _updateTooltip(col: number): void {
         this._assertTooltipSide(this._tooltipEl as HTMLElement, col);
+        this._updateTooltipData(col);
     }
 
     private _getMidpointStatus(x: number, minValue: number, maxValue: number): 'above' | 'below' {
