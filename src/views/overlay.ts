@@ -6,11 +6,13 @@ import { SourceView, View, ViewInvalidateMessage, ViewType } from "../interfaces
 import { OverlayRenderer } from "../renderer/overlay";
 import { DataSource } from "../source/data-source";
 import { Notifier } from "../utils/notifier";
+import { TooltipView } from "./tooltip";
 
 export class OverlayView implements View, SourceView {
   private _svgContainer: SVGSVGElement;
   private _renderer: OverlayRenderer;
   private _dataSource: DataSource = new DataSource([]);
+  private _tooltipView: TooltipView;
   private _verticalMargin: number = 3;
   private _mouseOverCol: number | null = null;
   private _color?: string;
@@ -23,6 +25,7 @@ export class OverlayView implements View, SourceView {
   ) {
     this._svgContainer = this._createSvgContainer();
     this._renderer = new OverlayRenderer(this);
+    this._tooltipView = new TooltipView(this._component);
 
     const handlers: EventHandlers = {
       mouseMove: this._onMouseMove.bind(this),
@@ -71,6 +74,7 @@ export class OverlayView implements View, SourceView {
 
   public setTooltipBgColor(color: string): void {
     this._tooltipBgColor = color;
+    this._tooltipView.updateBgColor(color);
     this.render();
   }
 
@@ -80,6 +84,7 @@ export class OverlayView implements View, SourceView {
 
   public updateDataSource(source: RawDataSource): void {
     this._dataSource = new DataSource(source);
+    this._tooltipView.updateDataSource(source);
     this._invalidate();
   }
 
@@ -98,6 +103,7 @@ export class OverlayView implements View, SourceView {
     svgContainer.style.overflow = "visible";
     svgContainer.style.position = "absolute";
     svgContainer.classList.add("light-trading-chart__overlay");
+    svgContainer.style.pointerEvents = 'none';
     this._component.element.appendChild(svgContainer);
     return svgContainer;
   }
@@ -105,11 +111,13 @@ export class OverlayView implements View, SourceView {
   private _onMouseMove(event: MouseEvent): void {
     const cols = (this.dataSource.size - 1) * 2;
     this._mouseOverCol = Math.ceil(Math.floor(event.offsetX / (this.width / cols)) / 2);
+    this._tooltipView.notifyMouseOverCol(this._mouseOverCol);
     this._viewInvalidator.notify({ viewType: ViewType.OverlayView });
   }
 
   private _onMouseOut(): void {
     this._mouseOverCol = null;
+    this._tooltipView.notifyMouseOut();
     this._viewInvalidator.notify({ viewType: ViewType.OverlayView });
   }
 }

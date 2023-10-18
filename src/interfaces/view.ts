@@ -5,7 +5,8 @@ import { RawDataSource } from './data-source';
 
 export enum ViewType {
   DataLayer = 'DATA_LAYER',
-  OverlayView = 'OVERLAY_VIEW'
+  OverlayView = 'OVERLAY_VIEW',
+  HoverView = 'HOVER_VIEW'
 }
 
 export interface View {
@@ -24,5 +25,5 @@ export interface ViewInvalidateMessage {
 }
 
 export interface ViewConstructor<T = View> {
-  new (component: ChartComponent, eventBus: EventBus, viewInvalidator: Notifier<ViewInvalidateMessage>): T;
+  new(component: ChartComponent, eventBus: EventBus, viewInvalidator: Notifier<ViewInvalidateMessage>): T;
 }
