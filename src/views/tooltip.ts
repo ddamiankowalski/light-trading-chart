@@ -49,8 +49,10 @@ export class TooltipView {
         const tooltip = document.createElement('div');
         this._assertTooltipSide(tooltip, col);
         tooltip.style.position = 'absolute';
-        tooltip.style.width = '100%';
-        tooltip.style.height = '1.5rem';
+        tooltip.style.width = '60%';
+        tooltip.style.height = '1rem';
+        tooltip.style.left = '50%';
+        tooltip.style.transform = 'translate(-50%)';
         tooltip.style.backgroundColor = this._color ?? 'black';
         this._tooltipContainer.appendChild(tooltip);
         this._animateTooltip(tooltip);
@@ -62,8 +64,10 @@ export class TooltipView {
         const midpoint = this._getMidpointStatus(dataPoint.y, this._dataSource.minMax.min, this._dataSource.minMax.max)
         if (midpoint === 'above') {
             tooltip.style.bottom = '0';
+            tooltip.style.borderRadius = '0.25rem 0.25rem 0 0';
         } else {
             tooltip.style.bottom = 'unset';
+            tooltip.style.borderRadius = '0 0 0.25rem 0.25rem';
         }
     }
 
