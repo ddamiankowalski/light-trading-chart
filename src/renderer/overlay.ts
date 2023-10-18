@@ -25,7 +25,7 @@ export class OverlayRenderer {
     return this._view.height - 2 * this._view.verticalMargin;
   }
 
-  public render(color: string): void {
+  public render(color: string, tooltipBgColor: string): void {
     if (this._view.dataSource.size <= 2 && this._view.dataSource.source[0].y === this._view.dataSource.source[1].y) {
       return;
     }
@@ -49,7 +49,7 @@ export class OverlayRenderer {
       (this._view.dataSource.source[this._view.mouseOverCol].y - min) * ratio;
     const xCoord = this._view.mouseOverCol * this.colGap;
 
-    !this._svgElement ? this._createSvg(xCoord, yCoord, color) : this._updateSvg(xCoord, yCoord);
+    !this._svgElement ? this._createSvg(xCoord, yCoord, color, tooltipBgColor) : this._updateSvg(xCoord, yCoord);
   }
 
   private _shouldAddMargin(): number {
@@ -60,13 +60,14 @@ export class OverlayRenderer {
     return this.effectiveCanvasHeight / (max - min);
   }
 
-  private _createSvg(x: number, y: number, color: string): void {
+  private _createSvg(x: number, y: number, color: string, tooltipBgColor: string): void {
     const element = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
     element.setAttribute('cx', x.toString());
     element.setAttribute('cy', y.toString());
     element.setAttribute('r', '6');
     element.setAttribute('fill', color);
-    element.setAttribute('stroke', '#272D3A');
+    //element.setAttribute('stroke', '#272D3A');
+    element.setAttribute('stroke', tooltipBgColor);
     element.setAttribute('stroke-width', '3');
     element.setAttribute('shape-rendering', 'geometricPrecision');
     element.classList.add('light-trading-chart__overlay-point');

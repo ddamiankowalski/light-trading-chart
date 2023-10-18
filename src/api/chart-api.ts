@@ -33,6 +33,10 @@ export class ChartAPI {
     this._dataView.updateRgbColor(color);
   }
 
+  public setTooltipBgColor(color: string): void {
+    this._overlayView.setTooltipBgColor(color);
+  }
+
   public setZeroLineColor(color: string): void {
     this._dataView.updateZeroColor(color);
   }

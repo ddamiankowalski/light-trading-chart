@@ -14,6 +14,7 @@ export class OverlayView implements View, SourceView {
   private _verticalMargin: number = 3;
   private _mouseOverCol: number | null = null;
   private _color?: string;
+  private _tooltipBgColor?: string;
 
   constructor(
     private _component: ChartComponent,
@@ -60,11 +61,16 @@ export class OverlayView implements View, SourceView {
   }
 
   public render(): void {
-    this._renderer.render(this._color as string);
+    this._renderer.render(this._color as string, this._tooltipBgColor as string);
   }
 
   public updateColor(color: string): void {
     this._color = color;
+    this.render();
+  }
+
+  public setTooltipBgColor(color: string): void {
+    this._tooltipBgColor = color;
     this.render();
   }
 
