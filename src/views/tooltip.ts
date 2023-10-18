@@ -66,14 +66,13 @@ export class TooltipView {
     tooltip.style.position = "absolute";
     tooltip.style.display = "flex";
     tooltip.style.height = "1.5rem";
-    tooltip.style.left = "50%";
-    tooltip.style.transform = "translate(-50%)";
     tooltip.style.backgroundColor = this._color ?? "black";
     tooltip.classList.add("light-chart-tooltip");
     this._tooltipContainer.appendChild(tooltip);
     this._animateTooltip(tooltip);
     this._createTooltipData(tooltip);
     this._createTooltipReturns(tooltip);
+    this._updateTooltipData(col);
     return tooltip;
   }
 
@@ -115,6 +114,28 @@ export class TooltipView {
     if (this._returnsLabel && this._returnsValue) {
       this._returnsLabel.innerHTML = "Returns: ";
       this._returnsValue.innerHTML = this._dataSource.source[col].y.toFixed(2).toString() + "%";
+    }
+
+    if (this._tooltipEl) {
+      this._tooltipEl.style.right = "unset";
+      this._tooltipEl.style.left = "unset";
+      this._tooltipEl.style.transform = "unset";
+      this._tooltipEl.style.left = (col * this._component.width) / (this._dataSource.size - 1) + "px";
+      this._tooltipEl.style.transform = "translate(-50%)";
+
+      const rect = this._tooltipEl.getBoundingClientRect();
+      const parentRect = this._tooltipContainer.getBoundingClientRect();
+      if (rect.x + rect.width >= parentRect.x + parentRect.width) {
+        this._tooltipEl.style.right = "0";
+        this._tooltipEl.style.left = "unset";
+        this._tooltipEl.style.transform = "unset";
+      }
+
+      if (rect.x <= parentRect.x) {
+        this._tooltipEl.style.right = "unset";
+        this._tooltipEl.style.left = "0";
+        this._tooltipEl.style.transform = "unset";
+      }
     }
   }
 
