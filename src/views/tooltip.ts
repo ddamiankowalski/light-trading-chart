@@ -63,6 +63,7 @@ export class TooltipView {
   private _createTooltip(col: number): HTMLElement {
     const tooltip = document.createElement("div");
     this._assertTooltipSide(tooltip, col);
+    tooltip.style.borderRadius = "0.25rem";
     tooltip.style.position = "absolute";
     tooltip.style.display = "flex";
     tooltip.style.flexDirection = "column";
@@ -147,11 +148,9 @@ export class TooltipView {
     if (midpoint === "above") {
       tooltip.style.bottom = "0";
       tooltip.style.top = "unset";
-      tooltip.style.borderRadius = "0.25rem 0.25rem 0 0";
     } else {
       tooltip.style.bottom = "unset";
       tooltip.style.top = "0";
-      tooltip.style.borderRadius = "0 0 0.25rem 0.25rem";
     }
   }
 
