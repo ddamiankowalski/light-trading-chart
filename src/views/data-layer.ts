@@ -14,6 +14,7 @@ export class DataLayerView implements View, SourceView {
   private _verticalMargin: number = 3;
   private _color?: string;
   private _rgbColor?: string;
+  private _zeroColor?: string;
 
   constructor(
     private _component: ChartComponent,
@@ -66,7 +67,7 @@ export class DataLayerView implements View, SourceView {
   }
 
   public render(): void {
-    this._renderer.render(this._color as string, this._rgbColor as string);
+    this._renderer.render(this._color as string, this._rgbColor as string, this._zeroColor as string);
   }
 
   public updateColor(color: string) {
@@ -76,6 +77,11 @@ export class DataLayerView implements View, SourceView {
 
   public updateRgbColor(color: string): void {
     this._rgbColor = color;
+    this.render();
+  }
+
+  public updateZeroColor(color: string): void {
+    this._zeroColor = color;
     this.render();
   }
 
@@ -108,5 +114,5 @@ export class DataLayerView implements View, SourceView {
     });
   }
 
-  private _onMouseMove(): void {}
+  private _onMouseMove(): void { }
 }

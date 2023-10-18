@@ -33,6 +33,10 @@ export class ChartAPI {
     this._dataView.updateRgbColor(color);
   }
 
+  public setZeroLineColor(color: string): void {
+    this._dataView.updateZeroColor(color);
+  }
+
   private _createChartComponent(): ChartComponent {
     return new ChartComponent(this._container);
   }

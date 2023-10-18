@@ -24,17 +24,20 @@ export class DataLayerRenderer {
     return this._canvas.height - 2 * this._view.verticalMargin;
   }
 
-  public render(color: string, rgbColor: string): void {
+  public render(color: string, rgbColor: string, zeroColor: string): void {
     this._resetCanvas();
 
     const { min, max } = this._view.dataSource.minMax;
     const ratio = this._getYAxisRatio(min, max);
 
     this._ctx.beginPath();
+    this._drawZeroLine(min, ratio, zeroColor);
+
     this._ctx.lineWidth = 2.5;
     this._ctx.lineCap = 'round';
     this._ctx.lineJoin = 'round';
     this._ctx.strokeStyle = color;
+
 
     for (let i = 0; i < this.dataSize; i++) {
       const xCoord = i * this.colGap;
@@ -53,8 +56,17 @@ export class DataLayerRenderer {
     }
     this._ctx.stroke();
 
+    this._ctx.save();
     this._clipPath();
     this._createGradient(rgbColor);
+    this._ctx.restore();
+  }
+
+  private _drawZeroLine(min: number, ratio: number, zeroColor: string): void {
+    let yCoord = this._canvas.height - this._shouldAddMargin() - (0 - min) * ratio;
+    this._ctx.fillStyle = zeroColor;
+
+    this._ctx.fillRect(0, yCoord, this._view.width, 2);
   }
 
   private _resetCanvas(): void {
