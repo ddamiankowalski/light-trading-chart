@@ -65,8 +65,10 @@ export class TooltipView {
     this._assertTooltipSide(tooltip, col);
     tooltip.style.position = "absolute";
     tooltip.style.display = "flex";
+    tooltip.style.flexDirection = "column";
     tooltip.style.height = "1.5rem";
     tooltip.style.backgroundColor = this._color ?? "black";
+    tooltip.style.border = `1px solid ${this._valueColor}`;
     tooltip.classList.add("light-chart-tooltip");
     this._tooltipContainer.appendChild(tooltip);
     this._animateTooltip(tooltip);
