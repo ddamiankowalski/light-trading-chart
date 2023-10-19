@@ -25,7 +25,7 @@ export class OverlayView implements View, SourceView {
   ) {
     this._svgContainer = this._createSvgContainer();
     this._renderer = new OverlayRenderer(this);
-    this._tooltipView = new TooltipView(this._component);
+    this._tooltipView = new TooltipView(this._component, this);
 
     const handlers: EventHandlers = {
       mouseMove: this._onMouseMove.bind(this),

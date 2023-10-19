@@ -1,6 +1,7 @@
 import { ChartComponent } from "../components/chart";
 import { RawDataSource } from "../interfaces/data-source";
 import { DataSource } from "../source/data-source";
+import { OverlayView } from "./overlay";
 
 export class TooltipView {
   private _dataSource = new DataSource([]);
@@ -15,8 +16,16 @@ export class TooltipView {
   private _returnsValue?: HTMLElement;
   private _returnsLabel?: HTMLElement;
 
-  constructor(private _component: ChartComponent) {
+  constructor(private _component: ChartComponent, private _view: OverlayView) {
     this._tooltipContainer = this._createTooltipContainer();
+  }
+
+  get effectiveCanvasHeight(): number {
+    if (this._view.verticalMargin * 2 > this._view.height) {
+      return this._view.height;
+    }
+
+    return this._view.height - 2 * this._view.verticalMargin;
   }
 
   public updateBgColor(color: string): void {
@@ -66,10 +75,8 @@ export class TooltipView {
     tooltip.style.borderRadius = "0.25rem";
     tooltip.style.position = "absolute";
     tooltip.style.display = "flex";
-    tooltip.style.flexDirection = "column";
     tooltip.style.height = "1.5rem";
     tooltip.style.backgroundColor = this._color ?? "black";
-    tooltip.style.border = `1px solid ${this._valueColor}`;
     tooltip.classList.add("light-chart-tooltip");
     this._tooltipContainer.appendChild(tooltip);
     this._animateTooltip(tooltip);
@@ -106,6 +113,10 @@ export class TooltipView {
     tooltip.appendChild(date);
     date.appendChild(this._dateLabel);
     date.appendChild(this._dateValue);
+  }
+
+  private _getYAxisRatio(min: number, max: number): number {
+    return this.effectiveCanvasHeight / (max - min);
   }
 
   private _updateTooltipData(col: number): void {
@@ -145,13 +156,25 @@ export class TooltipView {
   private _assertTooltipSide(tooltip: HTMLElement, col: number): void {
     const dataPoint = this._dataSource.source[col];
     const midpoint = this._getMidpointStatus(dataPoint.y, this._dataSource.minMax.min, this._dataSource.minMax.max);
+    this._setYCoord(midpoint, col, tooltip);
+  }
+
+  private _setYCoord(midpoint: "above" | "below", col: number, tooltip: HTMLElement): void {
+    const { min, max } = this._view.dataSource.minMax;
+    const ratio = this._getYAxisRatio(min, max);
+
+    const yCoord = this._view.height - this._shouldAddMargin() - (this._view.dataSource.source[col].y - min) * ratio;
+    tooltip.style.top = yCoord + "px";
+
     if (midpoint === "above") {
-      tooltip.style.bottom = "0";
-      tooltip.style.top = "unset";
+      tooltip.style.top = yCoord + 16 + "px";
     } else {
-      tooltip.style.bottom = "unset";
-      tooltip.style.top = "0";
+      tooltip.style.top = yCoord - 40 + "px";
     }
+  }
+
+  private _shouldAddMargin(): number {
+    return this._view.verticalMargin * 2 > this._view.height ? 0 : this._view.verticalMargin;
   }
 
   private _animateTooltip(tooltipEl: HTMLElement): void {
