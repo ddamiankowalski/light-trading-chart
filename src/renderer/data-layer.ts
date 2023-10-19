@@ -1,4 +1,4 @@
-import { DataLayerView } from '../views/data-layer';
+import { DataLayerView } from "../views/data-layer";
 
 export class DataLayerRenderer {
   private _ctx: CanvasRenderingContext2D;
@@ -33,11 +33,10 @@ export class DataLayerRenderer {
     this._ctx.beginPath();
     this._drawZeroLine(min, ratio, zeroColor);
 
-    this._ctx.lineWidth = 2.5;
-    this._ctx.lineCap = 'round';
-    this._ctx.lineJoin = 'round';
+    this._ctx.lineWidth = 2;
+    this._ctx.lineCap = "round";
+    this._ctx.lineJoin = "round";
     this._ctx.strokeStyle = color;
-
 
     for (let i = 0; i < this.dataSize; i++) {
       const xCoord = i * this.colGap;
@@ -64,6 +63,11 @@ export class DataLayerRenderer {
 
   private _drawZeroLine(min: number, ratio: number, zeroColor: string): void {
     let yCoord = this._canvas.height - this._shouldAddMargin() - (0 - min) * ratio;
+    if (yCoord > this._view.height - 2 - 6) {
+      yCoord = this._view.height - 2;
+    } else if (yCoord < 0) {
+      yCoord = 0;
+    }
     this._ctx.fillStyle = zeroColor;
 
     this._ctx.fillRect(0, yCoord, this._view.width, 2);
@@ -97,7 +101,7 @@ export class DataLayerRenderer {
     );
 
     if (!rgbColor) {
-      rgbColor = '74, 83, 103';
+      rgbColor = "74, 83, 103";
     }
 
     gradient.addColorStop(0, `rgba(${rgbColor}, 0.5)`);

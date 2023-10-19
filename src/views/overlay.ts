@@ -13,7 +13,7 @@ export class OverlayView implements View, SourceView {
   private _renderer: OverlayRenderer;
   private _dataSource: DataSource = new DataSource([]);
   private _tooltipView: TooltipView;
-  private _verticalMargin: number = 3;
+  private _verticalMargin: number = 6;
   private _mouseOverCol: number | null = null;
   private _color?: string;
   private _tooltipBgColor?: string;

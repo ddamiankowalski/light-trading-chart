@@ -11,7 +11,7 @@ export class DataLayerView implements View, SourceView {
   private _canvas: HTMLCanvasElement;
   private _renderer: DataLayerRenderer;
   private _dataSource: DataSource = new DataSource([]);
-  private _verticalMargin: number = 3;
+  private _verticalMargin: number = 6;
   private _color?: string;
   private _rgbColor?: string;
   private _zeroColor?: string;
@@ -114,5 +114,5 @@ export class DataLayerView implements View, SourceView {
     });
   }
 
-  private _onMouseMove(): void { }
+  private _onMouseMove(): void {}
 }
