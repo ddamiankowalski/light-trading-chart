@@ -24,6 +24,10 @@ export class ChartAPI {
     this._overlayView.updateDataSource(source);
   }
 
+  public setMargin(marginValue: number): void {
+    this._dataView.setMargin(marginValue);
+  }
+
   public setColor(color: string): void {
     this._dataView.updateColor(color);
     this._overlayView.updateColor(color);

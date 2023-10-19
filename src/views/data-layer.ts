@@ -75,6 +75,11 @@ export class DataLayerView implements View, SourceView {
     this.render();
   }
 
+  public setMargin(value: number): void {
+    this._verticalMargin = value;
+    this.render();
+  }
+
   public updateRgbColor(color: string): void {
     this._rgbColor = color;
     this.render();

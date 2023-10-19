@@ -62,8 +62,12 @@ export class DataLayerRenderer {
   }
 
   private _drawZeroLine(min: number, ratio: number, zeroColor: string): void {
+    if (!zeroColor) {
+      return;
+    }
+
     let yCoord = this._canvas.height - this._shouldAddMargin() - (0 - min) * ratio;
-    if (yCoord > this._view.height - 2 - 6) {
+    if (yCoord > this._view.height - 2 - this._view.verticalMargin) {
       yCoord = this._view.height - 2;
     } else if (yCoord < 0) {
       yCoord = 0;
