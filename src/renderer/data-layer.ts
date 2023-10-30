@@ -66,7 +66,7 @@ export class DataLayerRenderer {
       return;
     }
 
-    let yCoord = this._canvas.height - this._shouldAddMargin() - (0 - min) * ratio;
+    let yCoord = this._canvas.height - this._shouldAddMargin() - (0 - min) * ratio - 1;
     if (yCoord > this._view.height - 2 - this._view.verticalMargin) {
       yCoord = this._view.height - 2;
     } else if (yCoord < 0) {
