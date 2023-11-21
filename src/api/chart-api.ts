@@ -50,10 +50,10 @@ export class ChartAPI {
   }
 
   private _createDataLayerView(): DataLayerView {
-    return this._viewController.addView(DataLayerView, ViewType.DataLayer, this._component, this._eventBus);
+    return this._viewController.addView(DataLayerView, ViewType.DataLayer, this._component.dataComponent, this._eventBus);
   }
 
   private _createOverlayView(): OverlayView {
-    return this._viewController.addView(OverlayView, ViewType.OverlayView, this._component, this._eventBus);
+    return this._viewController.addView(OverlayView, ViewType.OverlayView, this._component.dataComponent, this._eventBus);
   }
 }

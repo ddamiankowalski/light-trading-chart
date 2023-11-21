@@ -1,4 +1,5 @@
 import { ChartComponent } from "../components/chart";
+import { DataComponent } from "../components/data";
 import { EventBus } from "../events/event-bus";
 import { View, ViewConstructor, ViewInvalidateMessage, ViewType } from "../interfaces/view";
 import { DataSource } from "../source/data-source";
@@ -23,7 +24,7 @@ export class ViewController {
   public addView<T extends View>(
     viewConstructor: ViewConstructor<T>,
     viewType: ViewType,
-    component: ChartComponent,
+    component: DataComponent,
     eventBus: EventBus
   ): T {
     const view = new viewConstructor(component, eventBus, this._viewInvalidator);

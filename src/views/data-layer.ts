@@ -1,4 +1,4 @@
-import { ChartComponent } from "../components/chart";
+import { DataComponent } from "../components/data";
 import { EventBus } from "../events/event-bus";
 import { RawDataSource } from "../interfaces/data-source";
 import { EventHandlers, EventType } from "../interfaces/events";
@@ -17,7 +17,7 @@ export class DataLayerView implements View, SourceView {
   private _zeroColor?: string;
 
   constructor(
-    private _component: ChartComponent,
+    private _component: DataComponent,
     private _eventBus: EventBus,
     private _viewInvalidator: Notifier<ViewInvalidateMessage>
   ) {
@@ -119,5 +119,5 @@ export class DataLayerView implements View, SourceView {
     });
   }
 
-  private _onMouseMove(): void {}
+  private _onMouseMove(): void { }
 }

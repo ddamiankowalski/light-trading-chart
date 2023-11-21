@@ -1,4 +1,5 @@
 import { ChartComponent } from "../components/chart";
+import { DataComponent } from "../components/data";
 import { RawDataSource } from "../interfaces/data-source";
 import { DataSource } from "../source/data-source";
 import { OverlayView } from "./overlay";
@@ -16,7 +17,7 @@ export class TooltipView {
   private _returnsValue?: HTMLElement;
   private _returnsLabel?: HTMLElement;
 
-  constructor(private _component: ChartComponent, private _view: OverlayView) {
+  constructor(private _component: DataComponent, private _view: OverlayView) {
     this._tooltipContainer = this._createTooltipContainer();
   }
 

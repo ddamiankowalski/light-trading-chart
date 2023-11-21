@@ -1,4 +1,5 @@
 import { ChartComponent } from '../components/chart';
+import { DataComponent } from '../components/data';
 import { EventBus } from '../events/event-bus';
 import { Notifier } from '../utils/notifier';
 import { RawDataSource } from './data-source';
@@ -25,5 +26,5 @@ export interface ViewInvalidateMessage {
 }
 
 export interface ViewConstructor<T = View> {
-  new(component: ChartComponent, eventBus: EventBus, viewInvalidator: Notifier<ViewInvalidateMessage>): T;
+  new(component: DataComponent, eventBus: EventBus, viewInvalidator: Notifier<ViewInvalidateMessage>): T;
 }
