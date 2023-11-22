@@ -1,9 +1,10 @@
-import { ChartComponent } from "../components/chart";
 import { DataComponent } from "../components/data";
+import { ValueScaleComponent } from "../components/valuescale";
 import { EventBus } from "../events/event-bus";
 import { View, ViewConstructor, ViewInvalidateMessage, ViewType } from "../interfaces/view";
 import { DataSource } from "../source/data-source";
 import { Notifier } from "../utils/notifier";
+import { ValueScaleView } from "./value-scale";
 
 export class ViewController {
   private _invalidationRunning: boolean = false;
@@ -30,6 +31,15 @@ export class ViewController {
     const view = new viewConstructor(component, eventBus, this._viewInvalidator);
     this._viewMap.set(viewType, view);
     return view;
+  }
+
+  public addValueScaleView(component: ValueScaleComponent): ValueScaleView {
+    const view = new ValueScaleView(component, this._viewInvalidator);
+    return view;
+  }
+
+  public addTimeScaleView(): void {
+    return;
   }
 
   private _setInvalidator(): Notifier<ViewInvalidateMessage> {

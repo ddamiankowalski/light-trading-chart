@@ -1,13 +1,14 @@
-import { ChartComponent } from '../components/chart';
-import { DataComponent } from '../components/data';
-import { EventBus } from '../events/event-bus';
-import { Notifier } from '../utils/notifier';
-import { RawDataSource } from './data-source';
+import { DataComponent } from "../components/data";
+import { EventBus } from "../events/event-bus";
+import { Notifier } from "../utils/notifier";
+import { RawDataSource } from "./data-source";
 
 export enum ViewType {
-  DataLayer = 'DATA_LAYER',
-  OverlayView = 'OVERLAY_VIEW',
-  HoverView = 'HOVER_VIEW'
+  DataLayer = "DATA_LAYER",
+  OverlayView = "OVERLAY_VIEW",
+  HoverView = "HOVER_VIEW",
+  ValueScaleView = "VALUE_SCALE_VIEW",
+  TimeScaleView = "TIME_SCALE_VIEW",
 }
 
 export interface View {
@@ -26,5 +27,5 @@ export interface ViewInvalidateMessage {
 }
 
 export interface ViewConstructor<T = View> {
-  new(component: DataComponent, eventBus: EventBus, viewInvalidator: Notifier<ViewInvalidateMessage>): T;
+  new (component: DataComponent, eventBus: EventBus, viewInvalidator: Notifier<ViewInvalidateMessage>): T;
 }

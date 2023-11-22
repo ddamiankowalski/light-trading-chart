@@ -23,6 +23,14 @@ export class ChartComponent {
     return this._data;
   }
 
+  get valueScaleComponent(): ValueScaleComponent {
+    return this._valueScale;
+  }
+
+  get timeScaleComponent(): TimeScaleComponent {
+    return this._timeScale;
+  }
+
   private _createComponent(): HTMLDivElement {
     const div = document.createElement("div");
     div.classList.add("light-trading-chart__wrapper");
@@ -40,18 +48,18 @@ export class ChartComponent {
   }
 
   private _createDataComponent(): DataComponent {
-    return new DataComponent(this.element)
+    return new DataComponent(this.element);
   }
 
   private _setStyleProperties(div: HTMLDivElement): void {
     div.style.width = "100%";
     div.style.height = "100%";
-    div.style.display = 'grid';
+    div.style.display = "grid";
     div.style.gridTemplateAreas = `
       "value-scale source"
       "time-scale time-scale"
-    `
-    div.style.gridTemplateColumns = '3rem 1fr';
-    div.style.gridTemplateRows = '1fr 3rem';
+    `;
+    div.style.gridTemplateColumns = "3rem 1fr";
+    div.style.gridTemplateRows = "1fr 3rem";
   }
 }

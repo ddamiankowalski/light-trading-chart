@@ -1,4 +1,3 @@
-import { ChartComponent } from "../components/chart";
 import { DataComponent } from "../components/data";
 import { RawDataSource } from "../interfaces/data-source";
 import { DataSource } from "../source/data-source";

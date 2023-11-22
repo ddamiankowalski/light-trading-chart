@@ -5,11 +5,13 @@ import { ViewController } from "../views/controller";
 import { DataLayerView } from "../views/data-layer";
 import { OverlayView } from "../views/overlay";
 import { ViewType } from "../interfaces/view";
+import { ValueScaleView } from "../views/value-scale";
 
 export class ChartAPI {
   private _component: ChartComponent;
   private _dataView: DataLayerView;
   private _overlayView: OverlayView;
+  private _valueScaleView: ValueScaleView;
   private _eventBus = new EventBus();
   private _viewController = new ViewController();
 
@@ -17,6 +19,7 @@ export class ChartAPI {
     this._component = this._createChartComponent();
     this._dataView = this._createDataLayerView();
     this._overlayView = this._createOverlayView();
+    this._valueScaleView = this._createValueScaleView();
   }
 
   public setData(source: RawDataSource): void {
@@ -50,10 +53,26 @@ export class ChartAPI {
   }
 
   private _createDataLayerView(): DataLayerView {
-    return this._viewController.addView(DataLayerView, ViewType.DataLayer, this._component.dataComponent, this._eventBus);
+    return this._viewController.addView(
+      DataLayerView,
+      ViewType.DataLayer,
+      this._component.dataComponent,
+      this._eventBus
+    );
   }
 
   private _createOverlayView(): OverlayView {
-    return this._viewController.addView(OverlayView, ViewType.OverlayView, this._component.dataComponent, this._eventBus);
+    return this._viewController.addView(
+      OverlayView,
+      ViewType.OverlayView,
+      this._component.dataComponent,
+      this._eventBus
+    );
   }
+
+  private _createValueScaleView(): ValueScaleView {
+    return this._viewController.addValueScaleView(this._component.valueScaleComponent);
+  }
+
+  private _createTimeScaleView(): TimeScaleView {}
 }

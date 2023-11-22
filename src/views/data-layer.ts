@@ -119,5 +119,5 @@ export class DataLayerView implements View, SourceView {
     });
   }
 
-  private _onMouseMove(): void { }
+  private _onMouseMove(): void {}
 }
