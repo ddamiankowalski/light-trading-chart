@@ -1,9 +1,11 @@
 import { DataComponent } from "../components/data";
+import { TimeScaleComponent } from "../components/timescale";
 import { ValueScaleComponent } from "../components/valuescale";
 import { EventBus } from "../events/event-bus";
 import { View, ViewConstructor, ViewInvalidateMessage, ViewType } from "../interfaces/view";
 import { DataSource } from "../source/data-source";
 import { Notifier } from "../utils/notifier";
+import { TimeScaleView } from "./time-scale";
 import { ValueScaleView } from "./value-scale";
 
 export class ViewController {
@@ -35,11 +37,14 @@ export class ViewController {
 
   public addValueScaleView(component: ValueScaleComponent): ValueScaleView {
     const view = new ValueScaleView(component, this._viewInvalidator);
+    this._viewMap.set(ViewType.ValueScaleView, view);
     return view;
   }
 
-  public addTimeScaleView(): void {
-    return;
+  public addTimeScaleView(component: TimeScaleComponent): TimeScaleView {
+    const view = new TimeScaleView(component, this._viewInvalidator);
+    this._viewMap.set(ViewType.TimeScaleView, view);
+    return view;
   }
 
   private _setInvalidator(): Notifier<ViewInvalidateMessage> {

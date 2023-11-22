@@ -6,12 +6,14 @@ import { DataLayerView } from "../views/data-layer";
 import { OverlayView } from "../views/overlay";
 import { ViewType } from "../interfaces/view";
 import { ValueScaleView } from "../views/value-scale";
+import { TimeScaleView } from "../views/time-scale";
 
 export class ChartAPI {
   private _component: ChartComponent;
   private _dataView: DataLayerView;
   private _overlayView: OverlayView;
   private _valueScaleView: ValueScaleView;
+  private _timeScaleView: TimeScaleView;
   private _eventBus = new EventBus();
   private _viewController = new ViewController();
 
@@ -20,6 +22,7 @@ export class ChartAPI {
     this._dataView = this._createDataLayerView();
     this._overlayView = this._createOverlayView();
     this._valueScaleView = this._createValueScaleView();
+    this._timeScaleView = this._createTimeScaleView();
   }
 
   public setData(source: RawDataSource): void {
@@ -74,5 +77,7 @@ export class ChartAPI {
     return this._viewController.addValueScaleView(this._component.valueScaleComponent);
   }
 
-  private _createTimeScaleView(): TimeScaleView {}
+  private _createTimeScaleView(): TimeScaleView {
+    return this._viewController.addTimeScaleView(this._component.timeScaleComponent);
+  }
 }

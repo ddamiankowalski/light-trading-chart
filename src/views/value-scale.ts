@@ -58,6 +58,6 @@ export class ValueScaleView implements View, SourceView {
   }
 
   private _invalidate(): void {
-    this._viewInvalidator.notify({ viewType: ViewType.OverlayView });
+    this._viewInvalidator.notify({ viewType: ViewType.ValueScaleView });
   }
 }
