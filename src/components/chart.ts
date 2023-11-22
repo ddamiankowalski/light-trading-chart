@@ -1,18 +1,22 @@
+import { ChartType } from "../interfaces/chart";
 import { DataComponent } from "./data";
 import { TimeScaleComponent } from "./timescale";
 import { ValueScaleComponent } from "./valuescale";
 
 export class ChartComponent {
   private _element: HTMLDivElement;
-  private _valueScale: ValueScaleComponent;
-  private _timeScale: TimeScaleComponent;
+  private _valueScale: ValueScaleComponent | null = null;
+  private _timeScale: TimeScaleComponent | null = null;
   private _data: DataComponent;
 
-  constructor(private _container: HTMLElement) {
+  constructor(private _container: HTMLElement, private _type: ChartType) {
     this._element = this._createComponent();
-    this._valueScale = this._createValueScale();
-    this._timeScale = this._createTimeScale();
     this._data = this._createDataComponent();
+
+    if (this._type === "FULL") {
+      this._valueScale = this._createValueScale();
+      this._timeScale = this._createTimeScale();
+    }
   }
 
   get element(): HTMLDivElement {
@@ -23,11 +27,11 @@ export class ChartComponent {
     return this._data;
   }
 
-  get valueScaleComponent(): ValueScaleComponent {
+  get valueScaleComponent(): ValueScaleComponent | null {
     return this._valueScale;
   }
 
-  get timeScaleComponent(): TimeScaleComponent {
+  get timeScaleComponent(): TimeScaleComponent | null {
     return this._timeScale;
   }
 
@@ -54,12 +58,15 @@ export class ChartComponent {
   private _setStyleProperties(div: HTMLDivElement): void {
     div.style.width = "100%";
     div.style.height = "100%";
-    div.style.display = "grid";
-    div.style.gridTemplateAreas = `
+
+    if (this._type === "FULL") {
+      div.style.display = "grid";
+      div.style.gridTemplateAreas = `
       "value-scale source"
       "time-scale time-scale"
     `;
-    div.style.gridTemplateColumns = "3rem 1fr";
-    div.style.gridTemplateRows = "1fr 3rem";
+      div.style.gridTemplateColumns = "3rem 1fr";
+      div.style.gridTemplateRows = "1fr 3rem";
+    }
   }
 }

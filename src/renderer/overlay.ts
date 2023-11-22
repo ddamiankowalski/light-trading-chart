@@ -14,7 +14,6 @@ export class OverlayRenderer {
   }
 
   get colGap(): number {
-    console.log(this._view.width);
     return this._view.width / (this._view.dataSource.size - 1);
   }
 

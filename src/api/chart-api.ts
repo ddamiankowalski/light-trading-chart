@@ -7,29 +7,36 @@ import { OverlayView } from "../views/overlay";
 import { ViewType } from "../interfaces/view";
 import { ValueScaleView } from "../views/value-scale";
 import { TimeScaleView } from "../views/time-scale";
+import { ChartType } from "../interfaces/chart";
 
 export class ChartAPI {
   private _component: ChartComponent;
   private _dataView: DataLayerView;
   private _overlayView: OverlayView;
-  private _valueScaleView: ValueScaleView;
-  private _timeScaleView: TimeScaleView;
+  private _valueScaleView: ValueScaleView | null = null;
+  private _timeScaleView: TimeScaleView | null = null;
   private _eventBus = new EventBus();
   private _viewController = new ViewController();
 
-  constructor(private _container: HTMLElement) {
-    this._component = this._createChartComponent();
+  constructor(private _container: HTMLElement, type: ChartType) {
+    this._component = this._createChartComponent(type);
     this._dataView = this._createDataLayerView();
     this._overlayView = this._createOverlayView();
-    this._valueScaleView = this._createValueScaleView();
-    this._timeScaleView = this._createTimeScaleView();
+
+    if (type === "FULL") {
+      this._valueScaleView = this._createValueScaleView();
+      this._timeScaleView = this._createTimeScaleView();
+    }
   }
 
   public setData(source: RawDataSource): void {
     this._dataView.updateDataSource(source);
     this._overlayView.updateDataSource(source);
-    this._valueScaleView.updateDataSource(source);
-    this._timeScaleView.updateDataSource(source);
+
+    if (this._valueScaleView && this._timeScaleView) {
+      this._valueScaleView.updateDataSource(source);
+      this._timeScaleView.updateDataSource(source);
+    }
   }
 
   public setMargin(marginValue: number): void {
@@ -53,8 +60,8 @@ export class ChartAPI {
     this._dataView.updateZeroColor(color);
   }
 
-  private _createChartComponent(): ChartComponent {
-    return new ChartComponent(this._container);
+  private _createChartComponent(type: ChartType): ChartComponent {
+    return new ChartComponent(this._container, type);
   }
 
   private _createDataLayerView(): DataLayerView {
@@ -76,10 +83,18 @@ export class ChartAPI {
   }
 
   private _createValueScaleView(): ValueScaleView {
+    if (!this._component.valueScaleComponent) {
+      throw new Error("Cannot create value scale view");
+    }
+
     return this._viewController.addValueScaleView(this._component.valueScaleComponent);
   }
 
   private _createTimeScaleView(): TimeScaleView {
+    if (!this._component.timeScaleComponent) {
+      throw new Error("Cannot create time scale view");
+    }
+
     return this._viewController.addTimeScaleView(this._component.timeScaleComponent);
   }
 }
