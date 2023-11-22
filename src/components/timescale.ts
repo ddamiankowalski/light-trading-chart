@@ -19,6 +19,7 @@ export class TimeScaleComponent {
 
   private _setStyleProperties(element: HTMLDivElement): void {
     element.style.gridArea = "time-scale";
+    element.style.position = "relative";
     element.style.height = "100%";
     element.style.width = "100%";
     element.style.background = "green";
