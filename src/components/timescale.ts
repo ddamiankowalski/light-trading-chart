@@ -22,6 +22,5 @@ export class TimeScaleComponent {
     element.style.position = "relative";
     element.style.height = "100%";
     element.style.width = "100%";
-    element.style.background = "green";
   }
 }

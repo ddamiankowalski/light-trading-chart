@@ -22,6 +22,5 @@ export class ValueScaleComponent {
     element.style.position = "relative";
     element.style.width = "100%";
     element.style.height = "100%";
-    element.style.background = "red";
   }
 }
