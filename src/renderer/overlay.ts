@@ -1,4 +1,4 @@
-import { OverlayView } from '../views/overlay';
+import { OverlayView } from "../views/overlay";
 
 export class OverlayRenderer {
   private _svgContainer: SVGSVGElement;
@@ -14,7 +14,7 @@ export class OverlayRenderer {
   }
 
   get colGap(): number {
-    console.log(this._view.width)
+    console.log(this._view.width);
     return this._view.width / (this._view.dataSource.size - 1);
   }
 
@@ -62,16 +62,16 @@ export class OverlayRenderer {
   }
 
   private _createSvg(x: number, y: number, color: string, tooltipBgColor: string): void {
-    const element = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    element.setAttribute('cx', x.toString());
-    element.setAttribute('cy', y.toString());
-    element.setAttribute('r', '6');
-    element.setAttribute('fill', color);
+    const element = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    element.setAttribute("cx", x.toString());
+    element.setAttribute("cy", y.toString());
+    element.setAttribute("r", "6");
+    element.setAttribute("fill", color);
     //element.setAttribute('stroke', '#272D3A');
-    element.setAttribute('stroke', tooltipBgColor);
-    element.setAttribute('stroke-width', '3');
-    element.setAttribute('shape-rendering', 'geometricPrecision');
-    element.classList.add('light-trading-chart__overlay-point');
+    element.setAttribute("stroke", tooltipBgColor);
+    element.setAttribute("stroke-width", "3");
+    element.setAttribute("shape-rendering", "geometricPrecision");
+    element.classList.add("light-trading-chart__overlay-point");
     this._svgContainer.replaceChildren(element);
     this._svgElement = element;
   }
@@ -84,10 +84,10 @@ export class OverlayRenderer {
 
   private _updateSvg(x: number, y: number): void {
     if (!this._svgElement) {
-      throw new Error('Could not update the svgCircleElement');
+      throw new Error("Could not update the svgCircleElement");
     }
 
-    this._svgElement.setAttribute('cx', x.toString());
-    this._svgElement.setAttribute('cy', y.toString());
+    this._svgElement.setAttribute("cx", x.toString());
+    this._svgElement.setAttribute("cy", y.toString());
   }
 }
