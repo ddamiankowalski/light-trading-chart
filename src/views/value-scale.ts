@@ -1,5 +1,5 @@
 import { ValueScaleComponent } from "../components/valuescale";
-import { RawDataSource } from "../interfaces/data-source";
+import { MinMaxSource, RawDataSource } from "../interfaces/data-source";
 import { SourceView, View, ViewInvalidateMessage, ViewType } from "../interfaces/view";
 import { ValueScaleRenderer } from "../renderer/value-scale";
 import { Notifier } from "../utils/notifier";
@@ -7,6 +7,7 @@ import { Notifier } from "../utils/notifier";
 export class ValueScaleView implements View, SourceView {
   private _svgContainer: SVGSVGElement;
   private _renderer: ValueScaleRenderer;
+  private _minMax: MinMaxSource | null = null;
 
   constructor(private _component: ValueScaleComponent, private _viewInvalidator: Notifier<ViewInvalidateMessage>) {
     this._svgContainer = this._createSvgContainer();
@@ -25,6 +26,14 @@ export class ValueScaleView implements View, SourceView {
     return this._component.element.offsetHeight;
   }
 
+  get minMax(): MinMaxSource {
+    if (!this._minMax) {
+      throw Error("Could not retrieve minmax");
+    }
+
+    return this._minMax;
+  }
+
   public invalidate(): void {
     this._invalidate();
   }
@@ -34,7 +43,11 @@ export class ValueScaleView implements View, SourceView {
   }
 
   public updateDataSource(source: RawDataSource): void {
-    console.log(source);
+    const max = Math.max(...source.map((point) => point.y));
+    const min = Math.min(...source.map((point) => point.y));
+
+    this._minMax = { min, max };
+    this.invalidate();
   }
 
   private _createRenderer(): ValueScaleRenderer {

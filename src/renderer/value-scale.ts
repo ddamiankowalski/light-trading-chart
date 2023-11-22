@@ -5,11 +5,11 @@ export class ValueScaleRenderer {
 
   constructor(private _view: ValueScaleView) {
     this._svgContainer = _view.svgContainer;
-    this._createSvg(10, 20, "black");
   }
 
   public render(): void {
-    console.log("rendering!!");
+    const minMax = this._view.minMax;
+    this._createSvg(10, 20, "black");
   }
 
   private _createSvg(x: number, y: number, color: string): void {
