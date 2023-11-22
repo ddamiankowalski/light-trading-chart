@@ -1,4 +1,3 @@
-import { MinMaxSource } from "../interfaces/data-source";
 import { ValueScaleView } from "../views/value-scale";
 
 export class ValueScaleRenderer {

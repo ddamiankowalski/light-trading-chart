@@ -7,6 +7,7 @@ import { Notifier } from "../utils/notifier";
 export class TimeScaleView implements View, SourceView {
   private _svgContainer: SVGSVGElement;
   private _renderer: TimeScaleRenderer;
+  private _timestamps: number[] = [];
 
   constructor(private _component: TimeScaleComponent, private _viewInvalidator: Notifier<ViewInvalidateMessage>) {
     this._svgContainer = this._createSvgContainer();
@@ -15,6 +16,10 @@ export class TimeScaleView implements View, SourceView {
 
   get svgContainer(): SVGSVGElement {
     return this._svgContainer;
+  }
+
+  get timestamps(): number[] {
+    return this._timestamps;
   }
 
   get width(): number {
@@ -34,7 +39,8 @@ export class TimeScaleView implements View, SourceView {
   }
 
   public updateDataSource(source: RawDataSource): void {
-    console.log(source);
+    this._timestamps = source.map((s) => s.x ?? 0);
+    this.invalidate();
   }
 
   private _createRenderer(): TimeScaleRenderer {
