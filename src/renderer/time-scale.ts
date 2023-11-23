@@ -17,7 +17,6 @@ export class TimeScaleRenderer {
   }
 
   private _createSvg(y: number): void {
-    console.log(this._view.timestamps);
     const colQuantity = this._view.timestamps.length;
     const colDist = this._view.width / (colQuantity - 1);
 

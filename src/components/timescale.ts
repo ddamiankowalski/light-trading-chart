@@ -22,6 +22,7 @@ export class TimeScaleComponent {
     element.style.fontSize = '0.625rem';
     element.style.fontFamily = 'Barlow';
     element.style.minHeight = "3rem";
-    element.style.width = "100%";
+    element.style.left = '3rem';
+    element.style.width = "calc(100% - 3rem)";
   }
 }
