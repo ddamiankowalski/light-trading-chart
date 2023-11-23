@@ -46,7 +46,7 @@ export class DataLayerRenderer {
       }
 
 
-      this._ctx.moveTo(xCoord + 1, rowDiff - 12);
+      this._ctx.moveTo(xCoord + 1, rowDiff);
       this._ctx.lineTo(xCoord + 1, this._view.height);
 
       prevX = xCoord;
@@ -55,7 +55,7 @@ export class DataLayerRenderer {
         /**
           * draw borders
           */
-        this._ctx.moveTo(i * this.colGap - 1, rowDiff - 12);
+        this._ctx.moveTo(i * this.colGap - 1, rowDiff);
         this._ctx.lineTo(i * this.colGap - 1, this._view.height);
       }
     }

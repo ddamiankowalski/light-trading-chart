@@ -28,7 +28,7 @@ export class ValueScaleRenderer {
       var textNode = document.createTextNode(((min + diff * i).toFixed(2)).toString() + '%');
       element.appendChild(textNode);
       element.setAttribute("x", x.toString());
-      element.setAttribute("y", (this._view.height - i * rowDiff - 6).toString());
+      element.setAttribute("y", (this._view.height - i * rowDiff).toString());
       element.setAttribute('fill', 'rgb(151, 159, 181)');
       element.classList.add("light-trading-chart__text");
       element.classList.add("light-trading-chart__text");
