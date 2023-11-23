@@ -63,14 +63,6 @@ export class DataLayerRenderer {
     for (let i = 0; i < 10; i++) {
       this._ctx.moveTo(0, this._view.height - i * rowDiff - 1);
       this._ctx.lineTo(this._view.width, this._view.height - i * rowDiff - 1);
-
-      if (i === 9) {
-        /**
-          * draw borders
-          */
-        this._ctx.moveTo(0, rowDiff - 12);
-        this._ctx.lineTo(this._view.width, rowDiff - 12);
-      }
     }
 
     this._ctx.stroke();
