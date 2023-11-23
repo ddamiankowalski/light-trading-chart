@@ -10,7 +10,7 @@ export class ValueScaleRenderer {
   public render(): void {
     this._clearSvgElement();
     const rowDiff = this._calculateRowDiff();
-    this._createSvg(5, rowDiff);
+    this._createSvg(0, rowDiff);
   }
 
   private _calculateRowDiff(): number {
@@ -25,7 +25,7 @@ export class ValueScaleRenderer {
 
     for (let i = 0; i < 10; i++) {
       const element = document.createElementNS("http://www.w3.org/2000/svg", "text");
-      var textNode = document.createTextNode((min + diff * i).toString());
+      var textNode = document.createTextNode(((min + diff * i).toFixed(2)).toString() + '%');
       element.appendChild(textNode);
       element.setAttribute("x", x.toString());
       element.setAttribute("y", (this._view.height - i * rowDiff - 6).toString());
