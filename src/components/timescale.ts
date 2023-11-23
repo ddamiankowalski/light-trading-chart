@@ -18,11 +18,10 @@ export class TimeScaleComponent {
   }
 
   private _setStyleProperties(element: HTMLDivElement): void {
-    element.style.gridArea = "time-scale";
     element.style.position = "relative";
     element.style.fontSize = '0.625rem';
     element.style.fontFamily = 'Barlow';
-    element.style.height = "100%";
+    element.style.minHeight = "3rem";
     element.style.width = "100%";
   }
 }

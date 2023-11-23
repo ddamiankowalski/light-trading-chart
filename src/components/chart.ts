@@ -5,18 +5,21 @@ import { ValueScaleComponent } from "./valuescale";
 
 export class ChartComponent {
   private _element: HTMLDivElement;
+  private _sourceWrapper: HTMLDivElement;
   private _valueScale: ValueScaleComponent | null = null;
   private _timeScale: TimeScaleComponent | null = null;
   private _data: DataComponent;
 
   constructor(private _container: HTMLElement, private _type: ChartType) {
     this._element = this._createComponent();
-    this._data = this._createDataComponent();
+    this._sourceWrapper = this._createSourceWrapper();
 
     if (this._type === "FULL") {
       this._valueScale = this._createValueScale();
       this._timeScale = this._createTimeScale();
     }
+
+    this._data = this._createDataComponent();
   }
 
   get element(): HTMLDivElement {
@@ -44,7 +47,7 @@ export class ChartComponent {
   }
 
   private _createValueScale(): ValueScaleComponent {
-    return new ValueScaleComponent(this.element);
+    return new ValueScaleComponent(this._sourceWrapper);
   }
 
   private _createTimeScale(): TimeScaleComponent {
@@ -52,7 +55,17 @@ export class ChartComponent {
   }
 
   private _createDataComponent(): DataComponent {
-    return new DataComponent(this.element);
+    return new DataComponent(this._sourceWrapper);
+  }
+
+  private _createSourceWrapper(): HTMLDivElement {
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('light-trading-chart__source-wrapper');
+    wrapper.style.position = 'relative';
+    wrapper.style.display = 'flex';
+    wrapper.style.height = '100%';
+    this._element.append(wrapper);
+    return wrapper;
   }
 
   private _setStyleProperties(div: HTMLDivElement): void {
@@ -60,11 +73,8 @@ export class ChartComponent {
     div.style.height = "100%";
 
     if (this._type === "FULL") {
-      div.style.display = "grid";
-      div.style.gridTemplateAreas = `
-      "value-scale source"
-      "null time-scale"
-    `;
+      div.style.display = "flex";
+      div.style.flexDirection = 'column';
       div.style.gridTemplateColumns = "3rem 1fr";
       div.style.gridTemplateRows = "1fr 3rem";
     }

@@ -20,7 +20,7 @@ export class ValueScaleComponent {
   private _setStyleProperties(element: HTMLDivElement): void {
     element.style.gridArea = "value-scale";
     element.style.position = "relative";
-    element.style.width = "100%";
+    element.style.minWidth = "3rem";
     element.style.height = "100%";
     element.style.fontSize = '0.625rem';
     element.style.fontFamily = 'Barlow';
