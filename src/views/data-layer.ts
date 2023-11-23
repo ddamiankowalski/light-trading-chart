@@ -1,5 +1,6 @@
 import { DataComponent } from "../components/data";
 import { EventBus } from "../events/event-bus";
+import { ChartType } from "../interfaces/chart";
 import { RawDataSource } from "../interfaces/data-source";
 import { EventHandlers, EventType } from "../interfaces/events";
 import { SourceView, View, ViewInvalidateMessage, ViewType } from "../interfaces/view";
@@ -19,10 +20,11 @@ export class DataLayerView implements View, SourceView {
   constructor(
     private _component: DataComponent,
     private _eventBus: EventBus,
-    private _viewInvalidator: Notifier<ViewInvalidateMessage>
+    private _viewInvalidator: Notifier<ViewInvalidateMessage>,
+    type: ChartType
   ) {
     this._canvas = this._createCanvas();
-    this._renderer = new DataLayerRenderer(this);
+    this._renderer = new DataLayerRenderer(this, type);
     this._resizeHandler();
 
     const handlers: EventHandlers = {
@@ -119,5 +121,5 @@ export class DataLayerView implements View, SourceView {
     });
   }
 
-  private _onMouseMove(): void {}
+  private _onMouseMove(): void { }
 }

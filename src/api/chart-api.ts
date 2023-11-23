@@ -18,12 +18,12 @@ export class ChartAPI {
   private _eventBus = new EventBus();
   private _viewController = new ViewController();
 
-  constructor(private _container: HTMLElement, type: ChartType) {
-    this._component = this._createChartComponent(type);
+  constructor(private _container: HTMLElement, private _type: ChartType) {
+    this._component = this._createChartComponent(_type);
     this._dataView = this._createDataLayerView();
     this._overlayView = this._createOverlayView();
 
-    if (type === "FULL") {
+    if (_type === "FULL") {
       this._valueScaleView = this._createValueScaleView();
       this._timeScaleView = this._createTimeScaleView();
     }
@@ -69,7 +69,8 @@ export class ChartAPI {
       DataLayerView,
       ViewType.DataLayer,
       this._component.dataComponent,
-      this._eventBus
+      this._eventBus,
+      this._type
     );
   }
 
@@ -78,7 +79,8 @@ export class ChartAPI {
       OverlayView,
       ViewType.OverlayView,
       this._component.dataComponent,
-      this._eventBus
+      this._eventBus,
+      this._type
     );
   }
 

@@ -2,6 +2,7 @@ import { DataComponent } from "../components/data";
 import { TimeScaleComponent } from "../components/timescale";
 import { ValueScaleComponent } from "../components/valuescale";
 import { EventBus } from "../events/event-bus";
+import { ChartType } from "../interfaces/chart";
 import { View, ViewConstructor, ViewInvalidateMessage, ViewType } from "../interfaces/view";
 import { DataSource } from "../source/data-source";
 import { Notifier } from "../utils/notifier";
@@ -28,9 +29,10 @@ export class ViewController {
     viewConstructor: ViewConstructor<T>,
     viewType: ViewType,
     component: DataComponent,
-    eventBus: EventBus
+    eventBus: EventBus,
+    type: ChartType
   ): T {
-    const view = new viewConstructor(component, eventBus, this._viewInvalidator);
+    const view = new viewConstructor(component, eventBus, this._viewInvalidator, type);
     this._viewMap.set(viewType, view);
     return view;
   }

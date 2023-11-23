@@ -1,10 +1,11 @@
+import { ChartType } from "../interfaces/chart";
 import { DataLayerView } from "../views/data-layer";
 
 export class DataLayerRenderer {
   private _ctx: CanvasRenderingContext2D;
   private _canvas: HTMLCanvasElement;
 
-  constructor(private _view: DataLayerView) {
+  constructor(private _view: DataLayerView, private _type: ChartType) {
     this._ctx = _view.ctx;
     this._canvas = _view.canvas;
   }
@@ -18,6 +19,10 @@ export class DataLayerRenderer {
   }
 
   get effectiveCanvasHeight(): number {
+    if (this._type === 'FULL') {
+      return this._canvas.height * .8;
+    }
+
     if (this._view.verticalMargin * 2 > this._canvas.height) {
       return this._canvas.height;
     }

@@ -1,3 +1,4 @@
+import { ChartType } from "../interfaces/chart";
 import { OverlayView } from "../views/overlay";
 
 export class OverlayRenderer {
@@ -5,7 +6,7 @@ export class OverlayRenderer {
   private _svgElement: SVGCircleElement | null = null;
   private _lastMouseOverCol: number | null = null;
 
-  constructor(private _view: OverlayView) {
+  constructor(private _view: OverlayView, private _type: ChartType) {
     this._svgContainer = _view.svgContainer;
   }
 
@@ -18,6 +19,10 @@ export class OverlayRenderer {
   }
 
   get effectiveCanvasHeight(): number {
+    if (this._type === 'FULL') {
+      return this._view.height * .8;
+    }
+
     if (this._view.verticalMargin * 2 > this._view.height) {
       return this._view.height;
     }

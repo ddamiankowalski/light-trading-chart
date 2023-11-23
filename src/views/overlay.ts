@@ -1,5 +1,6 @@
 import { DataComponent } from "../components/data";
 import { EventBus } from "../events/event-bus";
+import { ChartType } from "../interfaces/chart";
 import { RawDataSource } from "../interfaces/data-source";
 import { EventHandlers, EventType } from "../interfaces/events";
 import { SourceView, View, ViewInvalidateMessage, ViewType } from "../interfaces/view";
@@ -21,10 +22,11 @@ export class OverlayView implements View, SourceView {
   constructor(
     private _component: DataComponent,
     private _eventBus: EventBus,
-    private _viewInvalidator: Notifier<ViewInvalidateMessage>
+    private _viewInvalidator: Notifier<ViewInvalidateMessage>,
+    private _type: ChartType
   ) {
     this._svgContainer = this._createSvgContainer();
-    this._renderer = new OverlayRenderer(this);
+    this._renderer = new OverlayRenderer(this, this._type);
     this._tooltipView = new TooltipView(this._component, this);
 
     const handlers: EventHandlers = {
