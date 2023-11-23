@@ -29,6 +29,8 @@ export class ValueScaleRenderer {
       element.appendChild(textNode);
       element.setAttribute("x", x.toString());
       element.setAttribute("y", (y + i * rowDiff).toString());
+      element.setAttribute('fill', 'rgb(151, 159, 181)');
+      element.classList.add("light-trading-chart__text");
       element.classList.add("light-trading-chart__text");
       this._svgContainer.append(element);
     }

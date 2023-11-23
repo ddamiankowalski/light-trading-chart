@@ -63,7 +63,7 @@ export class ChartComponent {
       div.style.display = "grid";
       div.style.gridTemplateAreas = `
       "value-scale source"
-      "time-scale time-scale"
+      "null time-scale"
     `;
       div.style.gridTemplateColumns = "3rem 1fr";
       div.style.gridTemplateRows = "1fr 3rem";
