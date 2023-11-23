@@ -20,7 +20,6 @@ export class TimeScaleRenderer {
     const colQuantity = this._view.timestamps.length;
     const colDist = this._view.width / (colQuantity - 1);
 
-    const childElements = []
     let prevX = null;
 
     for (let i = 0; i < colQuantity; i++) {
@@ -37,7 +36,6 @@ export class TimeScaleRenderer {
       element.setAttribute("y", y.toString());
       element.setAttribute('fill', 'rgb(151, 159, 181)');
       element.classList.add("light-trading-chart__text");
-      childElements.push(element);
       this._svgContainer.append(element);
 
       element.style.transformOrigin = `${currX}px`;

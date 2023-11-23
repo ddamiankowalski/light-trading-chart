@@ -29,14 +29,52 @@ export class DataLayerRenderer {
     return this._canvas.height - 2 * this._view.verticalMargin;
   }
 
+  private _drawGrid(): void {
+    this._ctx.save();
+    this._ctx.beginPath();
+    this._ctx.lineWidth = 0.25;
+
+    let prevX = null;
+
+    for (let i = 0; i < this.dataSize; i++) {
+      const xCoord = i * this.colGap;
+
+
+      if (prevX !== null && (xCoord - prevX) < 50) {
+        continue;
+      }
+
+
+      this._ctx.moveTo(xCoord + 1, 0);
+      this._ctx.lineTo(xCoord + 1, this._view.height);
+
+      prevX = xCoord;
+    }
+
+    const rowDiff = this._calculateRowDiff();
+    for (let i = 0; i < 10; i++) {
+      this._ctx.moveTo(0, this._view.height - i * rowDiff - 6);
+      this._ctx.lineTo(this._view.width, this._view.height - i * rowDiff - 6);
+    }
+
+    this._ctx.stroke();
+    this._ctx.fill();
+    this._ctx.restore();
+  }
+
   public render(color: string, rgbColor: string, zeroColor: string): void {
     this._resetCanvas();
 
     const { min, max } = this._view.dataSource.minMax;
     const ratio = this._getYAxisRatio(min, max);
 
-    this._ctx.beginPath();
     this._drawZeroLine(min, ratio, zeroColor);
+
+    if (this._type === 'FULL') {
+      this._drawGrid();
+    }
+
+    this._ctx.beginPath();
 
     this._ctx.lineWidth = 2;
     this._ctx.lineCap = "round";
@@ -58,12 +96,18 @@ export class DataLayerRenderer {
 
       this._ctx.lineTo(xCoord + 0.5, yCoord + 0.5);
     }
+
     this._ctx.stroke();
 
     this._ctx.save();
     this._clipPath();
     this._createGradient(rgbColor);
     this._ctx.restore();
+  }
+
+  private _calculateRowDiff(): number {
+    const rowQuantity = Math.floor(this._view.height / 10);
+    return rowQuantity;
   }
 
   private _drawZeroLine(min: number, ratio: number, zeroColor: string): void {
