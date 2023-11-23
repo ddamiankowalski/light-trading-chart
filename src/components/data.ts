@@ -10,7 +10,13 @@ export class DataComponent {
     constructor(private _container: HTMLElement) {
         this._element = this._createElement();
         this._observer = this._setResizeObserver();
-        this._observer.observe(this._container.children[1]);
+
+        if (this._container.children[1]) {
+            this._observer.observe(this._container.children[1]);
+        } else {
+            this._observer.observe(this._container);
+        }
+
     }
 
     get width(): number {

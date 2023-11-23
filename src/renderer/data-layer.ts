@@ -29,11 +29,12 @@ export class DataLayerRenderer {
     return this._canvas.height - 2 * this._view.verticalMargin;
   }
 
-  private _drawGrid(): void {
+  private _drawGrid(color: string): void {
     this._ctx.save();
     this._ctx.beginPath();
-    this._ctx.lineWidth = 0.25;
-
+    this._ctx.lineWidth = 1;
+    this._ctx.strokeStyle = color;
+    const rowDiff = this._calculateRowDiff();
     let prevX = null;
 
     for (let i = 0; i < this.dataSize; i++) {
@@ -45,16 +46,15 @@ export class DataLayerRenderer {
       }
 
 
-      this._ctx.moveTo(xCoord + 1, 0);
+      this._ctx.moveTo(xCoord + 1, rowDiff - 12);
       this._ctx.lineTo(xCoord + 1, this._view.height);
 
       prevX = xCoord;
     }
 
-    const rowDiff = this._calculateRowDiff();
     for (let i = 0; i < 10; i++) {
-      this._ctx.moveTo(0, this._view.height - i * rowDiff - 6);
-      this._ctx.lineTo(this._view.width, this._view.height - i * rowDiff - 6);
+      this._ctx.moveTo(0, this._view.height - i * rowDiff);
+      this._ctx.lineTo(this._view.width, this._view.height - i * rowDiff);
     }
 
     this._ctx.stroke();
@@ -71,7 +71,7 @@ export class DataLayerRenderer {
     this._drawZeroLine(min, ratio, zeroColor);
 
     if (this._type === 'FULL') {
-      this._drawGrid();
+      this._drawGrid(zeroColor);
     }
 
     this._ctx.beginPath();
@@ -131,6 +131,10 @@ export class DataLayerRenderer {
   }
 
   private _shouldAddMargin(): number {
+    if (this._type === 'FULL') {
+      return 0;
+    }
+
     return this._view.verticalMargin * 2 > this._canvas.height ? 0 : this._view.verticalMargin;
   }
 

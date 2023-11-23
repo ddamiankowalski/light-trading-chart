@@ -58,6 +58,10 @@ export class OverlayRenderer {
   }
 
   private _shouldAddMargin(): number {
+    if (this._type === 'FULL') {
+      return 0;
+    }
+
     return this._view.verticalMargin * 2 > this._view.height ? 0 : this._view.verticalMargin;
   }
 
