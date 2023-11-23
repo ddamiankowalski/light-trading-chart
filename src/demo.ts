@@ -9,9 +9,11 @@ chart.setData([
   { x: 1, y: 2 },
   { x: 1, y: 2 },
   { x: 1, y: 2 },
+  { x: 1, y: 75.2 },
   { x: 1, y: 2 },
-  { x: 1, y: 2 },
-  { x: 1, y: 2 },
+  { x: 1, y: 0 },
+
+
 ]);
 
 console.log(chart);
