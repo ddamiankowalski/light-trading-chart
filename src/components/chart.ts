@@ -64,6 +64,10 @@ export class ChartComponent {
     wrapper.style.position = 'relative';
     wrapper.style.display = 'flex';
     wrapper.style.height = '100%';
+
+    if (this._type === 'FULL') {
+      wrapper.style.minHeight = '24rem';
+    }
     this._element.append(wrapper);
     return wrapper;
   }
