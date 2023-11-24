@@ -32,7 +32,7 @@ export class DataLayerRenderer {
   private _drawGrid(color: string): void {
     this._ctx.save();
     this._ctx.beginPath();
-    this._ctx.lineWidth = 1;
+    this._ctx.lineWidth = 0.5;
     this._ctx.strokeStyle = color;
     const rowDiff = this._calculateRowDiff();
     let prevX = null;
