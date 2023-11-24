@@ -41,7 +41,7 @@ export class TooltipView {
   }
 
   public notifyMouseOverCol(col: number): void {
-    if (this._dataSource.size <= 2 && this._dataSource.source[0].y === this._dataSource.source[1].y) {
+    if (this._dataSource.size === 1) {
       return;
     }
 

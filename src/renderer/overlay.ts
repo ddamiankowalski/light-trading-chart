@@ -31,7 +31,7 @@ export class OverlayRenderer {
   }
 
   public render(color: string, tooltipBgColor: string): void {
-    if (this._view.dataSource.size <= 2 && this._view.dataSource.source[0].y === this._view.dataSource.source[1].y) {
+    if (this._view.dataSource.size === 1) {
       return;
     }
 

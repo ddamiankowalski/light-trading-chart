@@ -92,8 +92,11 @@ export class DataLayerRenderer {
       const xCoord = i * this.colGap;
       let yCoord = this._canvas.height - this._shouldAddMargin() - (this._view.dataSource.source[i].y - min) * ratio;
 
-      if (this._view.dataSource.size <= 2 && this._view.dataSource.source[0].y === this._view.dataSource.source[1].y) {
+      if (this._view.dataSource.size === 1) {
         yCoord = (this._view.height - this._view.verticalMargin) / 2;
+        this._ctx.moveTo(0, yCoord);
+        this._ctx.lineTo(this._view.width, yCoord);
+        continue;
       }
 
       if (i === 0) {
@@ -101,7 +104,7 @@ export class DataLayerRenderer {
         continue;
       }
 
-      this._ctx.lineTo(xCoord + 0.5, yCoord + 0.5);
+      this._ctx.lineTo(xCoord, yCoord);
     }
 
     this._ctx.stroke();
