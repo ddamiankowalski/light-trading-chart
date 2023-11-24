@@ -122,11 +122,12 @@ export class DataLayerRenderer {
       const xCoord = this._view.mouseOverCol * this.colGap;
       const rowDiff = this._calculateRowDiff();
       this._ctx.strokeStyle = color;
-      this._ctx.setLineDash([5, 5]);
+      this._ctx.lineWidth = 0.5;
+      this._ctx.setLineDash([4, 6]);
 
       this._ctx.beginPath();
-      this._ctx.moveTo(xCoord + 1, rowDiff + 3);
-      this._ctx.lineTo(xCoord + 1, this._view.height);
+      this._ctx.moveTo(Math.round(xCoord), rowDiff + 3);
+      this._ctx.lineTo(Math.round(xCoord), this._view.height);
       this._ctx.stroke();
     }
   }
