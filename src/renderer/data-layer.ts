@@ -109,7 +109,26 @@ export class DataLayerRenderer {
     this._ctx.save();
     this._clipPath();
     this._createGradient(rgbColor);
+
+    if (this._type === 'FULL') {
+      this._drawHoverLine(zeroColor);
+    }
+
     this._ctx.restore();
+  }
+
+  private _drawHoverLine(color: string): void {
+    if (this._view.mouseOverCol) {
+      const xCoord = this._view.mouseOverCol * this.colGap;
+      const rowDiff = this._calculateRowDiff();
+      this._ctx.strokeStyle = color;
+      this._ctx.setLineDash([5, 5]);
+
+      this._ctx.beginPath();
+      this._ctx.moveTo(xCoord + 1, rowDiff + 3);
+      this._ctx.lineTo(xCoord + 1, this._view.height);
+      this._ctx.stroke();
+    }
   }
 
   private _calculateRowDiff(): number {

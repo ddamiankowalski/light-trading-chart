@@ -16,6 +16,7 @@ export class DataLayerView implements View, SourceView {
   private _color?: string;
   private _rgbColor?: string;
   private _zeroColor?: string;
+  private _mouseOverCol: number | null = null;
 
   constructor(
     private _component: DataComponent,
@@ -62,6 +63,10 @@ export class DataLayerView implements View, SourceView {
 
   get height(): number {
     return this._canvas.height;
+  }
+
+  get mouseOverCol(): number | null {
+    return this._mouseOverCol;
   }
 
   get verticalMargin(): number {
@@ -121,5 +126,8 @@ export class DataLayerView implements View, SourceView {
     });
   }
 
-  private _onMouseMove(): void { }
+  private _onMouseMove(event: MouseEvent): void {
+    const cols = (this.dataSource.size - 1) * 2;
+    this._mouseOverCol = Math.ceil(Math.floor(event.offsetX / (this.width / cols)) / 2);
+  }
 }
