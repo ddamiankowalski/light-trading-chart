@@ -69,7 +69,7 @@ export class DataLayerRenderer {
     this._ctx.restore();
   }
 
-  public render(color: string, rgbColor: string, zeroColor: string): void {
+  public render(color: string, rgbColor: string, zeroColor: string, hoverLineColor: string): void {
     this._resetCanvas();
 
     const { min, max } = this._view.dataSource.minMax;
@@ -111,7 +111,7 @@ export class DataLayerRenderer {
     this._createGradient(rgbColor);
 
     if (this._type === 'FULL') {
-      this._drawHoverLine(zeroColor);
+      this._drawHoverLine(hoverLineColor);
     }
 
     this._ctx.restore();

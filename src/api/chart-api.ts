@@ -60,6 +60,10 @@ export class ChartAPI {
     this._dataView.updateZeroColor(color);
   }
 
+  public setHoverLineColor(color: string): void {
+    this._dataView.updateHoverLineColor(color);
+  }
+
   private _createChartComponent(type: ChartType): ChartComponent {
     return new ChartComponent(this._container, type);
   }

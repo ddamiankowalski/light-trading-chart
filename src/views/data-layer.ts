@@ -16,6 +16,7 @@ export class DataLayerView implements View, SourceView {
   private _color?: string;
   private _rgbColor?: string;
   private _zeroColor?: string;
+  private _hoverLineColor?: string;
   private _mouseOverCol: number | null = null;
 
   constructor(
@@ -74,7 +75,7 @@ export class DataLayerView implements View, SourceView {
   }
 
   public render(): void {
-    this._renderer.render(this._color as string, this._rgbColor as string, this._zeroColor as string);
+    this._renderer.render(this._color as string, this._rgbColor as string, this._zeroColor as string, this._hoverLineColor as string);
   }
 
   public updateColor(color: string) {
@@ -94,6 +95,11 @@ export class DataLayerView implements View, SourceView {
 
   public updateZeroColor(color: string): void {
     this._zeroColor = color;
+    this.render();
+  }
+
+  public updateHoverLineColor(color: string): void {
+    this._hoverLineColor = color;
     this.render();
   }
 
