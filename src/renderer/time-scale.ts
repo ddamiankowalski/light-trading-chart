@@ -39,7 +39,7 @@ export class TimeScaleRenderer {
       this._svgContainer.append(element);
 
       element.style.transformOrigin = `${currX}px`;
-      element.style.transform = 'translateY(3rem) translateX(0.125rem) rotate(-60deg)';
+      element.style.transform = 'translateY(2.75rem) translateX(-1rem) rotate(320deg)';
       prevX = currX;
     }
   }
