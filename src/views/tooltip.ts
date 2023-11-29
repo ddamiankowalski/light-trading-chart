@@ -120,9 +120,9 @@ export class TooltipView {
   }
 
   private _updateTooltipData(col: number): void {
-    if (this._dateLabel && this._dateValue) {
+    if (this._dateLabel && this._dateValue && this._dataSource.source[col].x) {
       this._dateLabel.textContent = "Date: ";
-      this._dateValue.innerHTML = this._dataSource.source[col]?.x?.toString() as string;
+      this._dateValue.innerHTML = new Date(this._dataSource.source[col].x ?? 0).toLocaleDateString('en-GB') as string;
     }
 
     if (this._returnsLabel && this._returnsValue) {
