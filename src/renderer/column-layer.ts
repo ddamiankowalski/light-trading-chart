@@ -55,7 +55,13 @@ export class ColumnLayerRenderer {
       this._ctx.strokeStyle = "#979FB5";
 
       this._ctx.beginPath();
-      this._ctx.arc(xCoord + this.horizontalMargin / 2, yCoord, colWidth / 2, 0, 2 * Math.PI);
+      this._ctx.arc(
+        Math.abs(xCoord + this.horizontalMargin / 2),
+        Math.abs(yCoord),
+        Math.abs(colWidth / 2),
+        0,
+        2 * Math.PI
+      );
       this._ctx.stroke();
       this._ctx.fill();
     } else {
@@ -64,7 +70,13 @@ export class ColumnLayerRenderer {
 
       if (Math.abs(deltaYCoord - yCoord) < colWidth / 2) {
         this._ctx.beginPath();
-        this._ctx.arc(xCoord + this.horizontalMargin / 2, yCoord + colWidth / 6, colWidth / 2, 0, 2 * Math.PI);
+        this._ctx.arc(
+          Math.abs(xCoord + this.horizontalMargin / 2),
+          Math.abs(yCoord + colWidth / 6),
+          Math.abs(colWidth / 2),
+          0,
+          2 * Math.PI
+        );
         this._ctx.stroke();
         this._ctx.fill();
       } else {
