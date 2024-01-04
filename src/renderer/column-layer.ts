@@ -62,16 +62,23 @@ export class ColumnLayerRenderer {
       this._ctx.fillStyle = deltaYCoord > yCoord ? "#56B786" : "#EA4D58";
       this._ctx.strokeStyle = deltaYCoord > yCoord ? "#56B786" : "#EA4D58";
 
-      this._ctx.beginPath();
-      this._ctx.roundRect(
-        xCoord + this.horizontalMargin / 2 - colWidth / 2,
-        yCoord,
-        colWidth,
-        deltaYCoord - yCoord,
-        30
-      );
-      this._ctx.stroke();
-      this._ctx.fill();
+      if (Math.abs(deltaYCoord - yCoord) < colWidth / 2) {
+        this._ctx.beginPath();
+        this._ctx.arc(xCoord + this.horizontalMargin / 2, yCoord + colWidth / 6, colWidth / 2, 0, 2 * Math.PI);
+        this._ctx.stroke();
+        this._ctx.fill();
+      } else {
+        this._ctx.beginPath();
+        this._ctx.roundRect(
+          xCoord + this.horizontalMargin / 2 - colWidth / 2,
+          yCoord,
+          colWidth,
+          deltaYCoord - yCoord,
+          30
+        );
+        this._ctx.stroke();
+        this._ctx.fill();
+      }
     }
   }
 

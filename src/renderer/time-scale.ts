@@ -44,12 +44,13 @@ export class TimeScaleRenderer {
       element.setAttribute("x", currX.toString());
       element.setAttribute("y", y.toString());
       element.setAttribute("fill", "rgb(151, 159, 181)");
+      element.setAttribute("text-anchor", "end");
       element.classList.add("light-trading-chart__text");
       this._svgContainer.append(element);
 
-      element.style.transformOrigin = `${currX + element.getBoundingClientRect().width / 2}px ${0}px`;
+      element.style.transformOrigin = `${currX}px ${0}px`;
       element.style.transform = "rotate(300deg)";
-      this._svgContainer.style.transform = "translateY(2rem) translateX(-2rem)";
+      this._svgContainer.style.transform = "translateY(1rem) translateX(0.5rem)";
       prevX = currX;
     }
   }
