@@ -25,11 +25,11 @@ export abstract class CommonLayerView {
   }
 
   get width(): number {
-    return this._canvas.width;
+    return this.canvas.width / devicePixelRatio;
   }
 
   get height(): number {
-    return this._canvas.height;
+    return this.canvas.height / devicePixelRatio;
   }
 
   get dataSource(): DataSource {
@@ -71,8 +71,12 @@ export abstract class CommonLayerView {
 
   private _resizeHandler(): void {
     this._component.observerNotifier.subscribe(({ width, height }) => {
-      this.canvas.width = width;
-      this.canvas.height = height;
+      this.canvas.width = width * devicePixelRatio;
+      this.canvas.height = height * devicePixelRatio;
+
+      this._canvas.style.width = width + "px";
+      this._canvas.style.height = height + "px";
+
       this._invalidate();
     });
   }

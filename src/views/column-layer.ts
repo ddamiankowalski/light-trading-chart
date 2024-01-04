@@ -24,6 +24,14 @@ export class ColumnLayerView extends CommonLayerView implements View, SourceView
     _eventBus.registerEvents(ViewType.DataLayer, EventType.MouseEvent, handlers, this._component.element);
   }
 
+  get width(): number {
+    return this.canvas.width / devicePixelRatio;
+  }
+
+  get height(): number {
+    return this.canvas.height / devicePixelRatio;
+  }
+
   public render(): void {
     this._renderer.render();
   }

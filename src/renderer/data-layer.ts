@@ -3,15 +3,13 @@ import { DataLayerView } from "../views/data-layer";
 
 export class DataLayerRenderer {
   private _ctx: CanvasRenderingContext2D;
-  private _canvas: HTMLCanvasElement;
 
   constructor(private _view: DataLayerView, private _type: ChartType) {
     this._ctx = _view.ctx;
-    this._canvas = _view.canvas;
   }
 
   get colGap(): number {
-    return this._view.canvas.width / (this._view.dataSource.size - 1);
+    return this._view.width / (this._view.dataSource.size - 1);
   }
 
   get dataSize(): number {
@@ -19,14 +17,14 @@ export class DataLayerRenderer {
   }
 
   get effectiveCanvasHeight(): number {
-    if (this._type === 'FULL') {
-      return this._canvas.height * .8;
+    if (this._type === "FULL") {
+      return this._view.height * 0.8;
     }
 
-    if (this._view.verticalMargin * 2 > this._canvas.height) {
-      return this._canvas.height;
+    if (this._view.verticalMargin * 2 > this._view.height) {
+      return this._view.height;
     }
-    return this._canvas.height - 2 * this._view.verticalMargin;
+    return this._view.height - 2 * this._view.verticalMargin;
   }
 
   private _drawGrid(color: string): void {
@@ -40,11 +38,9 @@ export class DataLayerRenderer {
     for (let i = 0; i < this.dataSize; i++) {
       const xCoord = i * this.colGap;
 
-
-      if (prevX !== null && (xCoord - prevX) < 50) {
+      if (prevX !== null && xCoord - prevX < 50) {
         continue;
       }
-
 
       this._ctx.moveTo(xCoord + 1, rowDiff + 2);
       this._ctx.lineTo(xCoord + 1, this._view.height);
@@ -53,8 +49,8 @@ export class DataLayerRenderer {
 
       if (i === this.dataSize - 1) {
         /**
-          * draw borders
-          */
+         * draw borders
+         */
         this._ctx.moveTo(i * this.colGap - 1, rowDiff + 2);
         this._ctx.lineTo(i * this.colGap - 1, this._view.height);
       }
@@ -70,14 +66,17 @@ export class DataLayerRenderer {
   }
 
   public render(color: string, rgbColor: string, zeroColor: string, hoverLineColor: string): void {
+    this._ctx.save();
     this._resetCanvas();
+
+    this._ctx.scale(devicePixelRatio, devicePixelRatio);
 
     const { min, max } = this._view.dataSource.minMax;
     const ratio = this._getYAxisRatio(min, max);
 
     this._drawZeroLine(min, ratio, zeroColor);
 
-    if (this._type === 'FULL') {
+    if (this._type === "FULL") {
       this._drawGrid(zeroColor);
     }
 
@@ -90,7 +89,7 @@ export class DataLayerRenderer {
 
     for (let i = 0; i < this.dataSize; i++) {
       const xCoord = i * this.colGap;
-      let yCoord = this._canvas.height - this._shouldAddMargin() - (this._view.dataSource.source[i].y - min) * ratio;
+      let yCoord = this._view.height - this._shouldAddMargin() - (this._view.dataSource.source[i].y - min) * ratio;
 
       if (this._view.dataSource.size === 1) {
         yCoord = (this._view.height - this._view.verticalMargin) / 2;
@@ -109,11 +108,10 @@ export class DataLayerRenderer {
 
     this._ctx.stroke();
 
-    this._ctx.save();
     this._clipPath();
     this._createGradient(rgbColor);
 
-    if (this._type === 'FULL') {
+    if (this._type === "FULL") {
       this._drawHoverLine(hoverLineColor);
     }
 
@@ -145,7 +143,7 @@ export class DataLayerRenderer {
       return;
     }
 
-    let yCoord = this._canvas.height - this._shouldAddMargin() - (0 - min) * ratio - 1;
+    let yCoord = this._view.height - this._shouldAddMargin() - (0 - min) * ratio - 1;
     if (yCoord > this._view.height - 2 - this._view.verticalMargin) {
       yCoord = this._view.height - 2;
     } else if (yCoord < 0) {
@@ -157,15 +155,15 @@ export class DataLayerRenderer {
   }
 
   private _resetCanvas(): void {
-    this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
+    this._ctx.clearRect(0, 0, this._view.width * devicePixelRatio, this._view.height * devicePixelRatio);
   }
 
   private _shouldAddMargin(): number {
-    if (this._type === 'FULL') {
+    if (this._type === "FULL") {
       return 0;
     }
 
-    return this._view.verticalMargin * 2 > this._canvas.height ? 0 : this._view.verticalMargin;
+    return this._view.verticalMargin * 2 > this._view.height ? 0 : this._view.verticalMargin;
   }
 
   private _getYAxisRatio(min: number, max: number): number {
@@ -174,18 +172,13 @@ export class DataLayerRenderer {
 
   private _clipPath(): void {
     this._ctx.save();
-    this._ctx.lineTo(this._canvas.width, this._canvas.height);
-    this._ctx.lineTo(0, this._canvas.height);
+    this._ctx.lineTo(this._view.width, this._view.height);
+    this._ctx.lineTo(0, this._view.height);
     this._ctx.clip();
   }
 
   private _createGradient(rgbColor: string): void {
-    const gradient = this._ctx.createLinearGradient(
-      this._canvas.width / 2,
-      0,
-      this._canvas.width / 2,
-      this._canvas.height
-    );
+    const gradient = this._ctx.createLinearGradient(this._view.width / 2, 0, this._view.width / 2, this._view.height);
 
     if (!rgbColor) {
       rgbColor = "74, 83, 103";
@@ -195,7 +188,7 @@ export class DataLayerRenderer {
     gradient.addColorStop(1, `rgba(${rgbColor}, 0.0125)`);
 
     this._ctx.fillStyle = gradient;
-    this._ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);
+    this._ctx.fillRect(0, 0, this._view.width, this._view.height);
     this._ctx.restore();
   }
 }

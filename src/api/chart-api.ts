@@ -20,7 +20,7 @@ export class ChartAPI {
   private _eventBus = new EventBus();
   private _viewController = new ViewController();
 
-  constructor(private _container: HTMLElement, private _type: ChartType, private _dataType: ChartDataType = "COLUMNS") {
+  constructor(private _container: HTMLElement, private _type: ChartType, private _dataType: ChartDataType = "LINE") {
     this._component = this._createChartComponent(_type);
     this._dataView = this._createDataLayerView();
     this._overlayView = this._createOverlayView();

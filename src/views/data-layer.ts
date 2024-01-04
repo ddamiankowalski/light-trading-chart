@@ -45,6 +45,14 @@ export class DataLayerView extends CommonLayerView implements View, SourceView {
     return this._verticalMargin;
   }
 
+  get width(): number {
+    return this.canvas.width / devicePixelRatio;
+  }
+
+  get height(): number {
+    return this.canvas.height / devicePixelRatio;
+  }
+
   public render(): void {
     this._renderer.render(
       this._color as string,

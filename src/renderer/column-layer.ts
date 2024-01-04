@@ -10,7 +10,80 @@ export class ColumnLayerRenderer {
     this._canvas = _view.canvas;
   }
 
+  get dataSize(): number {
+    return this._view.dataSource.size;
+  }
+
+  get effectiveCanvasHeight(): number {
+    return this._view.height * 0.8;
+  }
+
+  get colGap(): number {
+    return (this._view.width - this.horizontalMargin) / (this._view.dataSource.size - 1);
+  }
+
+  get horizontalMargin(): number {
+    return 50;
+  }
+
   public render() {
-    console.log("RENDERING");
+    this._ctx.save();
+    this._ctx.scale(devicePixelRatio, devicePixelRatio);
+
+    const { min, max } = this._view.dataSource.minMax;
+    const ratio = this._getYAxisRatio(min, max);
+
+    this._resetCanvas();
+    this._drawGrid("black");
+
+    for (let i = 0; i < this.dataSize; i++) {
+      const xCoord = i * this.colGap;
+      let yCoord = this._view.height - (this._view.dataSource.source[i].y - min) * ratio;
+      let deltaYCoord = this._view.height - (0 - min) * ratio;
+
+      this._drawBox(xCoord, yCoord, deltaYCoord);
+    }
+
+    this._ctx.restore();
+  }
+
+  private _drawBox(xCoord: number, yCoord: number, deltaYCoord: number): void {
+    const colWidth = Math.min((this._view.width - this.horizontalMargin) / (this._view.dataSource.size - 1) / 2, 30);
+
+    this._ctx.fillStyle = "red";
+    this._ctx.strokeStyle = "red";
+    this._ctx.beginPath();
+    this._ctx.roundRect(xCoord + this.horizontalMargin / 2 - colWidth / 2, yCoord, colWidth, deltaYCoord - yCoord, 30);
+    this._ctx.stroke();
+    this._ctx.fill();
+  }
+
+  private _drawGrid(color: string): void {
+    this._ctx.save();
+    this._ctx.beginPath();
+    this._ctx.lineWidth = 0.5;
+    this._ctx.strokeStyle = color;
+    const rowDiff = this._calculateRowDiff();
+
+    for (let i = 0; i < 10; i++) {
+      this._ctx.moveTo(0, this._view.height - i * rowDiff - 1);
+      this._ctx.lineTo(this._view.width, this._view.height - i * rowDiff - 1);
+    }
+
+    this._ctx.stroke();
+    this._ctx.restore();
+  }
+
+  private _calculateRowDiff(): number {
+    const rowQuantity = Math.floor(this._view.height / 10);
+    return rowQuantity;
+  }
+
+  private _resetCanvas(): void {
+    this._ctx.clearRect(0, 0, this._canvas.width * devicePixelRatio, this._canvas.height * devicePixelRatio);
+  }
+
+  private _getYAxisRatio(min: number, max: number): number {
+    return this.effectiveCanvasHeight / (max - min);
   }
 }
