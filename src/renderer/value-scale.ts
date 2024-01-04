@@ -11,7 +11,7 @@ export class ValueScaleRenderer {
   public render(): void {
     this._clearSvgElement();
     const rowDiff = this._calculateRowDiff();
-    this._createSvg(this._chartOptions?.showPercentagePrefix ? 25 : 30, rowDiff);
+    this._createSvg(this._chartOptions?.showPercentagePrefix ? 40 : 55, rowDiff);
   }
 
   private _calculateRowDiff(): number {

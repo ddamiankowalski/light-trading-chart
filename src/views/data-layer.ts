@@ -9,11 +9,6 @@ import { CommonLayerView } from "./common-layer";
 
 export class DataLayerView extends CommonLayerView implements View, SourceView {
   private _renderer: DataLayerRenderer;
-  private _verticalMargin: number = 6;
-  private _color?: string;
-  private _rgbColor?: string;
-  private _zeroColor?: string;
-  private _hoverLineColor?: string;
   private _mouseOverCol: number | null = null;
 
   constructor(
@@ -22,7 +17,7 @@ export class DataLayerView extends CommonLayerView implements View, SourceView {
     protected _viewInvalidator: Notifier<ViewInvalidateMessage>,
     type: ChartType
   ) {
-    super(_component, _eventBus, _viewInvalidator, type);
+    super(_component, _eventBus, _viewInvalidator);
     this._renderer = new DataLayerRenderer(this, type);
 
     const handlers: EventHandlers = {
@@ -60,31 +55,6 @@ export class DataLayerView extends CommonLayerView implements View, SourceView {
       this._zeroColor as string,
       this._hoverLineColor as string
     );
-  }
-
-  public updateColor(color: string) {
-    this._color = color;
-    this.render();
-  }
-
-  public setMargin(value: number): void {
-    this._verticalMargin = value;
-    this.render();
-  }
-
-  public updateRgbColor(color: string): void {
-    this._rgbColor = color;
-    this.render();
-  }
-
-  public updateZeroColor(color: string): void {
-    this._zeroColor = color;
-    this.render();
-  }
-
-  public updateHoverLineColor(color: string): void {
-    this._hoverLineColor = color;
-    this.render();
   }
 
   private _onMouseMove(event: MouseEvent): void {

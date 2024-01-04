@@ -1,6 +1,5 @@
 import { DataComponent } from "../components/data";
 import { EventBus } from "../events/event-bus";
-import { ChartType } from "../interfaces/chart";
 import { EventHandlers, EventType } from "../interfaces/events";
 import { SourceView, View, ViewInvalidateMessage, ViewType } from "../interfaces/view";
 import { ColumnLayerRenderer } from "../renderer/column-layer";
@@ -13,10 +12,9 @@ export class ColumnLayerView extends CommonLayerView implements View, SourceView
   constructor(
     protected _component: DataComponent,
     protected _eventBus: EventBus,
-    protected _viewInvalidator: Notifier<ViewInvalidateMessage>,
-    type: ChartType
+    protected _viewInvalidator: Notifier<ViewInvalidateMessage>
   ) {
-    super(_component, _eventBus, _viewInvalidator, type);
+    super(_component, _eventBus, _viewInvalidator);
     this._renderer = new ColumnLayerRenderer(this);
 
     const handlers: EventHandlers = {};
@@ -33,6 +31,6 @@ export class ColumnLayerView extends CommonLayerView implements View, SourceView
   }
 
   public render(): void {
-    this._renderer.render();
+    this._renderer.render(this._zeroColor as string);
   }
 }

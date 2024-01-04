@@ -16,7 +16,6 @@ export class TimeScaleView implements View, SourceView {
     private _dataType: ChartDataType,
     private _chartOptions: ChartOptions
   ) {
-    console.log(_chartOptions);
     this._svgContainer = this._createSvgContainer();
     this._renderer = this._createRenderer();
   }

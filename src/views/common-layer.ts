@@ -1,6 +1,5 @@
 import { DataComponent } from "../components/data";
 import { EventBus } from "../events/event-bus";
-import { ChartType } from "../interfaces/chart";
 import { RawDataSource } from "../interfaces/data-source";
 import { ViewInvalidateMessage, ViewType } from "../interfaces/view";
 import { DataSource } from "../source/data-source";
@@ -10,11 +9,16 @@ export abstract class CommonLayerView {
   private _canvas: HTMLCanvasElement;
   private _dataSource: DataSource = new DataSource([]);
 
+  protected _color?: string;
+  protected _rgbColor?: string;
+  protected _zeroColor?: string;
+  protected _hoverLineColor?: string;
+  protected _verticalMargin: number = 6;
+
   constructor(
     protected _component: DataComponent,
     protected _eventBus: EventBus,
-    protected _viewInvalidator: Notifier<ViewInvalidateMessage>,
-    type: ChartType
+    protected _viewInvalidator: Notifier<ViewInvalidateMessage>
   ) {
     this._canvas = this._createCanvas();
     this._resizeHandler();
@@ -55,6 +59,31 @@ export abstract class CommonLayerView {
 
   public invalidate(): void {
     this._invalidate();
+  }
+
+  public updateColor(color: string) {
+    this._color = color;
+    this.render();
+  }
+
+  public setMargin(value: number): void {
+    this._verticalMargin = value;
+    this.render();
+  }
+
+  public updateRgbColor(color: string): void {
+    this._rgbColor = color;
+    this.render();
+  }
+
+  public updateZeroColor(color: string): void {
+    this._zeroColor = color;
+    this.render();
+  }
+
+  public updateHoverLineColor(color: string): void {
+    this._hoverLineColor = color;
+    this.render();
   }
 
   protected _invalidate(): void {

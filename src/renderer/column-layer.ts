@@ -25,7 +25,7 @@ export class ColumnLayerRenderer {
     return 25;
   }
 
-  public render() {
+  public render(zeroColor: string) {
     this._ctx.save();
     this._ctx.scale(devicePixelRatio, devicePixelRatio);
 
@@ -33,7 +33,7 @@ export class ColumnLayerRenderer {
     const ratio = this._getYAxisRatio(min, max);
 
     this._resetCanvas();
-    this._drawGrid("black");
+    this._drawGrid(zeroColor);
 
     for (let i = 0; i < this.dataSize; i++) {
       const value = this._view.dataSource.source[i].y;
