@@ -1,6 +1,6 @@
 import { createChart } from ".";
 
-const chart = createChart(document.getElementById("app") as HTMLElement, "PREVIEW");
+const chart = createChart(document.getElementById("app") as HTMLElement, "FULL");
 
 chart.setData([
   { x: 1, y: 5 },

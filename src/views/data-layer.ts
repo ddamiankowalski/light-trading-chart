@@ -1,17 +1,14 @@
 import { DataComponent } from "../components/data";
 import { EventBus } from "../events/event-bus";
 import { ChartType } from "../interfaces/chart";
-import { RawDataSource } from "../interfaces/data-source";
 import { EventHandlers, EventType } from "../interfaces/events";
 import { SourceView, View, ViewInvalidateMessage, ViewType } from "../interfaces/view";
 import { DataLayerRenderer } from "../renderer/data-layer";
-import { DataSource } from "../source/data-source";
 import { Notifier } from "../utils/notifier";
 import { CommonLayerView } from "./common-layer";
 
 export class DataLayerView extends CommonLayerView implements View, SourceView {
   private _renderer: DataLayerRenderer;
-  private _dataSource: DataSource = new DataSource([]);
   private _verticalMargin: number = 6;
   private _color?: string;
   private _rgbColor?: string;
@@ -38,10 +35,6 @@ export class DataLayerView extends CommonLayerView implements View, SourceView {
 
   get eventBus(): EventBus {
     return this._eventBus;
-  }
-
-  get dataSource(): DataSource {
-    return this._dataSource;
   }
 
   get mouseOverCol(): number | null {
@@ -84,11 +77,6 @@ export class DataLayerView extends CommonLayerView implements View, SourceView {
   public updateHoverLineColor(color: string): void {
     this._hoverLineColor = color;
     this.render();
-  }
-
-  public updateDataSource(source: RawDataSource): void {
-    this._dataSource = new DataSource(source);
-    this._invalidate();
   }
 
   private _onMouseMove(event: MouseEvent): void {

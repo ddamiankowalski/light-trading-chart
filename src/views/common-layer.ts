@@ -1,11 +1,14 @@
 import { DataComponent } from "../components/data";
 import { EventBus } from "../events/event-bus";
 import { ChartType } from "../interfaces/chart";
+import { RawDataSource } from "../interfaces/data-source";
 import { ViewInvalidateMessage, ViewType } from "../interfaces/view";
+import { DataSource } from "../source/data-source";
 import { Notifier } from "../utils/notifier";
 
 export abstract class CommonLayerView {
   private _canvas: HTMLCanvasElement;
+  private _dataSource: DataSource = new DataSource([]);
 
   constructor(
     protected _component: DataComponent,
@@ -29,6 +32,10 @@ export abstract class CommonLayerView {
     return this._canvas.height;
   }
 
+  get dataSource(): DataSource {
+    return this._dataSource;
+  }
+
   get ctx(): CanvasRenderingContext2D {
     const context = this._canvas.getContext("2d");
 
@@ -40,6 +47,11 @@ export abstract class CommonLayerView {
   }
 
   abstract render(): void;
+
+  public updateDataSource(source: RawDataSource): void {
+    this._dataSource = new DataSource(source);
+    this._invalidate();
+  }
 
   public invalidate(): void {
     this._invalidate();
