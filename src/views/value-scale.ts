@@ -1,4 +1,5 @@
 import { ValueScaleComponent } from "../components/valuescale";
+import { ChartOptions } from "../interfaces/chart";
 import { MinMaxSource, RawDataSource } from "../interfaces/data-source";
 import { SourceView, View, ViewInvalidateMessage, ViewType } from "../interfaces/view";
 import { ValueScaleRenderer } from "../renderer/value-scale";
@@ -9,7 +10,11 @@ export class ValueScaleView implements View, SourceView {
   private _renderer: ValueScaleRenderer;
   private _minMax: MinMaxSource | null = null;
 
-  constructor(private _component: ValueScaleComponent, private _viewInvalidator: Notifier<ViewInvalidateMessage>) {
+  constructor(
+    private _component: ValueScaleComponent,
+    private _viewInvalidator: Notifier<ViewInvalidateMessage>,
+    private _chartOptions: ChartOptions
+  ) {
     this._svgContainer = this._createSvgContainer();
     this._renderer = this._createRenderer();
   }
@@ -51,7 +56,7 @@ export class ValueScaleView implements View, SourceView {
   }
 
   private _createRenderer(): ValueScaleRenderer {
-    return new ValueScaleRenderer(this);
+    return new ValueScaleRenderer(this, this._chartOptions);
   }
 
   private _createSvgContainer(): SVGSVGElement {

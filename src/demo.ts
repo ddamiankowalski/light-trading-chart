@@ -2,6 +2,7 @@ import { createChart } from ".";
 
 const chart = createChart(document.getElementById("app") as HTMLElement, "FULL", "COLUMNS", {
   stopTimeScaleConvert: true,
+  showPercentagePrefix: false,
 });
 
 chart.setData([
@@ -13,7 +14,7 @@ chart.setData([
   { x: "JUNE", y: -15 },
   { x: "JULY", y: 5 },
   { x: "AUGUST", y: 23 },
-  { x: "SEPTEMBER", y: 11 },
+  { x: "SEPTEMBER", y: 11111111 },
   { x: "OCTOBER", y: -10 },
   { x: "NOVEMBER", y: -20 },
   { x: "DECEMBER", y: 10 },

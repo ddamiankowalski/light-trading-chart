@@ -110,7 +110,7 @@ export class ChartAPI {
       throw new Error("Cannot create value scale view");
     }
 
-    return this._viewController.addValueScaleView(this._component.valueScaleComponent);
+    return this._viewController.addValueScaleView(this._component.valueScaleComponent, this._chartOptions);
   }
 
   private _createTimeScaleView(): TimeScaleView {

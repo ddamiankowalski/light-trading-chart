@@ -37,8 +37,8 @@ export class ViewController {
     return view;
   }
 
-  public addValueScaleView(component: ValueScaleComponent): ValueScaleView {
-    const view = new ValueScaleView(component, this._viewInvalidator);
+  public addValueScaleView(component: ValueScaleComponent, chartOptions: ChartOptions): ValueScaleView {
+    const view = new ValueScaleView(component, this._viewInvalidator, chartOptions);
     this._viewMap.set(ViewType.ValueScaleView, view);
     return view;
   }
