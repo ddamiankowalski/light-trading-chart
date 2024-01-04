@@ -16,8 +16,16 @@ export class MouseHandler {
   }
 
   private _onTouchMove(event: TouchEvent): void {
+    if (!event.target) {
+      return;
+    }
+
     // @ts-ignore
-    event.offsetX = event.changedTouches[0].clientX;
+    let rect = event.target.getBoundingClientRect();
+    let offsetX = event.targetTouches[0].clientX - rect.x;
+
+    // @ts-ignore
+    event.offsetX = offsetX;
     this._proceedEvent(event as unknown as MouseEvent, this._handlers.mouseMove);
   }
 

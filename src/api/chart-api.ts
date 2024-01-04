@@ -7,7 +7,7 @@ import { OverlayView } from "../views/overlay";
 import { ViewType } from "../interfaces/view";
 import { ValueScaleView } from "../views/value-scale";
 import { TimeScaleView } from "../views/time-scale";
-import { ChartType } from "../interfaces/chart";
+import { ChartDataType, ChartType } from "../interfaces/chart";
 
 export class ChartAPI {
   private _component: ChartComponent;
@@ -18,7 +18,7 @@ export class ChartAPI {
   private _eventBus = new EventBus();
   private _viewController = new ViewController();
 
-  constructor(private _container: HTMLElement, private _type: ChartType) {
+  constructor(private _container: HTMLElement, private _type: ChartType, private _dataType: ChartDataType) {
     this._component = this._createChartComponent(_type);
     this._dataView = this._createDataLayerView();
     this._overlayView = this._createOverlayView();

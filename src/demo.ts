@@ -4,6 +4,8 @@ const chart = createChart(document.getElementById("app") as HTMLElement, "PREVIE
 
 chart.setData([
   { x: 1, y: 5 },
+  { x: 1, y: 25 },
+  { x: 1, y: 15 },
 ]);
 
 console.log(chart);
