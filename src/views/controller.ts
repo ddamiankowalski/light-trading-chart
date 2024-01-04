@@ -2,7 +2,7 @@ import { DataComponent } from "../components/data";
 import { TimeScaleComponent } from "../components/timescale";
 import { ValueScaleComponent } from "../components/valuescale";
 import { EventBus } from "../events/event-bus";
-import { ChartType } from "../interfaces/chart";
+import { ChartDataType, ChartOptions, ChartType } from "../interfaces/chart";
 import { View, ViewConstructor, ViewInvalidateMessage, ViewType } from "../interfaces/view";
 import { DataSource } from "../source/data-source";
 import { Notifier } from "../utils/notifier";
@@ -43,8 +43,12 @@ export class ViewController {
     return view;
   }
 
-  public addTimeScaleView(component: TimeScaleComponent): TimeScaleView {
-    const view = new TimeScaleView(component, this._viewInvalidator);
+  public addTimeScaleView(
+    component: TimeScaleComponent,
+    dataType: ChartDataType,
+    chartOptions: ChartOptions
+  ): TimeScaleView {
+    const view = new TimeScaleView(component, this._viewInvalidator, dataType, chartOptions);
     this._viewMap.set(ViewType.TimeScaleView, view);
     return view;
   }

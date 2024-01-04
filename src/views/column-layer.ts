@@ -17,7 +17,7 @@ export class ColumnLayerView extends CommonLayerView implements View, SourceView
     type: ChartType
   ) {
     super(_component, _eventBus, _viewInvalidator, type);
-    this._renderer = new ColumnLayerRenderer(this, type);
+    this._renderer = new ColumnLayerRenderer(this);
 
     const handlers: EventHandlers = {};
 

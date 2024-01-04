@@ -1,11 +1,10 @@
-import { ChartType } from "../interfaces/chart";
 import { ColumnLayerView } from "../views/column-layer";
 
 export class ColumnLayerRenderer {
   private _ctx: CanvasRenderingContext2D;
   private _canvas: HTMLCanvasElement;
 
-  constructor(private _view: ColumnLayerView, private _type: ChartType) {
+  constructor(private _view: ColumnLayerView) {
     this._ctx = _view.ctx;
     this._canvas = _view.canvas;
   }
@@ -23,7 +22,7 @@ export class ColumnLayerRenderer {
   }
 
   get horizontalMargin(): number {
-    return 50;
+    return 25;
   }
 
   public render() {
@@ -49,7 +48,7 @@ export class ColumnLayerRenderer {
   }
 
   private _drawBox(xCoord: number, yCoord: number, deltaYCoord: number, value: number): void {
-    const colWidth = Math.min((this._view.width - this.horizontalMargin) / (this._view.dataSource.size - 1) / 2, 30);
+    const colWidth = Math.min((this._view.width - this.horizontalMargin) / (this._view.dataSource.size - 1) / 2, 20);
 
     if (value === 0) {
       this._ctx.fillStyle = "#979FB5";

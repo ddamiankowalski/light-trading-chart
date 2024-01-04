@@ -7,20 +7,25 @@ import { OverlayView } from "../views/overlay";
 import { ViewType } from "../interfaces/view";
 import { ValueScaleView } from "../views/value-scale";
 import { TimeScaleView } from "../views/time-scale";
-import { ChartDataType, ChartType } from "../interfaces/chart";
+import { ChartDataType, ChartOptions, ChartType } from "../interfaces/chart";
 import { ColumnLayerView } from "../views/column-layer";
 import { CommonLayerView } from "../views/common-layer";
 
 export class ChartAPI {
   private _component: ChartComponent;
   private _dataView: CommonLayerView;
-  private _overlayView: OverlayView;
+  private _overlayView: OverlayView | null = null;
   private _valueScaleView: ValueScaleView | null = null;
   private _timeScaleView: TimeScaleView | null = null;
   private _eventBus = new EventBus();
   private _viewController = new ViewController();
 
-  constructor(private _container: HTMLElement, private _type: ChartType, private _dataType: ChartDataType = "COLUMNS") {
+  constructor(
+    private _container: HTMLElement,
+    private _type: ChartType,
+    private _dataType: ChartDataType,
+    private _chartOptions: ChartOptions
+  ) {
     this._component = this._createChartComponent(_type);
     this._dataView = this._createDataLayerView();
 
@@ -36,10 +41,7 @@ export class ChartAPI {
 
   public setData(source: RawDataSource): void {
     this._dataView.updateDataSource(source);
-
-    if (this._dataType === "LINE") {
-      this._overlayView.updateDataSource(source);
-    }
+    this._overlayView && this._overlayView.updateDataSource(source);
 
     if (this._valueScaleView && this._timeScaleView) {
       this._valueScaleView.updateDataSource(source);
@@ -55,7 +57,7 @@ export class ChartAPI {
   public setColor(color: string): void {
     //@ts-ignore
     this._dataView.updateColor(color);
-    this._overlayView.updateColor(color);
+    this._overlayView && this._overlayView.updateColor(color);
   }
 
   public setRgbColor(color: string): void {
@@ -64,7 +66,7 @@ export class ChartAPI {
   }
 
   public setTooltipBgColor(color: string): void {
-    this._overlayView.setTooltipBgColor(color);
+    this._overlayView && this._overlayView.setTooltipBgColor(color);
   }
 
   public setZeroLineColor(color: string): void {
@@ -116,6 +118,10 @@ export class ChartAPI {
       throw new Error("Cannot create time scale view");
     }
 
-    return this._viewController.addTimeScaleView(this._component.timeScaleComponent);
+    return this._viewController.addTimeScaleView(
+      this._component.timeScaleComponent,
+      this._dataType,
+      this._chartOptions
+    );
   }
 }

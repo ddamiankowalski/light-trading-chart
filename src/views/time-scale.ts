@@ -1,4 +1,5 @@
 import { TimeScaleComponent } from "../components/timescale";
+import { ChartDataType, ChartOptions } from "../interfaces/chart";
 import { RawDataSource } from "../interfaces/data-source";
 import { SourceView, View, ViewInvalidateMessage, ViewType } from "../interfaces/view";
 import { TimeScaleRenderer } from "../renderer/time-scale";
@@ -9,7 +10,13 @@ export class TimeScaleView implements View, SourceView {
   private _renderer: TimeScaleRenderer;
   private _timestamps: (number | string)[] = [];
 
-  constructor(private _component: TimeScaleComponent, private _viewInvalidator: Notifier<ViewInvalidateMessage>) {
+  constructor(
+    private _component: TimeScaleComponent,
+    private _viewInvalidator: Notifier<ViewInvalidateMessage>,
+    private _dataType: ChartDataType,
+    private _chartOptions: ChartOptions
+  ) {
+    console.log(_chartOptions);
     this._svgContainer = this._createSvgContainer();
     this._renderer = this._createRenderer();
   }
@@ -44,7 +51,7 @@ export class TimeScaleView implements View, SourceView {
   }
 
   private _createRenderer(): TimeScaleRenderer {
-    return new TimeScaleRenderer(this);
+    return new TimeScaleRenderer(this, this._dataType, this._chartOptions);
   }
 
   private _createSvgContainer(): SVGSVGElement {
