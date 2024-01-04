@@ -47,8 +47,9 @@ export class TimeScaleRenderer {
       element.classList.add("light-trading-chart__text");
       this._svgContainer.append(element);
 
-      element.style.transformOrigin = `${currX}px`;
-      element.style.transform = "translateY(2.75rem) translateX(-1rem) rotate(320deg)";
+      element.style.transformOrigin = `${currX + element.getBoundingClientRect().width / 2}px ${0}px`;
+      element.style.transform = "rotate(300deg)";
+      this._svgContainer.style.transform = "translateY(2rem) translateX(-2rem)";
       prevX = currX;
     }
   }
