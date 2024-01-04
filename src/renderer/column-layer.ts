@@ -69,13 +69,24 @@ export class ColumnLayerRenderer {
         this._ctx.fill();
       } else {
         this._ctx.beginPath();
-        this._ctx.roundRect(
-          xCoord + this.horizontalMargin / 2 - colWidth / 2,
-          yCoord,
-          colWidth,
-          deltaYCoord - yCoord,
-          30
-        );
+
+        if (deltaYCoord >= yCoord) {
+          this._ctx.roundRect(
+            xCoord + this.horizontalMargin / 2 - colWidth / 2,
+            yCoord,
+            colWidth,
+            deltaYCoord - yCoord,
+            30
+          );
+        } else {
+          this._ctx.roundRect(
+            xCoord + this.horizontalMargin / 2 - colWidth / 2,
+            deltaYCoord,
+            colWidth,
+            yCoord - deltaYCoord,
+            30
+          );
+        }
         this._ctx.stroke();
         this._ctx.fill();
       }
