@@ -72,18 +72,18 @@ export class ColumnLayerRenderer {
 
         if (deltaYCoord >= yCoord) {
           this._ctx.roundRect(
-            xCoord + this.horizontalMargin / 2 - colWidth / 2,
-            yCoord,
-            colWidth,
-            deltaYCoord - yCoord,
+            Math.abs(xCoord + this.horizontalMargin / 2 - colWidth / 2),
+            Math.abs(yCoord),
+            Math.abs(colWidth),
+            Math.abs(deltaYCoord - yCoord),
             30
           );
         } else {
           this._ctx.roundRect(
-            xCoord + this.horizontalMargin / 2 - colWidth / 2,
-            deltaYCoord,
-            colWidth,
-            yCoord - deltaYCoord,
+            Math.abs(xCoord + this.horizontalMargin / 2 - colWidth / 2),
+            Math.abs(deltaYCoord),
+            Math.abs(colWidth),
+            Math.abs(yCoord - deltaYCoord),
             30
           );
         }
