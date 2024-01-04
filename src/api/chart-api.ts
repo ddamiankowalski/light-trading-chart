@@ -20,10 +20,13 @@ export class ChartAPI {
   private _eventBus = new EventBus();
   private _viewController = new ViewController();
 
-  constructor(private _container: HTMLElement, private _type: ChartType, private _dataType: ChartDataType = "LINE") {
+  constructor(private _container: HTMLElement, private _type: ChartType, private _dataType: ChartDataType = "COLUMNS") {
     this._component = this._createChartComponent(_type);
     this._dataView = this._createDataLayerView();
-    this._overlayView = this._createOverlayView();
+
+    if (this._dataType === "LINE") {
+      this._overlayView = this._createOverlayView();
+    }
 
     if (_type === "FULL") {
       this._valueScaleView = this._createValueScaleView();
@@ -33,7 +36,10 @@ export class ChartAPI {
 
   public setData(source: RawDataSource): void {
     this._dataView.updateDataSource(source);
-    this._overlayView.updateDataSource(source);
+
+    if (this._dataType === "LINE") {
+      this._overlayView.updateDataSource(source);
+    }
 
     if (this._valueScaleView && this._timeScaleView) {
       this._valueScaleView.updateDataSource(source);

@@ -37,25 +37,43 @@ export class ColumnLayerRenderer {
     this._drawGrid("black");
 
     for (let i = 0; i < this.dataSize; i++) {
+      const value = this._view.dataSource.source[i].y;
       const xCoord = i * this.colGap;
-      let yCoord = this._view.height - (this._view.dataSource.source[i].y - min) * ratio;
+      let yCoord = this._view.height - (value - min) * ratio;
       let deltaYCoord = this._view.height - (0 - min) * ratio;
 
-      this._drawBox(xCoord, yCoord, deltaYCoord);
+      this._drawBox(xCoord, yCoord, deltaYCoord, value);
     }
 
     this._ctx.restore();
   }
 
-  private _drawBox(xCoord: number, yCoord: number, deltaYCoord: number): void {
+  private _drawBox(xCoord: number, yCoord: number, deltaYCoord: number, value: number): void {
     const colWidth = Math.min((this._view.width - this.horizontalMargin) / (this._view.dataSource.size - 1) / 2, 30);
 
-    this._ctx.fillStyle = "red";
-    this._ctx.strokeStyle = "red";
-    this._ctx.beginPath();
-    this._ctx.roundRect(xCoord + this.horizontalMargin / 2 - colWidth / 2, yCoord, colWidth, deltaYCoord - yCoord, 30);
-    this._ctx.stroke();
-    this._ctx.fill();
+    if (value === 0) {
+      this._ctx.fillStyle = "#979FB5";
+      this._ctx.strokeStyle = "#979FB5";
+
+      this._ctx.beginPath();
+      this._ctx.arc(xCoord + this.horizontalMargin / 2, yCoord, colWidth / 2, 0, 2 * Math.PI);
+      this._ctx.stroke();
+      this._ctx.fill();
+    } else {
+      this._ctx.fillStyle = deltaYCoord > yCoord ? "#56B786" : "#EA4D58";
+      this._ctx.strokeStyle = deltaYCoord > yCoord ? "#56B786" : "#EA4D58";
+
+      this._ctx.beginPath();
+      this._ctx.roundRect(
+        xCoord + this.horizontalMargin / 2 - colWidth / 2,
+        yCoord,
+        colWidth,
+        deltaYCoord - yCoord,
+        30
+      );
+      this._ctx.stroke();
+      this._ctx.fill();
+    }
   }
 
   private _drawGrid(color: string): void {
