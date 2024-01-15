@@ -10,12 +10,8 @@ export class DataComponent {
   constructor(private _container: HTMLElement) {
     this._element = this._createElement();
     this._observer = this._setResizeObserver();
-
-    if (this._container.children[1]) {
-      this._observer.observe(this._container.children[1]);
-    } else {
-      this._observer.observe(this._container);
-    }
+    this._observer.observe(this._element);
+    console.log(this._element);
   }
 
   get width(): number {
@@ -37,8 +33,9 @@ export class DataComponent {
   private _createElement(): HTMLDivElement {
     const div = document.createElement("div");
     div.classList.add("light-trading-chart__data");
-    div.style.flexGrow = "1";
     div.style.position = "relative";
+    div.style.width = "100%";
+    div.style.minWidth = "0";
     this._container.append(div);
     return div;
   }

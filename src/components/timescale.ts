@@ -19,10 +19,11 @@ export class TimeScaleComponent {
 
   private _setStyleProperties(element: HTMLDivElement): void {
     element.style.position = "relative";
-    element.style.fontSize = '0.625rem';
-    element.style.fontFamily = 'Barlow';
+    element.style.fontSize = "0.625rem";
+    element.style.fontFamily = "Barlow";
     element.style.minHeight = "3rem";
-    element.style.left = '3rem';
+    element.style.minWidth = "0";
+    element.style.left = "3rem";
     element.style.width = "calc(100% - 3rem)";
   }
 }

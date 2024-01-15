@@ -59,14 +59,15 @@ export class ChartComponent {
   }
 
   private _createSourceWrapper(): HTMLDivElement {
-    const wrapper = document.createElement('div');
-    wrapper.classList.add('light-trading-chart__source-wrapper');
-    wrapper.style.position = 'relative';
-    wrapper.style.display = 'flex';
-    wrapper.style.height = '100%';
+    const wrapper = document.createElement("div");
+    wrapper.classList.add("light-trading-chart__source-wrapper");
+    wrapper.style.position = "relative";
+    wrapper.style.display = "flex";
+    wrapper.style.height = "100%";
+    wrapper.style.minWidth = "0";
 
-    if (this._type === 'FULL') {
-      wrapper.style.minHeight = '24rem';
+    if (this._type === "FULL") {
+      wrapper.style.minHeight = "24rem";
     }
     this._element.append(wrapper);
     return wrapper;
@@ -78,7 +79,7 @@ export class ChartComponent {
 
     if (this._type === "FULL") {
       div.style.display = "flex";
-      div.style.flexDirection = 'column';
+      div.style.flexDirection = "column";
       div.style.gridTemplateColumns = "3rem 1fr";
       div.style.gridTemplateRows = "1fr 3rem";
     }
