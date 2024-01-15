@@ -11,7 +11,6 @@ export class DataComponent {
     this._element = this._createElement();
     this._observer = this._setResizeObserver();
     this._observer.observe(this._element);
-    console.log(this._element);
   }
 
   get width(): number {
