@@ -147,7 +147,7 @@ export class DataLayerRenderer {
     if (yCoord > this._view.height - 2 - this._view.verticalMargin) {
       yCoord = this._view.height - 2;
     } else if (yCoord < 0) {
-      yCoord = 0;
+      yCoord = this._type === "FULL" ? -100 : 0;
     }
     this._ctx.fillStyle = zeroColor;
 
