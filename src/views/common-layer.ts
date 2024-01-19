@@ -14,6 +14,7 @@ export abstract class CommonLayerView {
   protected _zeroColor?: string;
   protected _hoverLineColor?: string;
   protected _verticalMargin: number = 6;
+  protected _horizontalMargin: number = 40;
 
   constructor(
     protected _component: DataComponent,
@@ -40,6 +41,10 @@ export abstract class CommonLayerView {
     return this._dataSource;
   }
 
+  get horizontalMargin(): number {
+    return this._horizontalMargin;
+  }
+
   get ctx(): CanvasRenderingContext2D {
     const context = this._canvas.getContext("2d");
 
@@ -59,6 +64,11 @@ export abstract class CommonLayerView {
 
   public invalidate(): void {
     this._invalidate();
+  }
+
+  public updateHorizontalMargin(margin: number) {
+    this._horizontalMargin = margin;
+    this.render()
   }
 
   public updateColor(color: string) {

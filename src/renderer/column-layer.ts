@@ -17,15 +17,8 @@ export class ColumnLayerRenderer {
     return this._view.height * 0.8;
   }
 
-  get colGap(): number {
-    return (this._view.width - this.horizontalMargin) / (this._view.dataSource.size - 1);
-  }
 
-  get horizontalMargin(): number {
-    return 25;
-  }
-
-  public render(zeroColor: string) {
+  public render(zeroColor: string, horizontalMargin: number) {
     this._ctx.save();
     this._ctx.scale(devicePixelRatio, devicePixelRatio);
 
@@ -37,18 +30,22 @@ export class ColumnLayerRenderer {
 
     for (let i = 0; i < this.dataSize; i++) {
       const value = this._view.dataSource.source[i].y;
-      const xCoord = i * this.colGap;
+      const xCoord = i * this._getColGap(horizontalMargin);
       let yCoord = this._view.height - (value - min) * ratio;
       let deltaYCoord = this._view.height - (0 - min) * ratio;
 
-      this._drawBox(xCoord, yCoord, deltaYCoord, value);
+      this._drawBox(xCoord, yCoord, deltaYCoord, value, horizontalMargin);
     }
 
     this._ctx.restore();
   }
 
-  private _drawBox(xCoord: number, yCoord: number, deltaYCoord: number, value: number): void {
-    const colWidth = Math.min((this._view.width - this.horizontalMargin) / (this._view.dataSource.size - 1) / 2, 20);
+  private _getColGap(horizontalMargin: number): number {
+    return (this._view.width - horizontalMargin) / (this._view.dataSource.size - 1);
+  }
+
+  private _drawBox(xCoord: number, yCoord: number, deltaYCoord: number, value: number, horizontalMargin: number): void {
+    const colWidth = Math.min((this._view.width - horizontalMargin) / (this._view.dataSource.size - 1) / 2, 20);
 
     if (value === 0) {
       this._ctx.fillStyle = "#979FB5";
@@ -56,7 +53,7 @@ export class ColumnLayerRenderer {
 
       this._ctx.beginPath();
       this._ctx.arc(
-        Math.abs(xCoord + this.horizontalMargin / 2),
+        Math.abs(xCoord + horizontalMargin / 2),
         Math.abs(yCoord),
         Math.abs(colWidth / 2),
         0,
@@ -71,7 +68,7 @@ export class ColumnLayerRenderer {
       if (Math.abs(deltaYCoord - yCoord) < colWidth / 2) {
         this._ctx.beginPath();
         this._ctx.arc(
-          Math.abs(xCoord + this.horizontalMargin / 2),
+          Math.abs(xCoord + horizontalMargin / 2),
           Math.abs(yCoord + colWidth / 6),
           Math.abs(colWidth / 2),
           0,
@@ -84,7 +81,7 @@ export class ColumnLayerRenderer {
 
         if (deltaYCoord >= yCoord) {
           this._ctx.roundRect(
-            Math.abs(xCoord + this.horizontalMargin / 2 - colWidth / 2),
+            Math.abs(xCoord + horizontalMargin / 2 - colWidth / 2),
             Math.abs(yCoord),
             Math.abs(colWidth),
             Math.abs(deltaYCoord - yCoord),
@@ -92,7 +89,7 @@ export class ColumnLayerRenderer {
           );
         } else {
           this._ctx.roundRect(
-            Math.abs(xCoord + this.horizontalMargin / 2 - colWidth / 2),
+            Math.abs(xCoord + horizontalMargin / 2 - colWidth / 2),
             Math.abs(deltaYCoord),
             Math.abs(colWidth),
             Math.abs(yCoord - deltaYCoord),

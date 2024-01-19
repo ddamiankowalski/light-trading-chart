@@ -50,18 +50,23 @@ export class ChartAPI {
   }
 
   public setMargin(marginValue: number): void {
-    //@ts-ignore
     this._dataView.setMargin(marginValue);
   }
 
   public setColor(color: string): void {
-    //@ts-ignore
     this._dataView.updateColor(color);
     this._overlayView && this._overlayView.updateColor(color);
   }
 
+  public setHorizontalMargin(margin: number): void {
+    if (this._dataType !== 'COLUMNS') {
+      throw new Error('Cannot set horizontal margin for this type of chart');
+    }
+
+    this._dataView.updateHorizontalMargin(margin);
+  }
+
   public setRgbColor(color: string): void {
-    //@ts-ignore
     this._dataView.updateRgbColor(color);
   }
 
@@ -70,12 +75,10 @@ export class ChartAPI {
   }
 
   public setZeroLineColor(color: string): void {
-    //@ts-ignore
     this._dataView.updateZeroColor(color);
   }
 
   public setHoverLineColor(color: string): void {
-    //@ts-ignore
     this._dataView.updateHoverLineColor(color);
   }
 

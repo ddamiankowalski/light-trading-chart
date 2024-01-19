@@ -31,6 +31,6 @@ export class ColumnLayerView extends CommonLayerView implements View, SourceView
   }
 
   public render(): void {
-    this._renderer.render(this._zeroColor as string);
+    this._renderer.render(this._zeroColor as string, this._horizontalMargin);
   }
 }
