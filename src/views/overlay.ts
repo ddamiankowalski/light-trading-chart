@@ -1,7 +1,7 @@
 import { DataComponent } from "../components/data";
 import { EventBus } from "../events/event-bus";
 import { ChartType } from "../interfaces/chart";
-import { RawDataSource } from "../interfaces/data-source";
+import { MinMaxSource, RawDataSource } from "../interfaces/data-source";
 import { EventHandlers, EventType } from "../interfaces/events";
 import { SourceView, View, ViewInvalidateMessage, ViewType } from "../interfaces/view";
 import { OverlayRenderer } from "../renderer/overlay";
@@ -18,6 +18,7 @@ export class OverlayView implements View, SourceView {
   private _mouseOverCol: number | null = null;
   private _color?: string;
   private _tooltipBgColor?: string;
+  private _minMax: { min: number; max: number } | null = null;
 
   constructor(
     private _component: DataComponent,
@@ -57,6 +58,10 @@ export class OverlayView implements View, SourceView {
     return this._mouseOverCol;
   }
 
+  get minMax(): MinMaxSource | null {
+    return this._minMax;
+  }
+
   get width(): number {
     return this._component.element.offsetWidth;
   }
@@ -67,6 +72,11 @@ export class OverlayView implements View, SourceView {
 
   public render(): void {
     this._renderer.render(this._color as string, this._tooltipBgColor as string);
+  }
+
+  public setRange(range: { min: number, max: number }): void {
+    this._minMax = range;
+    this.render();
   }
 
   public updateColor(color: string): void {

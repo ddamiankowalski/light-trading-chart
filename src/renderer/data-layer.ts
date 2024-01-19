@@ -1,4 +1,5 @@
 import { ChartType } from "../interfaces/chart";
+import { MinMaxSource } from "../interfaces/data-source";
 import { DataLayerView } from "../views/data-layer";
 
 export class DataLayerRenderer {
@@ -16,9 +17,17 @@ export class DataLayerRenderer {
     return this._view.dataSource.size;
   }
 
+  get minMax(): MinMaxSource {
+    if (this._view.minMax) {
+      return this._view.minMax;
+    }
+
+    return this._view.dataSource.minMax;
+  }
+
   get effectiveCanvasHeight(): number {
     if (this._type === "FULL") {
-      return this._view.height * 0.8;
+      return this._view.height * (this._view.minMax ? 0.9 : 0.8);
     }
 
     if (this._view.verticalMargin * 2 > this._view.height) {
@@ -71,7 +80,7 @@ export class DataLayerRenderer {
 
     this._ctx.scale(devicePixelRatio, devicePixelRatio);
 
-    const { min, max } = this._view.dataSource.minMax;
+    const { min, max } = this.minMax;
     const ratio = this._getYAxisRatio(min, max);
 
     this._drawZeroLine(min, ratio, zeroColor);

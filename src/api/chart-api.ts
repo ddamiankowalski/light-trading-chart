@@ -59,11 +59,8 @@ export class ChartAPI {
   }
 
   public setFixedYRange(range: { min: number, max: number }): void {
-    if (this._dataType !== 'COLUMNS') {
-      throw new Error('Cannot set range for this type of chart');
-    }
-
-    if (this._valueScaleView) {
+    if (this._valueScaleView && this._overlayView) {
+      this._overlayView.setRange(range);
       this._valueScaleView.setRange(range);
       this._dataView.setRange(range);
     }

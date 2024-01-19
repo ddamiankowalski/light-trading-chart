@@ -1,4 +1,5 @@
 import { ChartType } from "../interfaces/chart";
+import { MinMaxSource } from "../interfaces/data-source";
 import { OverlayView } from "../views/overlay";
 
 export class OverlayRenderer {
@@ -20,7 +21,7 @@ export class OverlayRenderer {
 
   get effectiveCanvasHeight(): number {
     if (this._type === 'FULL') {
-      return this._view.height * .8;
+      return this._view.height * (this._view.minMax ? .9 : .8);
     }
 
     if (this._view.verticalMargin * 2 > this._view.height) {
@@ -28,6 +29,14 @@ export class OverlayRenderer {
     }
 
     return this._view.height - 2 * this._view.verticalMargin;
+  }
+
+  get minMax(): MinMaxSource {
+    if (this._view.minMax) {
+      return this._view.minMax;
+    }
+
+    return this._view.dataSource.minMax;
   }
 
   public render(color: string, tooltipBgColor: string): void {
@@ -45,7 +54,7 @@ export class OverlayRenderer {
     }
 
     this._lastMouseOverCol = this._view.mouseOverCol;
-    const { min, max } = this._view.dataSource.minMax;
+    const { min, max } = this.minMax;
     const ratio = this._getYAxisRatio(min, max);
 
     if (!this._view.dataSource.source[this._view.mouseOverCol]) {
@@ -79,7 +88,6 @@ export class OverlayRenderer {
     element.setAttribute("cy", y.toString());
     element.setAttribute("r", "6");
     element.setAttribute("fill", color);
-    //element.setAttribute('stroke', '#272D3A');
     element.setAttribute("stroke", tooltipBgColor);
     element.setAttribute("stroke-width", "3");
     element.setAttribute("shape-rendering", "geometricPrecision");
