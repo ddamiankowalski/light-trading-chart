@@ -47,7 +47,7 @@ export class ValueScaleView implements View, SourceView {
   public setRange(range: { min: number, max: number }): void {
     this._minMax = range;
     this._isFixedMinMax = true;
-    this.render();
+    this.invalidate();
   }
 
   public invalidate(): void {

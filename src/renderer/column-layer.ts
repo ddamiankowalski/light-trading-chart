@@ -15,7 +15,7 @@ export class ColumnLayerRenderer {
   }
 
   get effectiveCanvasHeight(): number {
-    return this._view.height * (this._view.minMax ? 1 : 0.8);
+    return this._view.height * (this._view.minMax ? 0.9 : 0.8);
   }
 
   get minMax(): MinMaxSource {

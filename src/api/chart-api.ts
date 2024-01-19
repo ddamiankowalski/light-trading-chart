@@ -36,10 +36,9 @@ export class ChartAPI {
     if (_type === "FULL") {
       this._valueScaleView = this._createValueScaleView();
 
-      if (this._chartOptions.hideTimeAxis) {
-        return;
+      if (!this._chartOptions.hideTimeAxis) {
+        this._timeScaleView = this._createTimeScaleView();
       }
-      this._timeScaleView = this._createTimeScaleView();
     }
   }
 
@@ -63,8 +62,8 @@ export class ChartAPI {
   }
 
   public setFixedYRange(range: { min: number, max: number }): void {
-    if (this._valueScaleView && this._overlayView) {
-      this._overlayView.setRange(range);
+    if (this._valueScaleView) {
+      this._overlayView?.setRange(range);
       this._valueScaleView.setRange(range);
       this._dataView.setRange(range);
     }
@@ -99,7 +98,7 @@ export class ChartAPI {
   }
 
   private _createChartComponent(type: ChartType): ChartComponent {
-    return new ChartComponent(this._container, type);
+    return new ChartComponent(this._container, type, this._chartOptions);
   }
 
   private _createDataLayerView(): CommonLayerView {

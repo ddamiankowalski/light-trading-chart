@@ -1,4 +1,4 @@
-import { ChartType } from "../interfaces/chart";
+import { ChartOptions, ChartType } from "../interfaces/chart";
 import { DataComponent } from "./data";
 import { TimeScaleComponent } from "./timescale";
 import { ValueScaleComponent } from "./valuescale";
@@ -10,13 +10,16 @@ export class ChartComponent {
   private _timeScale: TimeScaleComponent | null = null;
   private _data: DataComponent;
 
-  constructor(private _container: HTMLElement, private _type: ChartType) {
+  constructor(private _container: HTMLElement, private _type: ChartType, private _options: ChartOptions) {
     this._element = this._createComponent();
     this._sourceWrapper = this._createSourceWrapper();
 
     if (this._type === "FULL") {
       this._valueScale = this._createValueScale();
-      this._timeScale = this._createTimeScale();
+
+      if (!this._options.hideTimeAxis) {
+        this._timeScale = this._createTimeScale();
+      }
     }
 
     this._data = this._createDataComponent();
