@@ -12,23 +12,19 @@ export class TimeScaleRenderer {
     return this._view;
   }
 
-  get horizontalMargin(): number {
-    return this._dataType === "COLUMNS" ? 25 : 0;
-  }
-
-  public render(): void {
+  public render(horizontalMargin: number): void {
     this._clearSvgElement();
-    this._createSvg(0);
+    this._createSvg(horizontalMargin);
   }
 
-  private _createSvg(y: number): void {
+  private _createSvg(horizontalMargin: number = 0, y: number = 0): void {
     const colQuantity = this._view.timestamps.length;
-    const colDist = (this._view.width - this.horizontalMargin) / (colQuantity - 1);
+    const colDist = (this._view.width - horizontalMargin) / (colQuantity - 1);
 
     let prevX = null;
 
     for (let i = 0; i < colQuantity; i++) {
-      const currX = i * colDist + (this._dataType === "COLUMNS" ? this.horizontalMargin / 2 : 0);
+      const currX = i * colDist + (this._dataType === "COLUMNS" ? horizontalMargin / 2 : 0);
 
       if (prevX !== null && currX - prevX < 50 && this._dataType !== "COLUMNS") {
         continue;

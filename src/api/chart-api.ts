@@ -64,6 +64,10 @@ export class ChartAPI {
     }
 
     this._dataView.updateHorizontalMargin(margin);
+
+    if (this._timeScaleView) {
+      this._timeScaleView.updateHorizontalMargin(margin);
+    }
   }
 
   public setRgbColor(color: string): void {

@@ -14,7 +14,7 @@ export abstract class CommonLayerView {
   protected _zeroColor?: string;
   protected _hoverLineColor?: string;
   protected _verticalMargin: number = 6;
-  protected _horizontalMargin: number = 40;
+  protected _horizontalMargin: number = 60;
 
   constructor(
     protected _component: DataComponent,

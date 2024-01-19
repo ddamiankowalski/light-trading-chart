@@ -9,6 +9,7 @@ export class TimeScaleView implements View, SourceView {
   private _svgContainer: SVGSVGElement;
   private _renderer: TimeScaleRenderer;
   private _timestamps: (number | string)[] = [];
+  private _horizontalMargin = 60;
 
   constructor(
     private _component: TimeScaleComponent,
@@ -41,7 +42,12 @@ export class TimeScaleView implements View, SourceView {
   }
 
   public render(): void {
-    this._renderer.render();
+    this._renderer.render(this._horizontalMargin);
+  }
+
+  public updateHorizontalMargin(margin: number): void {
+    this._horizontalMargin = margin;
+    this.render();
   }
 
   public updateDataSource(source: RawDataSource): void {
