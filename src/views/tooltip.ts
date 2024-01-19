@@ -162,10 +162,10 @@ export class TooltipView {
     if (!dataPoint) {
       this.notifyMouseOut();
       return;
+    } else {
+      const midpoint = this._getMidpointStatus(dataPoint.y, this._dataSource.minMax.min, this._dataSource.minMax.max);
+      this._setYCoord(midpoint, col, tooltip);
     }
-
-    const midpoint = this._getMidpointStatus(dataPoint.y, this._dataSource.minMax.min, this._dataSource.minMax.max);
-    this._setYCoord(midpoint, col, tooltip);
   }
 
   private _setYCoord(midpoint: "above" | "below", col: number, tooltip: HTMLElement): void {
