@@ -1,3 +1,4 @@
+import { MinMaxSource } from "../interfaces/data-source";
 import { ColumnLayerView } from "../views/column-layer";
 
 export class ColumnLayerRenderer {
@@ -14,7 +15,15 @@ export class ColumnLayerRenderer {
   }
 
   get effectiveCanvasHeight(): number {
-    return this._view.height * 0.8;
+    return this._view.height * (this._view.minMax ? 1 : 0.8);
+  }
+
+  get minMax(): MinMaxSource {
+    if (this._view.minMax) {
+      return this._view.minMax;
+    }
+
+    return this._view.dataSource.minMax;
   }
 
 
@@ -22,7 +31,7 @@ export class ColumnLayerRenderer {
     this._ctx.save();
     this._ctx.scale(devicePixelRatio, devicePixelRatio);
 
-    const { min, max } = this._view.dataSource.minMax;
+    const { min, max } = this.minMax;
     const ratio = this._getYAxisRatio(min, max);
 
     this._resetCanvas();
@@ -32,6 +41,7 @@ export class ColumnLayerRenderer {
       const value = this._view.dataSource.source[i].y;
       const xCoord = i * this._getColGap(horizontalMargin);
       let yCoord = this._view.height - (value - min) * ratio;
+      console.log(this._view.height, value, min, ratio)
       let deltaYCoord = this._view.height - (0 - min) * ratio;
 
       this._drawBox(xCoord, yCoord, deltaYCoord, value, horizontalMargin);

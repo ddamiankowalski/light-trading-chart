@@ -15,14 +15,13 @@ export class ValueScaleRenderer {
   }
 
   private _calculateRowDiff(): number {
-    const rowQuantity = Math.floor(this._view.height / 10);
-    return rowQuantity;
+    return Math.floor(this._view.height / 10);
   }
 
   private _createSvg(x: number, rowDiff: number): void {
     const minMax = this._view.minMax;
     const { min, max } = minMax;
-    const diff = Math.abs(max - min) / 8;
+    const diff = Math.abs(max - min) / (this._view.isFixedMinMax ? 9 : 8);
 
     for (let i = 0; i < 10; i++) {
       const text = (min + diff * i).toFixed(2).toString() + (this._chartOptions?.showPercentagePrefix ? "%" : "");
