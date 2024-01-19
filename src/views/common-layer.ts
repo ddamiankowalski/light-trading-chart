@@ -15,6 +15,7 @@ export abstract class CommonLayerView {
   protected _hoverLineColor?: string;
   protected _verticalMargin: number = 6;
   protected _horizontalMargin: number = 60;
+  protected _minMax: { min: number; max: number } | null = null;
 
   constructor(
     protected _component: DataComponent,
@@ -45,6 +46,10 @@ export abstract class CommonLayerView {
     return this._horizontalMargin;
   }
 
+  get minMax(): { min: number; max: number } | null {
+    return this._minMax;
+  }
+
   get ctx(): CanvasRenderingContext2D {
     const context = this._canvas.getContext("2d");
 
@@ -69,6 +74,11 @@ export abstract class CommonLayerView {
   public updateHorizontalMargin(margin: number) {
     this._horizontalMargin = margin;
     this.render()
+  }
+
+  public setRange(range: { min: number, max: number }): void {
+    this._minMax = range;
+    this.render();
   }
 
   public updateColor(color: string) {

@@ -9,6 +9,7 @@ export class ValueScaleView implements View, SourceView {
   private _svgContainer: SVGSVGElement;
   private _renderer: ValueScaleRenderer;
   private _minMax: MinMaxSource | null = null;
+  private _isFixedMinMax = false;
 
   constructor(
     private _component: ValueScaleComponent,
@@ -37,6 +38,16 @@ export class ValueScaleView implements View, SourceView {
     }
 
     return this._minMax;
+  }
+
+  get isFixedMinMax(): boolean {
+    return this._isFixedMinMax;
+  }
+
+  public setRange(range: { min: number, max: number }): void {
+    this._minMax = range;
+    this._isFixedMinMax = true;
+    this.render();
   }
 
   public invalidate(): void {

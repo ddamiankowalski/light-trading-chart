@@ -58,6 +58,17 @@ export class ChartAPI {
     this._overlayView && this._overlayView.updateColor(color);
   }
 
+  public setFixedYRange(range: { min: number, max: number }): void {
+    if (this._dataType !== 'COLUMNS') {
+      throw new Error('Cannot set range for this type of chart');
+    }
+
+    if (this._valueScaleView) {
+      this._valueScaleView.setRange(range);
+      this._dataView.setRange(range);
+    }
+  }
+
   public setHorizontalMargin(margin: number): void {
     if (this._dataType !== 'COLUMNS') {
       throw new Error('Cannot set horizontal margin for this type of chart');
