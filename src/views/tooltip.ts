@@ -120,6 +120,10 @@ export class TooltipView {
   }
 
   private _updateTooltipData(col: number): void {
+    if (!this._dataSource.source[col]) {
+      return;
+    }
+
     if (this._dateLabel && this._dateValue && this._dataSource.source[col].x) {
       this._dateLabel.textContent = "Date: ";
       this._dateValue.innerHTML = new Date(this._dataSource.source[col].x ?? 0).toLocaleDateString('en-GB') as string;
@@ -157,7 +161,6 @@ export class TooltipView {
     const dataPoint = this._dataSource.source[col];
     if (!dataPoint) {
       this.notifyMouseOut();
-      return;
     }
 
     const midpoint = this._getMidpointStatus(dataPoint.y, this._dataSource.minMax.min, this._dataSource.minMax.max);
