@@ -8,6 +8,6 @@ const chart = createChart(document.getElementById("app") as HTMLElement, "FULL",
 
 chart.setHorizontalMargin(100);
 
-chart.setData([{ x: 'test', y: 0 }, { x: 'test', y: 0 }]);
+chart.setData([{ x: 'test', y: 0 }, { x: 'test', y: 0 }, { x: 'test', y: 10 }, { x: 'test', y: 20 }, { x: 'test', y: 30 }, { x: 'test', y: 0 }]);
 
-chart.setFixedYRange({ min: -100, max: 100 });
+//chart.setFixedYRange({ min: -100, max: 100 });

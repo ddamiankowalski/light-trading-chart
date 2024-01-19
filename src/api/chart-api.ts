@@ -46,8 +46,11 @@ export class ChartAPI {
     this._dataView.updateDataSource(source);
     this._overlayView && this._overlayView.updateDataSource(source);
 
-    if (this._valueScaleView && this._timeScaleView) {
+    if (this._valueScaleView) {
       this._valueScaleView.updateDataSource(source);
+    }
+
+    if (this._timeScaleView) {
       this._timeScaleView.updateDataSource(source);
     }
   }
