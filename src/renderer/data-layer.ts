@@ -101,7 +101,10 @@ export class DataLayerRenderer {
       let yCoord = this._view.height - this._shouldAddMargin() - (this._view.dataSource.source[i].y - min) * ratio;
 
       if (this._view.dataSource.size === 1) {
-        yCoord = (this._view.height - this._view.verticalMargin) / 2;
+        if (this._type === 'PREVIEW') {
+          yCoord = (this._view.height - this._view.verticalMargin) / 2;
+        }
+
         this._ctx.moveTo(0, yCoord);
         this._ctx.lineTo(this._view.width, yCoord);
         continue;
