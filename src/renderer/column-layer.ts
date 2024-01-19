@@ -41,7 +41,6 @@ export class ColumnLayerRenderer {
       const value = this._view.dataSource.source[i].y;
       const xCoord = i * this._getColGap(horizontalMargin);
       let yCoord = this._view.height - (value - min) * ratio;
-      console.log(this._view.height, value, min, ratio)
       let deltaYCoord = this._view.height - (0 - min) * ratio;
 
       this._drawBox(xCoord, yCoord, deltaYCoord, value, horizontalMargin);
