@@ -35,6 +35,10 @@ export class ChartAPI {
 
     if (_type === "FULL") {
       this._valueScaleView = this._createValueScaleView();
+
+      if (this._chartOptions.hideTimeAxis) {
+        return;
+      }
       this._timeScaleView = this._createTimeScaleView();
     }
   }

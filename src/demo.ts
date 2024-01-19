@@ -3,6 +3,7 @@ import { createChart } from ".";
 const chart = createChart(document.getElementById("app") as HTMLElement, "FULL", "LINE", {
   stopTimeScaleConvert: true,
   showPercentagePrefix: true,
+  hideTimeAxis: true
 });
 
 //chart.setHorizontalMargin(100);
