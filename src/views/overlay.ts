@@ -112,6 +112,11 @@ export class OverlayView implements View, SourceView {
   }
 
   private _onMouseMove(event: MouseEvent): void {
+    if (event.offsetX < 0 || event.offsetX > this.width) {
+      this._onMouseOut();
+      return;
+    }
+
     const cols = (this.dataSource.size - 1) * 2;
     this._mouseOverCol = Math.ceil(Math.floor(event.offsetX / (this.width / cols)) / 2);
     this._tooltipView.notifyMouseOverCol(this._mouseOverCol);
