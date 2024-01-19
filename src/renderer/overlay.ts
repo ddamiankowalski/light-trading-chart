@@ -48,6 +48,10 @@ export class OverlayRenderer {
     const { min, max } = this._view.dataSource.minMax;
     const ratio = this._getYAxisRatio(min, max);
 
+    if (!this._view.dataSource.source[this._view.mouseOverCol]) {
+      return
+    }
+
     const yCoord =
       this._view.height -
       this._shouldAddMargin() -
