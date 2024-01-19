@@ -155,6 +155,11 @@ export class TooltipView {
 
   private _assertTooltipSide(tooltip: HTMLElement, col: number): void {
     const dataPoint = this._dataSource.source[col];
+    if (!dataPoint) {
+      this.notifyMouseOut();
+      return;
+    }
+
     const midpoint = this._getMidpointStatus(dataPoint.y, this._dataSource.minMax.min, this._dataSource.minMax.max);
     this._setYCoord(midpoint, col, tooltip);
   }
