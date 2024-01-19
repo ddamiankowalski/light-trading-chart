@@ -6,12 +6,13 @@ export class MouseHandler {
   }
 
   private _parseHandlers(): void {
-    this._target.addEventListener("mousemove", (event) => this._onMouseMove.call(this, event));
-    this._target.addEventListener("mouseout", (event) => this._onMouseOut.call(this, event));
+    this._target.addEventListener("mousemove", (event) => this._onMouseMove.call(this, event as MouseEvent & TouchEvent));
+    this._target.addEventListener("mouseout", (event) => this._onMouseOut.call(this, event as MouseEvent & TouchEvent));
     this._target.addEventListener("touchmove", (event) => this._onTouchMove.call(this, event));
+    this._target.addEventListener("touchend", (event) => this._onMouseOut.call(this, event as MouseEvent & TouchEvent));
   }
 
-  private _onMouseMove(event: MouseEvent): void {
+  private _onMouseMove(event: MouseEvent & TouchEvent): void {
     this._proceedEvent(event, this._handlers.mouseMove);
   }
 
@@ -26,14 +27,14 @@ export class MouseHandler {
 
     // @ts-ignore
     event.offsetX = offsetX;
-    this._proceedEvent(event as unknown as MouseEvent, this._handlers.mouseMove);
+    this._proceedEvent(event as MouseEvent & TouchEvent, this._handlers.mouseMove);
   }
 
-  private _onMouseOut(event: MouseEvent): void {
+  private _onMouseOut(event: MouseEvent & TouchEvent): void {
     this._proceedEvent(event, this._handlers.mouseOut);
   }
 
-  private _proceedEvent(event: MouseEvent, handler?: EventHandler): void {
+  private _proceedEvent(event: MouseEvent & TouchEvent, handler?: EventHandler): void {
     if (handler) {
       handler(event);
     }
