@@ -118,7 +118,7 @@ export class ColumnLayerRenderer {
     this._ctx.strokeStyle = color;
     const rowDiff = this._calculateRowDiff();
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 9; i++) {
       this._ctx.moveTo(0, this._view.height - i * rowDiff - 1);
       this._ctx.lineTo(this._view.width, this._view.height - i * rowDiff - 1);
     }
@@ -128,7 +128,7 @@ export class ColumnLayerRenderer {
   }
 
   private _calculateRowDiff(): number {
-    const rowQuantity = Math.floor(this._view.height / 10);
+    const rowQuantity = Math.ceil(this._view.height / 9);
     return rowQuantity;
   }
 
