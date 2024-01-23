@@ -23,12 +23,13 @@ export class ChartAPI {
   constructor(
     private _container: HTMLElement,
     private _type: ChartType,
-    private _dataType: ChartDataType,
+    private _dataType: ChartDataType = 'LINE',
     private _chartOptions: ChartOptions
   ) {
     this._component = this._createChartComponent(_type);
     this._dataView = this._createDataLayerView();
 
+    console.log(this._dataType)
     if (this._dataType === "LINE") {
       this._overlayView = this._createOverlayView();
     }

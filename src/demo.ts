@@ -2,12 +2,12 @@ import { createChart } from ".";
 
 const chart = createChart(document.getElementById("app") as HTMLElement, "FULL", "COLUMNS", {
   stopTimeScaleConvert: true,
-  showPercentagePrefix: true,
-  hideTimeAxis: true
+  showPercentagePrefix: false,
+  hideTimeAxis: false
 });
 
-chart.setHorizontalMargin(100);
+//chart.setHorizontalMargin(100);
 
-chart.setData([{ x: 'test', y: 0 }, { x: 'test', y: 0 }, { x: 'test', y: 10 }, { x: 'test', y: 20 }, { x: 'test', y: 30 }, { x: 'test', y: 0 }]);
+chart.setData([{ x: 'January', y: 0 }, { x: 'January', y: 0 }, { x: 'January', y: 10 }, { x: 'January', y: 20 }, { x: 'January', y: 30 }, { x: 'January', y: 0 }, { x: 'January', y: 0 }, { x: 'January', y: 0 }, { x: 'January', y: 0 }, { x: 'January', y: 0 }, { x: 'January', y: 0 }, { x: 'January', y: 0 }]);
 
-//chart.setFixedYRange({ min: -100, max: 100 });
+chart.setFixedYRange({ min: -100, max: 100 });

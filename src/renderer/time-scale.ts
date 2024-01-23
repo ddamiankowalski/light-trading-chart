@@ -19,7 +19,7 @@ export class TimeScaleRenderer {
 
   private _createSvg(horizontalMargin: number = 0, y: number = 0): void {
     const colQuantity = this._view.timestamps.length;
-    const colDist = (this._view.width - horizontalMargin) / (colQuantity - 1);
+    const colDist = this._dataType === 'COLUMNS' ? (this._view.width - horizontalMargin) / (colQuantity - 1) : this._view.width / (this._view.timestamps.length - 1);
 
     let prevX = null;
 
