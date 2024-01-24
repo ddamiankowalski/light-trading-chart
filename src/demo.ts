@@ -10,4 +10,4 @@ const chart = createChart(document.getElementById("app") as HTMLElement, "FULL",
 
 chart.setData([{ x: 'January', y: 0 }, { x: 'January', y: 0 }, { x: 'January', y: 10 }, { x: 'January', y: 20 }, { x: 'January', y: 30 }, { x: 'January', y: 0 }, { x: 'January', y: 0 }, { x: 'January', y: 0 }, { x: 'January', y: 0 }, { x: 'January', y: 0 }, { x: 'January', y: 0 }, { x: 'January', y: 0 }]);
 
-//chart.setFixedYRange({ min: -100, max: 100 });
+chart.setFixedYRange({ min: -100, max: 100 });

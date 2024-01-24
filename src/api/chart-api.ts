@@ -29,7 +29,6 @@ export class ChartAPI {
     this._component = this._createChartComponent(_type);
     this._dataView = this._createDataLayerView();
 
-    console.log(this._dataType)
     if (this._dataType === "LINE") {
       this._overlayView = this._createOverlayView();
     }

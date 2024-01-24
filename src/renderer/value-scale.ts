@@ -21,7 +21,6 @@ export class ValueScaleRenderer {
   private _createSvg(x: number, rowDiff: number): void {
     const minMax = this._view.minMax;
     const { min, max } = minMax;
-    console.log(min, max)
     const diff = Math.abs(max - min) / (this._view.isFixedMinMax ? 8 : 7);
 
     for (let i = 0; i < 9; i++) {
