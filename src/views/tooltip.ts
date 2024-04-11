@@ -132,7 +132,7 @@ export class TooltipView {
 
     if (this._returnsLabel && this._returnsValue) {
       this._returnsLabel.innerHTML = "Returns: ";
-      this._returnsValue.innerHTML = this._dataSource.source[col].y.toFixed(2).toString() + (this._view.chartOptions.showTooltipPercent ? "%" : "");
+      this._returnsValue.innerHTML = this._dataSource.source[col].y.toFixed(2).toString() + (this._view.chartOptions.hideTooltipPercentage ? "" : "%");
     }
 
     if (this._tooltipEl) {

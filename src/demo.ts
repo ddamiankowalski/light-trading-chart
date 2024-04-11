@@ -4,7 +4,7 @@ const chart = createChart(document.getElementById("app") as HTMLElement, "FULL",
   stopTimeScaleConvert: true,
   showPercentagePrefix: false,
   hideTimeAxis: false,
-  showTooltipPercent: false
+  hideTooltipPercentage: false
 });
 
 //chart.setHorizontalMargin(100);
