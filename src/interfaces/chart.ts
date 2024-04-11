@@ -6,5 +6,6 @@ export interface ChartOptions {
   stopTimeScaleConvert: boolean;
   showPercentagePrefix: boolean;
   hideTimeAxis: boolean;
-  hideTooltipPercentage?: boolean;
+  customValueTooltipLabel?: string;
+  tooltipValueSuffix?: string;
 }

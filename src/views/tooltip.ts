@@ -131,8 +131,11 @@ export class TooltipView {
     }
 
     if (this._returnsLabel && this._returnsValue) {
-      this._returnsLabel.innerHTML = "Returns: ";
-      this._returnsValue.innerHTML = this._dataSource.source[col].y.toFixed(2).toString() + (this._view.chartOptions.hideTooltipPercentage ? "" : "%");
+      const valuePrefix = this._view.chartOptions.customValueTooltipLabel || "Returns: ";
+      this._returnsLabel.innerHTML = valuePrefix;
+
+      const valueSuffix = this._view.chartOptions.tooltipValueSuffix || '%';
+      this._returnsValue.innerHTML = this._dataSource.source[col].y.toFixed(2).toString() + valueSuffix;
     }
 
     if (this._tooltipEl) {
