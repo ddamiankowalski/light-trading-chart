@@ -4,7 +4,7 @@ const chart = createChart(document.getElementById("app") as HTMLElement, "FULL",
   stopTimeScaleConvert: true,
   showPercentagePrefix: false,
   hideTimeAxis: false,
-  tooltipValuePrefix: 'pref',
+  customValueTooltipLabel: 'pref',
   tooltipValueSuffix: 'suff'
 });
 
