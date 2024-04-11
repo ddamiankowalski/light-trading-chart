@@ -136,10 +136,11 @@ export class DataLayerRenderer {
     const lines = this._view.lines;
     const { min, max } = this.minMax;
     const ratio = this._getYAxisRatio(min, max);
-    this._ctx.save();
-    this._ctx.beginPath();
 
     lines.forEach(line => {
+      this._ctx.save();
+      this._ctx.beginPath();
+
       this._ctx.lineWidth = 2;
       this._ctx.strokeStyle = line.color;
       let yCoord = this._view.height - this._shouldAddMargin() - (line.y - min) * ratio;
@@ -147,9 +148,10 @@ export class DataLayerRenderer {
       this._ctx.lineTo(this._view.width, yCoord);
       this._ctx.stroke();
       this._view.drawTooltip(yCoord, line);
-    })
 
-    this._ctx.restore();
+      this._ctx.restore();
+
+    })
   }
 
   private _drawHoverLine(color: string): void {
