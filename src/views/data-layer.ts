@@ -84,11 +84,11 @@ export class DataLayerView extends CommonLayerView implements View, SourceView {
     container.appendChild(tooltip);
 
     const label = document.createElement('span');
-    label.classList.add("light-chart-tooltip__value");
+    label.classList.add("light-chart-line-tooltip__value");
     label.innerHTML = line.label;
 
     const value = document.createElement('span');
-    value.classList.add("light-chart-tooltip__label");
+    value.classList.add("light-chart-line-tooltip__label");
     value.innerHTML = line.labelValue.toString();
 
     tooltip.appendChild(label);
