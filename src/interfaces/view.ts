@@ -1,7 +1,7 @@
 import { DataComponent } from "../components/data";
 import { EventBus } from "../events/event-bus";
 import { Notifier } from "../utils/notifier";
-import { ChartType } from "./chart";
+import { ChartOptions, ChartType } from "./chart";
 import { RawDataSource } from "./data-source";
 
 export enum ViewType {
@@ -28,5 +28,5 @@ export interface ViewInvalidateMessage {
 }
 
 export interface ViewConstructor<T = View> {
-  new(component: DataComponent, eventBus: EventBus, viewInvalidator: Notifier<ViewInvalidateMessage>, type: ChartType): T;
+  new(component: DataComponent, eventBus: EventBus, viewInvalidator: Notifier<ViewInvalidateMessage>, type: ChartType, chartOptions: ChartOptions): T;
 }

@@ -30,9 +30,10 @@ export class ViewController {
     viewType: ViewType,
     component: DataComponent,
     eventBus: EventBus,
-    type: ChartType
+    type: ChartType,
+    chartOptions: ChartOptions
   ): T {
-    const view = new viewConstructor(component, eventBus, this._viewInvalidator, type);
+    const view = new viewConstructor(component, eventBus, this._viewInvalidator, type, chartOptions);
     this._viewMap.set(viewType, view);
     return view;
   }

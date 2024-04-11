@@ -112,7 +112,8 @@ export class ChartAPI {
       ViewType.DataLayer,
       this._component.dataComponent,
       this._eventBus,
-      this._type
+      this._type,
+      this._chartOptions
     );
   }
 
@@ -122,7 +123,8 @@ export class ChartAPI {
       ViewType.OverlayView,
       this._component.dataComponent,
       this._eventBus,
-      this._type
+      this._type,
+      this._chartOptions
     );
   }
 

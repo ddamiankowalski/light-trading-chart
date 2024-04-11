@@ -1,6 +1,6 @@
 import { DataComponent } from "../components/data";
 import { EventBus } from "../events/event-bus";
-import { ChartType } from "../interfaces/chart";
+import { ChartOptions, ChartType } from "../interfaces/chart";
 import { MinMaxSource, RawDataSource } from "../interfaces/data-source";
 import { EventHandlers, EventType } from "../interfaces/events";
 import { SourceView, View, ViewInvalidateMessage, ViewType } from "../interfaces/view";
@@ -24,7 +24,8 @@ export class OverlayView implements View, SourceView {
     private _component: DataComponent,
     private _eventBus: EventBus,
     private _viewInvalidator: Notifier<ViewInvalidateMessage>,
-    private _type: ChartType
+    private _type: ChartType,
+    private _chartOptions: ChartOptions
   ) {
     this._svgContainer = this._createSvgContainer();
     this._renderer = new OverlayRenderer(this, this._type);
@@ -40,6 +41,10 @@ export class OverlayView implements View, SourceView {
 
   get eventBus(): EventBus {
     return this._eventBus;
+  }
+
+  get chartOptions(): ChartOptions {
+    return this._chartOptions;
   }
 
   get svgContainer(): SVGSVGElement {

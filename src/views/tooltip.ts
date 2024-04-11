@@ -18,6 +18,7 @@ export class TooltipView {
 
   constructor(private _component: DataComponent, private _view: OverlayView) {
     this._tooltipContainer = this._createTooltipContainer();
+    console.log(this._view.chartOptions);
   }
 
   get effectiveCanvasHeight(): number {
@@ -131,7 +132,7 @@ export class TooltipView {
 
     if (this._returnsLabel && this._returnsValue) {
       this._returnsLabel.innerHTML = "Returns: ";
-      this._returnsValue.innerHTML = this._dataSource.source[col].y.toFixed(2).toString() + "%";
+      this._returnsValue.innerHTML = this._dataSource.source[col].y.toFixed(2).toString() + (this._view.chartOptions.showTooltipPercent ? "%" : "");
     }
 
     if (this._tooltipEl) {
