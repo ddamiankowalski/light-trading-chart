@@ -50,7 +50,6 @@ export class TimeScaleRenderer {
         this._svgContainer.style.transform = "translateY(1rem) translateX(0.5rem)";
       } else {
         const elWidth = element.getBBox().width
-        console.log(elWidth)
         element.style.transform = `translateY(1.25rem) translateX(${elWidth / 2}px)`;
       }
       prevX = currX;
