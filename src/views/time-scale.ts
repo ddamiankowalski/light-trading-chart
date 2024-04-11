@@ -29,6 +29,10 @@ export class TimeScaleView implements View, SourceView {
     return this._timestamps;
   }
 
+  get rotateLabels(): boolean {
+    return !!this._chartOptions.straightLabels;
+  }
+
   get width(): number {
     return this._component.element.offsetWidth;
   }
@@ -51,7 +55,7 @@ export class TimeScaleView implements View, SourceView {
   }
 
   public updateDataSource(source: RawDataSource): void {
-    this._timestamps = source.map((s) => s.x ?? 0);
+    this._timestamps = source.map((s) => s.xLabel ?? s.x ?? 0);
     this.invalidate();
   }
 

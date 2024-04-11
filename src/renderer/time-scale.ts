@@ -44,9 +44,15 @@ export class TimeScaleRenderer {
       element.classList.add("light-trading-chart__text");
       this._svgContainer.append(element);
 
-      element.style.transformOrigin = `${currX}px ${0}px`;
-      element.style.transform = "rotate(300deg)";
-      this._svgContainer.style.transform = "translateY(1rem) translateX(0.5rem)";
+      if (this._view.rotateLabels) {
+        element.style.transformOrigin = `${currX}px ${0}px`;
+        element.style.transform = "rotate(300deg)";
+        this._svgContainer.style.transform = "translateY(1rem) translateX(0.5rem)";
+      } else {
+        const elWidth = element.getBBox().width
+        console.log(elWidth)
+        element.style.transform = `translateY(1.25rem) translateX(${elWidth / 2}px)`;
+      }
       prevX = currX;
     }
   }

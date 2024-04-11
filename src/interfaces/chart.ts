@@ -8,4 +8,5 @@ export interface ChartOptions {
   hideTimeAxis: boolean;
   customValueTooltipLabel?: string;
   tooltipValueSuffix?: string;
+  straightLabels?: boolean;
 }
