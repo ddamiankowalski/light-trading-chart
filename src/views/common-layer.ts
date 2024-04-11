@@ -1,6 +1,7 @@
 import { DataComponent } from "../components/data";
 import { EventBus } from "../events/event-bus";
 import { RawDataSource } from "../interfaces/data-source";
+import { DataLine } from "../interfaces/lines";
 import { ViewInvalidateMessage, ViewType } from "../interfaces/view";
 import { DataSource } from "../source/data-source";
 import { Notifier } from "../utils/notifier";
@@ -8,6 +9,7 @@ import { Notifier } from "../utils/notifier";
 export abstract class CommonLayerView {
   private _canvas: HTMLCanvasElement;
   private _dataSource: DataSource = new DataSource([]);
+  private _dataLines: DataLine[] = [];
 
   protected _color?: string;
   protected _rgbColor?: string;
@@ -42,6 +44,10 @@ export abstract class CommonLayerView {
     return this._dataSource;
   }
 
+  get lines(): DataLine[] {
+    return this._dataLines;
+  }
+
   get horizontalMargin(): number {
     return this._horizontalMargin;
   }
@@ -61,6 +67,10 @@ export abstract class CommonLayerView {
   }
 
   abstract render(): void;
+
+  public addLines(lines: DataLine[]): void {
+    this._dataLines = lines;
+  }
 
   public updateDataSource(source: RawDataSource): void {
     this._dataSource = new DataSource(source);

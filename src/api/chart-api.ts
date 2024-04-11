@@ -10,6 +10,7 @@ import { TimeScaleView } from "../views/time-scale";
 import { ChartDataType, ChartOptions, ChartType } from "../interfaces/chart";
 import { ColumnLayerView } from "../views/column-layer";
 import { CommonLayerView } from "../views/common-layer";
+import { DataLine } from "../interfaces/lines";
 
 export class ChartAPI {
   private _component: ChartComponent;
@@ -55,8 +56,10 @@ export class ChartAPI {
     }
   }
 
-  public setHorizontalLines(): void {
-    console.log('setting horizontal lines');
+  public setHorizontalLines(lines: DataLine[]): void {
+    this._dataView.addLines(lines);
+
+    if (this._overlayView) { this._overlayView.addLines(lines) }
   }
 
   public setMargin(marginValue: number): void {

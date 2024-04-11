@@ -1,5 +1,6 @@
 import { DataComponent } from "../components/data";
-import { RawDataSource } from "../interfaces/data-source";
+import { MinMaxSource, RawDataSource } from "../interfaces/data-source";
+import { DataLine } from "../interfaces/lines";
 import { DataSource } from "../source/data-source";
 import { OverlayView } from "./overlay";
 
@@ -9,6 +10,7 @@ export class TooltipView {
   private _tooltipEl: HTMLElement | null = null;
   private _color?: string;
   private _valueColor?: string;
+  private _dataLines: DataLine[] = [];
 
   private _dateValue?: HTMLElement;
   private _dateLabel?: HTMLElement;
@@ -18,6 +20,14 @@ export class TooltipView {
 
   constructor(private _component: DataComponent, private _view: OverlayView) {
     this._tooltipContainer = this._createTooltipContainer();
+  }
+
+  get minMax(): MinMaxSource {
+    if (this._view.minMax) {
+      return this._view.minMax;
+    }
+
+    return this._view.dataSource.minMax;
   }
 
   get effectiveCanvasHeight(): number {
@@ -52,6 +62,11 @@ export class TooltipView {
     }
   }
 
+  public addLines(lines: DataLine[]): void {
+    this._dataLines = lines;
+    this._createLinesSVG();
+  }
+
   public notifyMouseOut(): void {
     this._tooltipEl?.remove();
     this._tooltipEl = null;
@@ -67,6 +82,40 @@ export class TooltipView {
     container.style.pointerEvents = "none";
     this._component.element.appendChild(container);
     return container;
+  }
+
+  private _createLinesSVG(): void {
+    const { min, max } = this.minMax;
+    const ratio = this._getYAxisRatio(min, max);
+
+    this._dataLines.forEach(line => {
+      const lineBox = document.createElement('div');
+      lineBox.style.height = '1.5rem';
+      lineBox.style.color = 'white';
+      lineBox.style.margin = '0.25rem';
+      lineBox.style.display = 'flex';
+      lineBox.style.justifyContent = 'cetnter';
+      lineBox.style.alignItems = 'center';
+      lineBox.style.padding = '0.125rem 0.75rem'
+      lineBox.style.background = this._color || 'black';
+      lineBox.style.position = 'absolute';
+      lineBox.style.borderRadius = '0.25rem';
+      lineBox.style.gap = '0.25rem';
+
+      let yCoord = this._view.height - this._shouldAddMargin() - (line.y - min) * ratio;
+      lineBox.style.top = `${yCoord - 32}px`;
+
+      const boxLabel = document.createElement('span');
+      boxLabel.classList.add("light-chart-tooltip__label");
+      lineBox.appendChild(boxLabel);
+      boxLabel.innerHTML = line.label;
+
+      const boxValue = document.createElement('span');
+      boxValue.classList.add("light-chart-tooltip__value");
+      lineBox.appendChild(boxValue);
+      boxValue.innerHTML = line.y.toString();
+      this._tooltipContainer.appendChild(lineBox);
+    })
   }
 
   private _createTooltip(col: number): HTMLElement {

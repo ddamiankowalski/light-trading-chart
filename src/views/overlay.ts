@@ -3,6 +3,7 @@ import { EventBus } from "../events/event-bus";
 import { ChartOptions, ChartType } from "../interfaces/chart";
 import { MinMaxSource, RawDataSource } from "../interfaces/data-source";
 import { EventHandlers, EventType } from "../interfaces/events";
+import { DataLine } from "../interfaces/lines";
 import { SourceView, View, ViewInvalidateMessage, ViewType } from "../interfaces/view";
 import { OverlayRenderer } from "../renderer/overlay";
 import { DataSource } from "../source/data-source";
@@ -19,6 +20,7 @@ export class OverlayView implements View, SourceView {
   private _color?: string;
   private _tooltipBgColor?: string;
   private _minMax: { min: number; max: number } | null = null;
+  private _dataLines: DataLine[] = [];
 
   constructor(
     private _component: DataComponent,
@@ -75,8 +77,17 @@ export class OverlayView implements View, SourceView {
     return this._component.element.offsetHeight;
   }
 
+  get lines(): DataLine[] {
+    return this._dataLines;
+  }
+
   public render(): void {
     this._renderer.render(this._color as string, this._tooltipBgColor as string);
+  }
+
+  public addLines(lines: DataLine[]) {
+    this._dataLines = lines;
+    this._tooltipView.addLines(lines);
   }
 
   public setRange(range: { min: number, max: number }): void {
