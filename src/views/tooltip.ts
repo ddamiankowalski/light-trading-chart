@@ -17,6 +17,7 @@ export class TooltipView {
 
   private _returnsValue?: HTMLElement;
   private _returnsLabel?: HTMLElement;
+  private _lineBoxContainer: HTMLElement[] = [];
 
   constructor(private _component: DataComponent, private _view: OverlayView) {
     this._tooltipContainer = this._createTooltipContainer();
@@ -48,6 +49,7 @@ export class TooltipView {
 
   public updateDataSource(source: RawDataSource): void {
     this._dataSource = new DataSource(source);
+    this._createLinesSVG();
   }
 
   public notifyMouseOverCol(col: number): void {
@@ -87,9 +89,16 @@ export class TooltipView {
   private _createLinesSVG(): void {
     const { min, max } = this.minMax;
     const ratio = this._getYAxisRatio(min, max);
+    this._lineBoxContainer.forEach(container => container.remove());
+
 
     this._dataLines.forEach(line => {
       const lineBox = document.createElement('div');
+      this._lineBoxContainer.push(lineBox);
+      lineBox.style.position = 'absolute';
+      let yCoord = this._view.height - this._shouldAddMargin() - (line.y - min) * ratio;
+      lineBox.style.top = `${yCoord}px`;
+
       lineBox.style.height = '1.5rem';
       lineBox.style.color = 'white';
       lineBox.style.margin = '0.25rem';
@@ -97,13 +106,9 @@ export class TooltipView {
       lineBox.style.justifyContent = 'cetnter';
       lineBox.style.alignItems = 'center';
       lineBox.style.padding = '0.125rem 0.75rem'
-      lineBox.style.background = this._color || 'black';
-      lineBox.style.position = 'absolute';
+      lineBox.style.backgroundColor = this._color || 'black';
       lineBox.style.borderRadius = '0.25rem';
       lineBox.style.gap = '0.25rem';
-
-      let yCoord = this._view.height - this._shouldAddMargin() - (line.y - min) * ratio;
-      lineBox.style.top = `${yCoord - 32}px`;
 
       const boxLabel = document.createElement('span');
       boxLabel.classList.add("light-chart-tooltip__label");
