@@ -49,7 +49,9 @@ export class TooltipView {
 
   public updateDataSource(source: RawDataSource): void {
     this._dataSource = new DataSource(source);
-    this._createLinesSVG();
+    setTimeout(() => {
+      this._createLinesSVG();
+    }, 1000)
   }
 
   public notifyMouseOverCol(col: number): void {
@@ -66,7 +68,6 @@ export class TooltipView {
 
   public addLines(lines: DataLine[]): void {
     this._dataLines = lines;
-    this._createLinesSVG();
   }
 
   public notifyMouseOut(): void {
@@ -87,39 +88,26 @@ export class TooltipView {
   }
 
   private _createLinesSVG(): void {
-    const { min, max } = this.minMax;
-    const ratio = this._getYAxisRatio(min, max);
     this._lineBoxContainer.forEach(container => container.remove());
+    this._lineBoxContainer = [];
 
 
     this._dataLines.forEach(line => {
-      const lineBox = document.createElement('div');
-      this._lineBoxContainer.push(lineBox);
-      lineBox.style.position = 'absolute';
-      let yCoord = this._view.height - this._shouldAddMargin() - (line.y - min) * ratio;
-      lineBox.style.top = `${yCoord}px`;
+      const tooltip = document.createElement("div");
+      tooltip.style.borderRadius = "0.25rem";
+      tooltip.style.position = "absolute";
+      tooltip.style.display = "flex";
+      tooltip.style.height = "1.5rem";
+      tooltip.style.width = "1.5rem";
+      tooltip.classList.add("light-chart-tooltip");
+      tooltip.style.backgroundColor = this._color ?? "black";
+      this._tooltipContainer.appendChild(tooltip);
 
-      lineBox.style.height = '1.5rem';
-      lineBox.style.color = 'white';
-      lineBox.style.margin = '0.25rem';
-      lineBox.style.display = 'flex';
-      lineBox.style.justifyContent = 'cetnter';
-      lineBox.style.alignItems = 'center';
-      lineBox.style.padding = '0.125rem 0.75rem'
-      lineBox.style.backgroundColor = this._color || 'black';
-      lineBox.style.borderRadius = '0.25rem';
-      lineBox.style.gap = '0.25rem';
+      const { min, max } = this._view.dataSource.minMax;
+      const ratio = this._getYAxisRatio(min, max);
 
-      const boxLabel = document.createElement('span');
-      boxLabel.classList.add("light-chart-tooltip__label");
-      lineBox.appendChild(boxLabel);
-      boxLabel.innerHTML = line.label;
-
-      const boxValue = document.createElement('span');
-      boxValue.classList.add("light-chart-tooltip__value");
-      lineBox.appendChild(boxValue);
-      boxValue.innerHTML = line.y.toString();
-      this._tooltipContainer.appendChild(lineBox);
+      const yCoord = this._view.height - this._shouldAddMargin() - (line.y - min) * ratio;
+      tooltip.style.top = yCoord + "px";
     })
   }
 
