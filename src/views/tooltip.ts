@@ -130,10 +130,10 @@ export class TooltipView {
     }
 
     if (this._returnsLabel && this._returnsValue) {
-      const valuePrefix = this._view.chartOptions.customValueTooltipLabel || "Returns: ";
+      const valuePrefix = this._view.chartOptions.customValueTooltipLabel !== undefined ? this._view.chartOptions.customValueTooltipLabel : "Returns: ";
       this._returnsLabel.innerHTML = valuePrefix;
 
-      const valueSuffix = this._view.chartOptions.tooltipValueSuffix || '%';
+      const valueSuffix = this._view.chartOptions.tooltipValueSuffix !== undefined ? this._view.chartOptions.tooltipValueSuffix : '%';
       this._returnsValue.innerHTML = this._dataSource.source[col].y.toFixed(2).toString() + valueSuffix;
     }
 
