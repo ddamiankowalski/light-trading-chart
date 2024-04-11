@@ -5,7 +5,8 @@ const chart = createChart(document.getElementById("app") as HTMLElement, "FULL",
   showPercentagePrefix: false,
   hideTimeAxis: false,
   customValueTooltipLabel: 'pref',
-  tooltipValueSuffix: 'suff'
+  tooltipValueSuffix: 'suff',
+  straightLabels: true
 });
 
 //chart.setHorizontalMargin(100);

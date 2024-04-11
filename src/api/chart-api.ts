@@ -55,6 +55,10 @@ export class ChartAPI {
     }
   }
 
+  public setHorizontalLines(): void {
+    console.log('setting horizontal lines');
+  }
+
   public setMargin(marginValue: number): void {
     this._dataView.setMargin(marginValue);
   }

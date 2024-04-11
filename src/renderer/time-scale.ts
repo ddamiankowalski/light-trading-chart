@@ -44,7 +44,7 @@ export class TimeScaleRenderer {
       element.classList.add("light-trading-chart__text");
       this._svgContainer.append(element);
 
-      if (this._view.rotateLabels) {
+      if (!this._view.straightLabels) {
         element.style.transformOrigin = `${currX}px ${0}px`;
         element.style.transform = "rotate(300deg)";
         this._svgContainer.style.transform = "translateY(1rem) translateX(0.5rem)";

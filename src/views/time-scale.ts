@@ -29,7 +29,7 @@ export class TimeScaleView implements View, SourceView {
     return this._timestamps;
   }
 
-  get rotateLabels(): boolean {
+  get straightLabels(): boolean {
     return !!this._chartOptions.straightLabels;
   }
 
