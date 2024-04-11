@@ -74,6 +74,7 @@ export abstract class CommonLayerView {
   abstract render(): void;
 
   public addLines(lines: DataLine[]): void {
+    this.dataSource.lineMinMax(lines);
     this._dataLines = lines;
   }
 

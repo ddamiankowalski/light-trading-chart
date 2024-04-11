@@ -43,7 +43,7 @@ export class ChartAPI {
     }
   }
 
-  public setData(source: RawDataSource): void {
+  public setData(source: RawDataSource, lines: DataLine[]): void {
     this._dataView.updateDataSource(source);
     this._overlayView && this._overlayView.updateDataSource(source);
 
@@ -54,12 +54,8 @@ export class ChartAPI {
     if (this._timeScaleView) {
       this._timeScaleView.updateDataSource(source);
     }
-  }
 
-  public setHorizontalLines(lines: DataLine[]): void {
-    this._dataView.addLines(lines);
-
-    if (this._overlayView) { this._overlayView.addLines(lines) }
+    this._setHorizontalLines(lines);
   }
 
   public setMargin(marginValue: number): void {
@@ -110,6 +106,12 @@ export class ChartAPI {
 
   private _createChartComponent(type: ChartType): ChartComponent {
     return new ChartComponent(this._container, type, this._chartOptions);
+  }
+
+  private _setHorizontalLines(lines: DataLine[]): void {
+    this._dataView.addLines(lines);
+
+    if (this._overlayView) { this._overlayView.addLines(lines) }
   }
 
   private _createDataLayerView(): CommonLayerView {

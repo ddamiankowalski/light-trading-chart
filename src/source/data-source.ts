@@ -1,4 +1,5 @@
 import { MinMaxSource, RawDataSource } from '../interfaces/data-source';
+import { DataLine } from '../interfaces/lines';
 
 export class DataSource {
   private _minMax: MinMaxSource = { min: Infinity, max: -Infinity };
@@ -20,6 +21,18 @@ export class DataSource {
 
   get minMax(): MinMaxSource {
     return this._minMax;
+  }
+
+  public lineMinMax(lines: DataLine[]): void {
+    lines.forEach(line => {
+      if (line.y > this.minMax.max) {
+        this.minMax.max = line.y
+      }
+
+      if (line.y < this.minMax.min) {
+        this.minMax.min = line.y;
+      }
+    })
   }
 
   private _setDataSource(source: RawDataSource): void {
