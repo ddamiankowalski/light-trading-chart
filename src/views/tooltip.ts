@@ -1,6 +1,5 @@
 import { DataComponent } from "../components/data";
 import { MinMaxSource, RawDataSource } from "../interfaces/data-source";
-import { DataLine } from "../interfaces/lines";
 import { DataSource } from "../source/data-source";
 import { OverlayView } from "./overlay";
 
@@ -10,14 +9,12 @@ export class TooltipView {
   private _tooltipEl: HTMLElement | null = null;
   private _color?: string;
   private _valueColor?: string;
-  private _dataLines: DataLine[] = [];
 
   private _dateValue?: HTMLElement;
   private _dateLabel?: HTMLElement;
 
   private _returnsValue?: HTMLElement;
   private _returnsLabel?: HTMLElement;
-  private _lineBoxContainer: HTMLElement[] = [];
 
   constructor(private _component: DataComponent, private _view: OverlayView) {
     this._tooltipContainer = this._createTooltipContainer();
@@ -49,9 +46,6 @@ export class TooltipView {
 
   public updateDataSource(source: RawDataSource): void {
     this._dataSource = new DataSource(source);
-    setTimeout(() => {
-      this._createLinesSVG();
-    }, 1000)
   }
 
   public notifyMouseOverCol(col: number): void {
@@ -64,10 +58,6 @@ export class TooltipView {
     } else {
       this._updateTooltip(col);
     }
-  }
-
-  public addLines(lines: DataLine[]): void {
-    this._dataLines = lines;
   }
 
   public notifyMouseOut(): void {
@@ -85,30 +75,6 @@ export class TooltipView {
     container.style.pointerEvents = "none";
     this._component.element.appendChild(container);
     return container;
-  }
-
-  private _createLinesSVG(): void {
-    this._lineBoxContainer.forEach(container => container.remove());
-    this._lineBoxContainer = [];
-
-
-    this._dataLines.forEach(line => {
-      const tooltip = document.createElement("div");
-      tooltip.style.borderRadius = "0.25rem";
-      tooltip.style.position = "absolute";
-      tooltip.style.display = "flex";
-      tooltip.style.height = "1.5rem";
-      tooltip.style.width = "1.5rem";
-      tooltip.classList.add("light-chart-tooltip");
-      tooltip.style.backgroundColor = this._color ?? "black";
-      this._tooltipContainer.appendChild(tooltip);
-
-      const { min, max } = this._view.dataSource.minMax;
-      const ratio = this._getYAxisRatio(min, max);
-
-      const yCoord = this._view.height - this._shouldAddMargin() - (line.y - min) * ratio;
-      tooltip.style.top = yCoord + "px";
-    })
   }
 
   private _createTooltip(col: number): HTMLElement {
@@ -213,11 +179,11 @@ export class TooltipView {
     }
   }
 
-  private _setYCoord(midpoint: "above" | "below", col: number, tooltip: HTMLElement): void {
+  private _setYCoord(midpoint: "above" | "below", col: number, tooltip: HTMLElement, value?: number): void {
     const { min, max } = this._view.dataSource.minMax;
     const ratio = this._getYAxisRatio(min, max);
 
-    const yCoord = this._view.height - this._shouldAddMargin() - (this._view.dataSource.source[col].y - min) * ratio;
+    const yCoord = this._view.height - this._shouldAddMargin() - ((value || this._view.dataSource.source[col].y) - min) * ratio;
     tooltip.style.top = yCoord + "px";
 
     if (midpoint === "above") {

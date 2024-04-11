@@ -10,6 +10,7 @@ export abstract class CommonLayerView {
   private _canvas: HTMLCanvasElement;
   private _dataSource: DataSource = new DataSource([]);
   private _dataLines: DataLine[] = [];
+  private _tooltipBgColor: string | null = null;
 
   protected _color?: string;
   protected _rgbColor?: string;
@@ -34,6 +35,10 @@ export abstract class CommonLayerView {
 
   get width(): number {
     return this.canvas.width / devicePixelRatio;
+  }
+
+  get tooltipBgColor(): string | null {
+    return this._tooltipBgColor;
   }
 
   get height(): number {
@@ -70,6 +75,10 @@ export abstract class CommonLayerView {
 
   public addLines(lines: DataLine[]): void {
     this._dataLines = lines;
+  }
+
+  public setTooltipBgColor(color: string): void {
+    this._tooltipBgColor = color;
   }
 
   public updateDataSource(source: RawDataSource): void {

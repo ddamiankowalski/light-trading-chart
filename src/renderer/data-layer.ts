@@ -132,6 +132,7 @@ export class DataLayerRenderer {
   }
 
   private _drawLines(): void {
+    this._view.clearLinesTooltip();
     const lines = this._view.lines;
     const { min, max } = this.minMax;
     const ratio = this._getYAxisRatio(min, max);
@@ -140,11 +141,12 @@ export class DataLayerRenderer {
 
     lines.forEach(line => {
       this._ctx.lineWidth = 2;
-      this._ctx.strokeStyle = 'red';
+      this._ctx.strokeStyle = line.color;
       let yCoord = this._view.height - this._shouldAddMargin() - (line.y - min) * ratio;
       this._ctx.moveTo(0, yCoord);
       this._ctx.lineTo(this._view.width, yCoord);
       this._ctx.stroke();
+      this._view.drawTooltip(yCoord, line);
     })
 
     this._ctx.restore();

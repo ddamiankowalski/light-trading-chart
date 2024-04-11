@@ -97,6 +97,7 @@ export class ChartAPI {
 
   public setTooltipBgColor(color: string): void {
     this._overlayView && this._overlayView.setTooltipBgColor(color);
+    this._dataView.setTooltipBgColor(color);
   }
 
   public setZeroLineColor(color: string): void {
