@@ -222,7 +222,6 @@ export class DataLayerRenderer {
   private _createGradient(rgbColor: string, customColors: string[], yCoord: number): void {
     if (customColors.length === 2) {
       const parsedYCoord = isFinite(yCoord) ? yCoord : 0;
-      console.log(parsedYCoord);
       const gradient = this._ctx.createLinearGradient(this._view.width / 2, parsedYCoord, this._view.width / 2, this._view.height);
 
       if (!rgbColor) {
