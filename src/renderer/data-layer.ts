@@ -220,6 +220,33 @@ export class DataLayerRenderer {
   }
 
   private _createGradient(rgbColor: string, customColors: string[], yCoord: number): void {
+    if (customColors.length === 2) {
+      const parsedYCoord = isFinite(yCoord) ? yCoord : 0;
+      const gradient = this._ctx.createLinearGradient(this._view.width / 2, parsedYCoord, this._view.width / 2, this._view.height);
+
+      if (!rgbColor) {
+        rgbColor = "74, 83, 103";
+      }
+
+      if (customColors.length === 2) {
+        gradient.addColorStop(0, customColors[0]);
+        gradient.addColorStop(1, customColors[1]);
+      } else {
+        gradient.addColorStop(0, `rgba(${rgbColor}, 0.25)`);
+        gradient.addColorStop(1, `rgba(${rgbColor}, 0)`);
+      }
+
+      this._ctx.fillStyle = gradient;
+
+      if (isFinite(yCoord)) {
+        this._ctx.fillRect(0, this._view.height - parsedYCoord, this._view.width, parsedYCoord)
+      } else {
+        this._ctx.fillRect(0, 0, this._view.width, this._view.height);
+      }
+
+      this._ctx.restore();
+    }
+
     const parsedYCoord = isFinite(yCoord) ? yCoord : 0;
     const gradient = this._ctx.createLinearGradient(this._view.width / 2, parsedYCoord, this._view.width / 2, this._view.height);
 
@@ -231,8 +258,8 @@ export class DataLayerRenderer {
       gradient.addColorStop(0, customColors[0]);
       gradient.addColorStop(1, customColors[1]);
     } else {
-      gradient.addColorStop(0, `rgba(${rgbColor}, 0.5)`);
-      gradient.addColorStop(1, `rgba(${rgbColor}, 0.0125)`);
+      gradient.addColorStop(0, `rgba(${rgbColor}, 0.25)`);
+      gradient.addColorStop(1, `rgba(${rgbColor}, 0)`);
     }
 
     this._ctx.fillStyle = gradient;
