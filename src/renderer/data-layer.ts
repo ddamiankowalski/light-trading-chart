@@ -96,9 +96,15 @@ export class DataLayerRenderer {
     this._ctx.lineJoin = "round";
     this._ctx.strokeStyle = color;
 
+    let maxYCoord = -Infinity;
+
     for (let i = 0; i < this.dataSize; i++) {
       const xCoord = i * this.colGap;
       let yCoord = this._view.height - this._shouldAddMargin() - (this._view.dataSource.source[i].y - min) * ratio;
+
+      if (yCoord > maxYCoord) {
+        maxYCoord = yCoord;
+      }
 
       if (this._view.dataSource.size === 1) {
         if (this._type === 'PREVIEW') {
@@ -121,7 +127,7 @@ export class DataLayerRenderer {
     this._ctx.stroke();
 
     this._clipPath();
-    this._createGradient(rgbColor, customGradientColors);
+    this._createGradient(rgbColor, customGradientColors, maxYCoord);
 
     if (this._type === "FULL") {
       this._drawHoverLine(hoverLineColor);
@@ -213,8 +219,8 @@ export class DataLayerRenderer {
     this._ctx.clip();
   }
 
-  private _createGradient(rgbColor: string, customColors: string[]): void {
-    const gradient = this._ctx.createLinearGradient(this._view.width / 2, 0, this._view.width / 2, this._view.height);
+  private _createGradient(rgbColor: string, customColors: string[], yCoord: number): void {
+    const gradient = this._ctx.createLinearGradient(this._view.width / 2, yCoord, this._view.width / 2, this._view.height);
 
     if (!rgbColor) {
       rgbColor = "74, 83, 103";
@@ -229,7 +235,7 @@ export class DataLayerRenderer {
     }
 
     this._ctx.fillStyle = gradient;
-    this._ctx.fillRect(0, 0, this._view.width, this._view.height);
+    this._ctx.fillRect(0, this._view.height - yCoord, this._view.width, yCoord)
     this._ctx.restore();
   }
 }
