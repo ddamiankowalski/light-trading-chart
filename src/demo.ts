@@ -11,8 +11,8 @@ const chart = createChart(document.getElementById("app") as HTMLElement, "FULL",
 
 //chart.setHorizontalMargin(100);
 
-chart.setData([{ x: 'January', y: 0, xLabel: 'dupa' }, { x: 'sdasdasdasdasdsa', y: 0, xLabel: 'dupa2' }, { x: 'sadasdasdasdasdas', y: 10 }, { x: 'J', y: 20 }, { x: 'January', y: 30 }, { x: 'January', y: 0 }, { x: 'January', y: 0 }, { x: 'January', y: 0 }, { x: 'January', y: 0 }, { x: 'January', y: 0 }, { x: 'January', y: 0 }, { x: 'January', y: 0 }], [
-  { label: 'dupa', y: 100, color: 'red', labelValue: 'dupavalue' }
-]);
+chart.setData([{ x: 'January', y: 0, xLabel: 'dupa' }, { x: 'sdasdasdasdasdsa', y: 0, xLabel: 'dupa2' }, { x: 'sadasdasdasdasdas', y: 10 }, { x: 'J', y: 20 }, { x: 'January', y: 30 }, { x: 'January', y: 0 }, { x: 'January', y: 0 }, { x: 'January', y: 0 }, { x: 'January', y: 0 }, { x: 'January', y: 0 }, { x: 'January', y: 0 }, { x: 'January', y: 0 }]);
+
+chart.setHorizontalLines([{ label: 'dupa', y: 40, color: 'red', labelValue: 'dupavalue' }, { label: 'dupa', y: -20, color: 'red', labelValue: 'dupavalue' }]);
 
 // chart.setFixedYRange({ min: -100, max: 100 });

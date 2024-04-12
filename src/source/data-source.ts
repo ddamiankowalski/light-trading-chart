@@ -3,6 +3,7 @@ import { DataLine } from '../interfaces/lines';
 
 export class DataSource {
   private _minMax: MinMaxSource = { min: Infinity, max: -Infinity };
+  private _tooltipMinMax: MinMaxSource = { min: Infinity, max: -Infinity };
   private _source: RawDataSource;
   private _dataSize: number = 0;
 
@@ -21,6 +22,10 @@ export class DataSource {
 
   get minMax(): MinMaxSource {
     return this._minMax;
+  }
+
+  get tooltipMinMax(): MinMaxSource {
+    return this._tooltipMinMax;
   }
 
   public lineMinMax(lines: DataLine[]): void {
@@ -42,6 +47,15 @@ export class DataSource {
 
   private _calcMinMax(source: RawDataSource): void {
     this._minMax = source.reduce(
+      (acc, curr) => {
+        acc.min = acc.min < curr.y ? acc.min : curr.y;
+        acc.max = acc.max > curr.y ? acc.max : curr.y;
+        return acc;
+      },
+      { min: Infinity, max: -Infinity }
+    );
+
+    this._tooltipMinMax = source.reduce(
       (acc, curr) => {
         acc.min = acc.min < curr.y ? acc.min : curr.y;
         acc.max = acc.max > curr.y ? acc.max : curr.y;

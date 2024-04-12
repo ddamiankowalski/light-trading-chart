@@ -87,6 +87,8 @@ export class OverlayView implements View, SourceView {
 
   public addLines(lines: DataLine[]) {
     this._dataLines = lines;
+    this._tooltipView.addLines(lines);
+    this._dataSource.lineMinMax(lines);
   }
 
   public setRange(range: { min: number, max: number }): void {
@@ -114,6 +116,10 @@ export class OverlayView implements View, SourceView {
     this._dataSource = new DataSource(source);
     this._tooltipView.updateDataSource(source);
     this._invalidate();
+  }
+
+  public updateLines(lines: DataLine[]): void {
+
   }
 
   private _invalidate(): void {

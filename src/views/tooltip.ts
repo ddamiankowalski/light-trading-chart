@@ -1,5 +1,6 @@
 import { DataComponent } from "../components/data";
 import { MinMaxSource, RawDataSource } from "../interfaces/data-source";
+import { DataLine } from "../interfaces/lines";
 import { DataSource } from "../source/data-source";
 import { OverlayView } from "./overlay";
 
@@ -25,7 +26,7 @@ export class TooltipView {
       return this._view.minMax;
     }
 
-    return this._view.dataSource.minMax;
+    return this._dataSource.minMax;
   }
 
   get effectiveCanvasHeight(): number {
@@ -34,6 +35,12 @@ export class TooltipView {
     }
 
     return this._view.height - 2 * this._view.verticalMargin;
+  }
+
+  public addLines(lines: DataLine[]): void {
+    this._dataSource.lineMinMax(lines);
+
+    console.log(this._dataSource);
   }
 
   public updateBgColor(color: string): void {
@@ -180,10 +187,10 @@ export class TooltipView {
   }
 
   private _setYCoord(midpoint: "above" | "below", col: number, tooltip: HTMLElement, value?: number): void {
-    const { min, max } = this._view.dataSource.minMax;
+    const { min, max } = this._dataSource.minMax;
     const ratio = this._getYAxisRatio(min, max);
 
-    const yCoord = this._view.height - this._shouldAddMargin() - ((value || this._view.dataSource.source[col].y) - min) * ratio;
+    const yCoord = this._view.height - this._shouldAddMargin() - ((value || this._dataSource.source[col].y) - min) * ratio;
     tooltip.style.top = yCoord + "px";
 
     if (midpoint === "above") {

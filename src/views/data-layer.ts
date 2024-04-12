@@ -80,6 +80,7 @@ export class DataLayerView extends CommonLayerView implements View, SourceView {
     tooltip.style.top = yCoord - 28 + 'px';
     tooltip.style.backgroundColor = this.tooltipBgColor || 'black';
     tooltip.style.color = 'white';
+    tooltip.style.pointerEvents = 'none';
     tooltip.classList.add("light-chart-tooltip");
     container.appendChild(tooltip);
 
