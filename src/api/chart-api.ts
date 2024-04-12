@@ -64,6 +64,7 @@ export class ChartAPI {
     this._dataView.addLines(lines);
 
     if (this._overlayView) { this._overlayView.addLines(lines) }
+    if (this._valueScaleView) { this._valueScaleView.addLines(lines) }
 
     this._overlayView?.invalidate();
     this._dataView.invalidate();

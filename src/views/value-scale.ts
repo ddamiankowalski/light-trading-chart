@@ -1,6 +1,7 @@
 import { ValueScaleComponent } from "../components/valuescale";
 import { ChartOptions } from "../interfaces/chart";
 import { MinMaxSource, RawDataSource } from "../interfaces/data-source";
+import { DataLine } from "../interfaces/lines";
 import { SourceView, View, ViewInvalidateMessage, ViewType } from "../interfaces/view";
 import { ValueScaleRenderer } from "../renderer/value-scale";
 import { Notifier } from "../utils/notifier";
@@ -42,6 +43,18 @@ export class ValueScaleView implements View, SourceView {
 
   get isFixedMinMax(): boolean {
     return this._isFixedMinMax;
+  }
+
+  public addLines(lines: DataLine[]): void {
+    lines.forEach(line => {
+      if (line.y > this.minMax.max) {
+        this.minMax.max = line.y
+      }
+
+      if (line.y < this.minMax.min) {
+        this.minMax.min = line.y;
+      }
+    })
   }
 
   public setRange(range: { min: number, max: number }): void {
