@@ -39,8 +39,6 @@ export class TooltipView {
 
   public addLines(lines: DataLine[]): void {
     this._dataSource.lineMinMax(lines);
-
-    console.log(this._dataSource);
   }
 
   public updateBgColor(color: string): void {

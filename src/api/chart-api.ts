@@ -43,6 +43,10 @@ export class ChartAPI {
     }
   }
 
+  public setGradient(startRgb: string, endRgb: string): void {
+    this._dataView.setGradientColors([startRgb, endRgb]);
+  }
+
   public setData(source: RawDataSource): void {
     this._dataView.updateDataSource(source);
     this._overlayView && this._overlayView.updateDataSource(source);

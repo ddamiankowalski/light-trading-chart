@@ -11,6 +11,7 @@ export abstract class CommonLayerView {
   private _dataSource: DataSource = new DataSource([]);
   private _dataLines: DataLine[] = [];
   private _tooltipBgColor: string | null = null;
+  private _customGradientColors: string[] | null = null;
 
   protected _color?: string;
   protected _rgbColor?: string;
@@ -71,6 +72,10 @@ export abstract class CommonLayerView {
     return context;
   }
 
+  get customGradient(): string[] | null {
+    return this._customGradientColors;
+  }
+
   abstract render(): void;
 
   public addLines(lines: DataLine[]): void {
@@ -85,6 +90,10 @@ export abstract class CommonLayerView {
   public updateDataSource(source: RawDataSource): void {
     this._dataSource = new DataSource(source);
     this._invalidate();
+  }
+
+  public setGradientColors(colors: string[]): void {
+    this._customGradientColors = colors;
   }
 
   public invalidate(): void {

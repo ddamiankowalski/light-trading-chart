@@ -74,7 +74,7 @@ export class DataLayerRenderer {
     this._ctx.restore();
   }
 
-  public render(color: string, rgbColor: string, zeroColor: string, hoverLineColor: string): void {
+  public render(color: string, rgbColor: string, zeroColor: string, hoverLineColor: string, customGradientColors: string[] = []): void {
     this._ctx.save();
     this._resetCanvas();
 
@@ -121,7 +121,7 @@ export class DataLayerRenderer {
     this._ctx.stroke();
 
     this._clipPath();
-    this._createGradient(rgbColor);
+    this._createGradient(rgbColor, customGradientColors);
 
     if (this._type === "FULL") {
       this._drawHoverLine(hoverLineColor);
@@ -213,15 +213,20 @@ export class DataLayerRenderer {
     this._ctx.clip();
   }
 
-  private _createGradient(rgbColor: string): void {
+  private _createGradient(rgbColor: string, customColors: string[]): void {
     const gradient = this._ctx.createLinearGradient(this._view.width / 2, 0, this._view.width / 2, this._view.height);
 
     if (!rgbColor) {
       rgbColor = "74, 83, 103";
     }
 
-    gradient.addColorStop(0, `rgba(${rgbColor}, 0.5)`);
-    gradient.addColorStop(1, `rgba(${rgbColor}, 0.0125)`);
+    if (customColors.length === 2) {
+      gradient.addColorStop(0, customColors[0]);
+      gradient.addColorStop(1, customColors[1]);
+    } else {
+      gradient.addColorStop(0, `rgba(${rgbColor}, 0.5)`);
+      gradient.addColorStop(1, `rgba(${rgbColor}, 0.0125)`);
+    }
 
     this._ctx.fillStyle = gradient;
     this._ctx.fillRect(0, 0, this._view.width, this._view.height);

@@ -33,6 +33,7 @@ export class DataComponent {
     const div = document.createElement("div");
     div.classList.add("light-trading-chart__data");
     div.style.position = "relative";
+    div.style.overflow = 'hidden';
     div.style.width = "100%";
     div.style.minWidth = "0";
     this._container.append(div);

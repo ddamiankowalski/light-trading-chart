@@ -56,7 +56,8 @@ export class DataLayerView extends CommonLayerView implements View, SourceView {
       this._color as string,
       this._rgbColor as string,
       this._zeroColor as string,
-      this._hoverLineColor as string
+      this._hoverLineColor as string,
+      this.customGradient || []
     );
   }
 
