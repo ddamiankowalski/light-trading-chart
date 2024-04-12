@@ -118,10 +118,6 @@ export class OverlayView implements View, SourceView {
     this._invalidate();
   }
 
-  public updateLines(lines: DataLine[]): void {
-
-  }
-
   private _invalidate(): void {
     this._viewInvalidator.notify({ viewType: ViewType.OverlayView });
   }
