@@ -96,15 +96,11 @@ export class DataLayerRenderer {
     this._ctx.lineJoin = "round";
     this._ctx.strokeStyle = color;
 
-    let maxYCoord = -Infinity;
+    let maxYCoord = Infinity;
 
     for (let i = 0; i < this.dataSize; i++) {
       const xCoord = i * this.colGap;
       let yCoord = this._view.height - this._shouldAddMargin() - (this._view.dataSource.source[i].y - min) * ratio;
-
-      if (yCoord > maxYCoord) {
-        maxYCoord = yCoord;
-      }
 
       if (this._view.dataSource.size === 1) {
         if (this._type === 'PREVIEW') {
@@ -122,6 +118,10 @@ export class DataLayerRenderer {
       }
 
       this._ctx.lineTo(xCoord, yCoord);
+
+      if (yCoord < maxYCoord) {
+        maxYCoord = yCoord;
+      }
     }
 
     this._ctx.stroke();
@@ -222,6 +222,7 @@ export class DataLayerRenderer {
   private _createGradient(rgbColor: string, customColors: string[], yCoord: number): void {
     if (customColors.length === 2) {
       const parsedYCoord = isFinite(yCoord) ? yCoord : 0;
+      console.log(parsedYCoord);
       const gradient = this._ctx.createLinearGradient(this._view.width / 2, parsedYCoord, this._view.width / 2, this._view.height);
 
       if (!rgbColor) {
@@ -239,37 +240,25 @@ export class DataLayerRenderer {
       this._ctx.fillStyle = gradient;
 
       if (isFinite(yCoord)) {
-        this._ctx.fillRect(0, this._view.height - parsedYCoord, this._view.width, parsedYCoord)
+        this._ctx.fillRect(0, parsedYCoord, this._view.width, this._view.height - parsedYCoord)
       } else {
         this._ctx.fillRect(0, 0, this._view.width, this._view.height);
       }
 
       this._ctx.restore();
-    }
-
-    const parsedYCoord = isFinite(yCoord) ? yCoord : 0;
-    const gradient = this._ctx.createLinearGradient(this._view.width / 2, parsedYCoord, this._view.width / 2, this._view.height);
-
-    if (!rgbColor) {
-      rgbColor = "74, 83, 103";
-    }
-
-    if (customColors.length === 2) {
-      gradient.addColorStop(0, customColors[0]);
-      gradient.addColorStop(1, customColors[1]);
     } else {
-      gradient.addColorStop(0, `rgba(${rgbColor}, 0.25)`);
-      gradient.addColorStop(1, `rgba(${rgbColor}, 0)`);
-    }
+      const gradient = this._ctx.createLinearGradient(this._view.width / 2, 0, this._view.width / 2, this._view.height);
 
-    this._ctx.fillStyle = gradient;
+      if (!rgbColor) {
+        rgbColor = "74, 83, 103";
+      }
 
-    if (isFinite(yCoord)) {
-      this._ctx.fillRect(0, this._view.height - parsedYCoord, this._view.width, parsedYCoord)
-    } else {
+      gradient.addColorStop(0, `rgba(${rgbColor}, 0.5)`);
+      gradient.addColorStop(1, `rgba(${rgbColor}, 0.0125)`);
+
+      this._ctx.fillStyle = gradient;
       this._ctx.fillRect(0, 0, this._view.width, this._view.height);
+      this._ctx.restore();
     }
-
-    this._ctx.restore();
   }
 }
