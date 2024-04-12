@@ -220,11 +220,8 @@ export class DataLayerRenderer {
   }
 
   private _createGradient(rgbColor: string, customColors: string[], yCoord: number): void {
-    if (!isFinite(yCoord)) {
-      yCoord = 0;
-    }
-
-    const gradient = this._ctx.createLinearGradient(this._view.width / 2, yCoord, this._view.width / 2, this._view.height);
+    const parsedYCoord = isFinite(yCoord) ? yCoord : 0;
+    const gradient = this._ctx.createLinearGradient(this._view.width / 2, parsedYCoord, this._view.width / 2, this._view.height);
 
     if (!rgbColor) {
       rgbColor = "74, 83, 103";
@@ -239,7 +236,13 @@ export class DataLayerRenderer {
     }
 
     this._ctx.fillStyle = gradient;
-    this._ctx.fillRect(0, this._view.height - yCoord, this._view.width, yCoord)
+
+    if (isFinite(yCoord)) {
+      this._ctx.fillRect(0, this._view.height - parsedYCoord, this._view.width, parsedYCoord)
+    } else {
+      this._ctx.fillRect(0, 0, this._view.width, this._view.height);
+    }
+
     this._ctx.restore();
   }
 }
