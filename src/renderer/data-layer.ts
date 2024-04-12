@@ -151,7 +151,7 @@ export class DataLayerRenderer {
       this._ctx.strokeStyle = line.color;
       let yCoord = this._view.height - this._shouldAddMargin() - (line.y - min) * ratio;
       this._ctx.moveTo(0, yCoord);
-      this._ctx.lineTo(this._view.width, yCoord);
+      this._ctx.lineTo(this._view.width * devicePixelRatio, yCoord);
       this._ctx.stroke();
       this._view.drawTooltip(yCoord, line);
 
