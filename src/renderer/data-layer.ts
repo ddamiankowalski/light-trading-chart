@@ -220,6 +220,10 @@ export class DataLayerRenderer {
   }
 
   private _createGradient(rgbColor: string, customColors: string[], yCoord: number): void {
+    if (!isFinite(yCoord)) {
+      yCoord = 0;
+    }
+
     const gradient = this._ctx.createLinearGradient(this._view.width / 2, yCoord, this._view.width / 2, this._view.height);
 
     if (!rgbColor) {
