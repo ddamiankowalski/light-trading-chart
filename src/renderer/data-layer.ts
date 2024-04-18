@@ -74,7 +74,13 @@ export class DataLayerRenderer {
     this._ctx.restore();
   }
 
-  public render(color: string, rgbColor: string, zeroColor: string, hoverLineColor: string, customGradientColors: string[] = []): void {
+  public render(
+    color: string,
+    rgbColor: string,
+    zeroColor: string,
+    hoverLineColor: string,
+    customGradientColors: string[] = []
+  ): void {
     this._ctx.save();
     this._resetCanvas();
 
@@ -103,7 +109,7 @@ export class DataLayerRenderer {
       let yCoord = this._view.height - this._shouldAddMargin() - (this._view.dataSource.source[i].y - min) * ratio;
 
       if (this._view.dataSource.size === 1) {
-        if (this._type === 'PREVIEW') {
+        if (this._type === "PREVIEW") {
           yCoord = (this._view.height - this._view.verticalMargin) / 2;
         }
 
@@ -143,21 +149,20 @@ export class DataLayerRenderer {
     const { min, max } = this.minMax;
     const ratio = this._getYAxisRatio(min, max);
 
-    lines.forEach(line => {
+    lines.forEach((line) => {
       this._ctx.save();
       this._ctx.beginPath();
 
       this._ctx.lineWidth = 2;
       this._ctx.strokeStyle = line.color;
       let yCoord = this._view.height - this._shouldAddMargin() - (line.y - min) * ratio;
-      this._ctx.moveTo(0, yCoord);
-      this._ctx.lineTo(this._view.width * devicePixelRatio, yCoord);
+      this._ctx.moveTo(0, yCoord * devicePixelRatio);
+      this._ctx.lineTo(this._view.width * devicePixelRatio, yCoord * devicePixelRatio);
       this._ctx.stroke();
       this._view.drawTooltip(yCoord, line);
 
       this._ctx.restore();
-
-    })
+    });
   }
 
   private _drawHoverLine(color: string): void {
@@ -222,7 +227,12 @@ export class DataLayerRenderer {
   private _createGradient(rgbColor: string, customColors: string[], yCoord: number): void {
     if (customColors.length === 2) {
       const parsedYCoord = isFinite(yCoord) ? yCoord : 0;
-      const gradient = this._ctx.createLinearGradient(this._view.width / 2, parsedYCoord, this._view.width / 2, this._view.height);
+      const gradient = this._ctx.createLinearGradient(
+        this._view.width / 2,
+        parsedYCoord,
+        this._view.width / 2,
+        this._view.height
+      );
 
       if (!rgbColor) {
         rgbColor = "74, 83, 103";
@@ -239,7 +249,7 @@ export class DataLayerRenderer {
       this._ctx.fillStyle = gradient;
 
       if (isFinite(yCoord)) {
-        this._ctx.fillRect(0, parsedYCoord, this._view.width, this._view.height - parsedYCoord)
+        this._ctx.fillRect(0, parsedYCoord, this._view.width, this._view.height - parsedYCoord);
       } else {
         this._ctx.fillRect(0, 0, this._view.width, this._view.height);
       }
