@@ -153,7 +153,7 @@ export class DataLayerRenderer {
       this._ctx.save();
       this._ctx.beginPath();
 
-      this._ctx.lineWidth = 2;
+      this._ctx.lineWidth = line.width || 2;
       this._ctx.strokeStyle = line.color;
       let yCoord = this._view.height - this._shouldAddMargin() - (line.y - min) * ratio;
       this._ctx.moveTo(0, yCoord * devicePixelRatio);
